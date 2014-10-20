@@ -1,29 +1,21 @@
 # RubyOnRun
 
-TODO: Write a gem description
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'ruby_on_run'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install ruby_on_run
-
 ## Usage
 
-TODO: Write usage instructions here
+Unit tests:
 
-## Contributing
+    $ rspec
+    $ rspec spec
 
-1. Fork it ( https://github.com/[my-github-username]/ruby_on_run/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+Integration tests:
+
+    $ rake test:functions
+    $ rake test:recursion
+    $ rake test:class
+    $ ...
+    $ rake test:all
+
+Execution:
+
+    $ bin/ruby_on_run file.bytecode
+    $ bin/ruby file.rb

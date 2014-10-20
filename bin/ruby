@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'ruby_on_run'
+# require "rubinius"
+
+# Rubinius tokenizer -> Rubinius parser -> Rubinius compiler -> RubyOnRunVM
+
+
+puts 'under construction, stay tunded'
