@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe RubyOnRun::Reader do
 
   let(:reader) { RubyOnRun::Reader.new }

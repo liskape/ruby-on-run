@@ -1,15 +1,17 @@
-class RubyOnRun::Reader
-  
-  def say_hi
-    puts 'hi'
-  end
+module RubyOnRun
+  class Reader
 
-  def number
-    6
-  end
+    def say_hi
+      puts 'hi'
+    end
 
-  def empty?
-    true
-  end
+    def number
+      6
+    end
 
+    def empty?
+      true
+    end
+
+  end
 end
