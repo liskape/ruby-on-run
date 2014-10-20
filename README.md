@@ -1,13 +1,15 @@
 # RubyOnRun
 
-## Usage
+Ruby on Run is program that interprets bytecode from rubinius compiler
+
+## Development
 
 Unit tests:
 
     $ rspec
     $ rspec spec
 
-Integration tests:
+Integration tests (TODO):
 
     $ rake test:functions
     $ rake test:recursion
@@ -15,7 +17,13 @@ Integration tests:
     $ ...
     $ rake test:all
 
-Execution:
+
+## Execeution
+
+Interpret bytecode from file or stream
 
     $ bin/ruby_on_run file.bytecode
+
+Compile ruby file using rubinius and interpret
+
     $ bin/ruby file.rb

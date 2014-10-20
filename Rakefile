@@ -1,6 +1,14 @@
 require "bundler/gem_tasks"
 
 
+desc "Open an irb session preloaded with this library"
+task :console do
+  sh "pry -r ./lib/ruby_on_run.rb"
+end
+
+task :c => :console
+
+
 #######################################################################
 # integration tests
 # HERE definition of tasks:

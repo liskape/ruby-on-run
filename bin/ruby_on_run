@@ -2,7 +2,6 @@
 
 require 'ruby_on_run'
 
-
-RubyOnRun::Reader.new.say_hi
+vm = RubyOnRun::VirtualMachine.new nil
 
 puts 'our VM'
