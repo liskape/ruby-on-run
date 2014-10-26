@@ -10,5 +10,4 @@ describe RubyOnRun::BytecodeParser do
     end
   end
 
-
 end
