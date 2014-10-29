@@ -1,12 +1,8 @@
-# https://github.com/rubinius/rubinius-compiler/blob/2.0/lib/rubinius/compiler/opcodes.rb
-module Rubinius
-  class InstructionSet
+require "pry"
 
-    class Instruction < Struct.new(:code, :name, :stack, :args, :control_flow)
-      def arity
-        args.size
-      end
-    end
+# https://github.com/rubinius/rubinius-compiler/blob/2.0/lib/rubinius/compiler/opcodes.rb
+module RubyOnRun
+  class InstructionSet
 
     @opcodes = []
 
@@ -14,24 +10,39 @@ module Rubinius
       @opcodes
     end
 
+    def self.create_instruction_class(options)
+      Class.new.tap do |klass|
+        klass.class_eval do
+
+          %i(code name stack args control_flow).each do |meth|
+            define_method meth do
+              options[meth]
+            end
+          end
+
+          options[:args].each do |meth|
+            attr_accessor meth
+          end
+
+        end
+      end
+    end
+
+
     def self.opcode(code, name, options)
-      @opcodes[code] = Instruction.new code, name,
-        options[:stack],
-        options[:args],
-        options[:control_flow]
+      @opcodes[code] = create_instruction_class options.merge(code: code, name: name)
     end
 
     # expects array of bytes
     # fetch code
     # fetch params if any
-    # return instance of RubyOnRun::Instruction
-    def parse_instruction(stream)
-      instruction = Rubinius::InstructionSet.opcodes[stream.shift]
-
-      instruction.arity.times do
-        stream.shift
+    # returns Instraction
+    def self.parse_instruction(stream)
+      opcodes[stream.shift].new.tap do |instruction|
+        instruction.args.each do |arg|
+          instruction.send "#{arg}=", stream.shift
+        end
       end
-      RubyOnRun::Instruction.new(instruction.name)
     end
 
     opcode 0, :noop, :stack => [0, 0], :args => [], :control_flow => :next
@@ -96,7 +107,6 @@ module Rubinius
     opcode 49, :send_method, :stack => [1, 1], :args => [:literal], :control_flow => :send
     opcode 50, :send_stack, :stack => [[1,2], 1], :args => [:literal, :count], :control_flow => :send
     opcode 51, :send_stack_with_block, :stack => [[2,2], 1], :args => [:literal, :count], :control_flow => :send
-    CALL_FLAG_CONCAT = 2
     opcode 52, :send_stack_with_splat, :stack => [[3,2], 1], :args => [:literal, :count], :control_flow => :send
     opcode 53, :send_super_stack_with_block, :stack => [[1,2], 1], :args => [:literal, :count], :control_flow => :send
     opcode 54, :send_super_stack_with_splat, :stack => [[2,2], 1], :args => [:literal, :count], :control_flow => :send

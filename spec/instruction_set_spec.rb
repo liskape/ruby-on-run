@@ -1,6 +1,6 @@
-describe Rubinius::InstructionSet do
+describe RubyOnRun::InstructionSet do
   let(:stream) { [20, 1] }
-  let(:instruction_set) { Rubinius::InstructionSet.new }
+  let(:instruction_set) { RubyOnRun::InstructionSet }
   let(:instruction) { instruction_set.parse_instruction(stream) }
 
 
