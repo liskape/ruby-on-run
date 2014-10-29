@@ -129,8 +129,8 @@ class RubyOnRun::Bytecode < Struct.new(:magic, :signature, :version, :stream)
         code.post_args = unmarshal_data
         code.total_args = unmarshal_data
         code.splat = unmarshal_data
-        code.dummy1 = unmarshal_data
-        code.dummy2 = unmarshal_data
+        code.keywords = unmarshal_data
+        code.arity = unmarshal_data
         code.literals = unmarshal_data
         code.lines = unmarshal_data
         code.file = unmarshal_data
