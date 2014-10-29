@@ -1,66 +1,43 @@
-class RubyOnRun::BytecodeParser
-  ##
-  # Create a CompiledFile with +magic+ bytes, +signature+, and +version+.
-  # The optional +stream+ is used to lazy load the body.
+# https://github.com/rubinius/rubinius-compiler/blob/2.0/lib/rubinius/compiler/compiled_file.rb
+require 'ostruct'
 
-  def initialize(magic, signature, version, stream=nil)
-    @magic = magic
-    @signature = signature
-    @version = version
-    @stream = stream
-    @data = nil
-  end
+class RubyOnRun::Bytecode < Struct.new(:magic, :signature, :version, :stream)
 
-  attr_reader :magic
-  attr_reader :signature
-  attr_reader :version
-  attr_reader :stream
+  CompiledCode        = Class.new OpenStruct
+  InstructionSequence = Class.new Array
+  Tuple               = Class.new Array
+
 
   ##
   # From a stream-like object +stream+ load the data in and return a
   # CompiledFile object.
   def self.load(stream)
-    raise IOError, "attempted to load nil stream" unless stream
-
-    magic = stream.lines[0].chomp
-    signature = Integer(stream.lines[1].chomp)
-    version = Integer(stream.lines[2].chomp)
-
-    return new(magic, signature, version, stream.lines[3..-1].join)
+    new stream.lines[0].chomp,
+        Integer(stream.lines[1].chomp),
+        Integer(stream.lines[2].chomp),
+        stream.lines[3..-1].join
   end
 
   ##
   # Return the body object by unmarshaling the data
   def body
-    return @data if @data
-
-    @data = Marshal.new.unmarshal(stream)
+    @data ||= BytecodeParser.new(stream).parse
   end
 
   ##
-  # A class used to convert an CompiledCode to and from
-  # a String.
-  class Marshal
+  # A class used to convert an stream to compiled code
+  class BytecodeParser
 
-    ##
-    # Read all data from +stream+ and invoke unmarshal_data
-    def unmarshal(stream)
-      if stream.kind_of? String
-        str = stream
-      else
-        str = stream.read
-      end
-
+    def initialize(stream)
       @start = 0
-      @size = str.size
-      @data = str.bytes
+      @size = stream.size
+      @data = stream.bytes
+    end
 
+    def parse
       unmarshal_data
     end
 
-    ##
-    # Process a stream object +stream+ as as marshalled data and
-    # return an object representation of it.
     def unmarshal_data
       kind = next_type
       case kind
@@ -116,7 +93,7 @@ class RubyOnRun::BytecodeParser
         return str.split("::").inject(Object) { |a,n| a.const_get(n) }
       when 112 # ?p
         count = next_string.to_i
-        obj = Rubinius::Tuple.new(count)
+        obj = Tuple.new(count)
         i = 0
         while i < count
           obj[i] = unmarshal_data
@@ -125,7 +102,7 @@ class RubyOnRun::BytecodeParser
         return obj
       when 105 # ?i
         count = next_string.to_i
-        seq = Rubinius::InstructionSequence.new(count)
+        seq = InstructionSequence.new(count)
         i = 0
         while i < count
           seq[i] = next_string.to_i
@@ -141,27 +118,28 @@ class RubyOnRun::BytecodeParser
         if version != 1
           raise "Unknown CompiledCode version #{version}"
         end
-        code = Rubinius::CompiledCode.new
-        code.metadata      = unmarshal_data
-        code.primitive     = unmarshal_data
-        code.name          = unmarshal_data
-        code.iseq          = unmarshal_data
-        code.stack_size    = unmarshal_data
-        code.local_count   = unmarshal_data
+        code = CompiledCode.new
+        code.metadata = unmarshal_data
+        code.primitive = unmarshal_data
+        code.name = unmarshal_data
+        code.iseq = unmarshal_data
+        code.stack_size = unmarshal_data
+        code.local_count = unmarshal_data
         code.required_args = unmarshal_data
-        code.post_args     = unmarshal_data
-        code.total_args    = unmarshal_data
-        code.splat         = unmarshal_data
-        code.literals      = unmarshal_data
-        code.lines         = unmarshal_data
-        code.file          = unmarshal_data
-        code.local_names   = unmarshal_data
+        code.post_args = unmarshal_data
+        code.total_args = unmarshal_data
+        code.splat = unmarshal_data
+        code.dummy1 = unmarshal_data
+        code.dummy2 = unmarshal_data
+        code.literals = unmarshal_data
+        code.lines = unmarshal_data
+        code.file = unmarshal_data
+        code.local_names = unmarshal_data
         return code
       else
         raise "Unknown type '#{kind.chr}'"
       end
     end
-
 
     ##
     # Returns the next character in _@data_ as a Fixnum.
@@ -191,30 +169,9 @@ class RubyOnRun::BytecodeParser
     # Returns the next _count_ bytes in _@data_, skipping the
     # trailing "\n" character.
     def next_bytes(count)
-      str = String.from_bytearray @data, @start, count
+      str = @data.slice(@start, count).map(&:chr).join
       @start += count + 1
       str
     end
-
-    ##
-    # A helper function to force strings to ASCII-8BIT encoding. This is
-    # needed because Ruby's encoding system causes the result of a UTF-8
-    # string interpolated in a file (like this one) with a ASCII-8BIT
-    # encoding magic comment to be UTF-8. In other words, given the
-    # following script:
-    #
-    #   # -*- encoding: ascii-8bit -*s
-    #
-    #   x = "❤"
-    #   s = "abc #{x}"
-    #
-    # the string, s, will have UTF-8 encoding, NOT ASCII-8BIT encoding.
-    def b(val)
-      val.force_encoding Encoding::ASCII_8BIT
-    end
   end
 end
-
-
-#TODO methods
-# locate @data[@start..-1].index("\n".bytes.first) + @start

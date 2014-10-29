@@ -1,0 +1,16 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  2
+Literals:    1: :+
+Lines to IP: 1: 0..8
+
+0000:  push_int                   3
+0002:  meta_push_1                
+0003:  send_stack                 :+, 1
+0006:  pop                        
+0007:  push_true                  
+0008:  ret                        
+----------------------------------------
