@@ -3,13 +3,26 @@ class RubyOnRun::VMStackFrame
 
   @method
   @bytecode
+  @bytecode_pointer
+  @literals
   @args
   @locals
   @stack
-  @bytecode_pointer
   @parent
 
   def initialize()
   end  
+  
+  def push(x)
+    stack.push(x)
+  end
+  
+  def pop
+    stack.pop
+  end
+  
+  def top
+    stack.top
+  end
   
 end
