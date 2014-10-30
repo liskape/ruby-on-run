@@ -28,7 +28,6 @@ module RubyOnRun
       end
     end
 
-
     def self.opcode(code, name, options)
       @opcodes[code] = create_instruction_class options.merge(code: code, name: name)
     end
@@ -37,10 +36,10 @@ module RubyOnRun
     # fetch code
     # fetch params if any
     # returns Instraction
-    def self.parse_instruction(stream)
-      opcodes[stream.shift].new.tap do |instruction|
+    def self.parse_instruction(instruction_stream)
+      opcodes[instruction_stream.shift].new.tap do |instruction|
         instruction.args.each do |arg|
-          instruction.send "#{arg}=", stream.shift
+          instruction.send "#{arg}=", instruction_stream.shift
         end
       end
     end
