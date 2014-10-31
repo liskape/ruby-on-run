@@ -1,5 +1,5 @@
 # class representing a frame in VMStack
-class RubyOnRun::VMStackFrame
+class VMStackFrame
 
   @method
   @bytecode
