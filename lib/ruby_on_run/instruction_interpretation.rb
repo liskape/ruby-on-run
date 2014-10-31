@@ -59,7 +59,8 @@ module InstructionInterpretation
       @current_stack_frame.parent.push(top)
       @current_stack_frame = @current_stack_frame.parent
     else
-      # TODO
+	  # TODO: save the return value somewhere 
+      @current_stack_frame = nil	  
     end
   end
   
