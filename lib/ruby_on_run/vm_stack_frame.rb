@@ -11,18 +11,21 @@ class RubyOnRun::VMStackFrame
   @parent
 
   def initialize()
+    @stack = []
   end  
   
   def push(x)
-    stack.push(x)
+    @stack.push(x)
   end
   
   def pop
-    stack.pop
+    @stack.pop
   end
   
   def top
-    stack.top
+    top = @stack.pop
+    @stack.push(top)
+    top
   end
   
 end
