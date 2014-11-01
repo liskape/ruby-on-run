@@ -131,5 +131,129 @@ describe 'InstructionInterpretation' do
       expect(dummy.current_stack_frame).to eq nil
     end
   end
+  
+  describe '#swap_stack' do
+    it 'swaps stack' do
+      dummy.push_false([])	
+	  dummy.push_true([])
+      dummy.swap_stack([])
+      expect(dummy.current_stack_frame.pop).to eq false
+	  expect(dummy.current_stack_frame.top).to eq true
+    end
+  end
+  
+  describe '#dup_top' do
+    it 'dups top' do
+	  dummy.push_false([])	
+	  dummy.push_true([])
+      dummy.dup_top([])
+      expect(dummy.current_stack_frame.pop).to eq true
+	  expect(dummy.current_stack_frame.top).to eq true
+    end
+  end
+  
+  describe '#dup_many' do
+    it 'dups many' do
+	  dummy.push_false([])
+	  dummy.push_false([]) 
+	  dummy.push_false([])	
+	  dummy.push_true([])
+      dummy.dup_many([2])
+      expect(dummy.current_stack_frame.pop).to eq true
+	  expect(dummy.current_stack_frame.pop).to eq false
+	  expect(dummy.current_stack_frame.pop).to eq true
+	  expect(dummy.current_stack_frame.pop).to eq false
+    end
+  end
 
+  describe '#pop' do
+    it 'pops' do
+	  dummy.push_true([])
+      expect(dummy.pop([])).to eq true
+    end
+  end	
+
+  describe '#pop_many' do
+    it 'pops many' do
+	  dummy.push_false([])
+	  dummy.push_true([])
+      expect(dummy.pop([])).to eq true
+	  expect(dummy.pop([])).to eq false
+    end
+  end
+  
+  describe '#rotate' do
+    it 'rotates' do
+	  dummy.push_false([])
+	  dummy.push_true([])
+	  dummy.push_false([])
+	  dummy.push_true([])
+	  dummy.rotate([4])
+      expect(dummy.pop([])).to eq false
+	  expect(dummy.pop([])).to eq true
+	  expect(dummy.pop([])).to eq false
+	  expect(dummy.pop([])).to eq true
+    end
+  end
+	
+  describe '#move_down' do
+    it 'moves down' do
+	  dummy.push_false([])
+	  dummy.push_false([])
+	  dummy.push_false([])
+	  dummy.push_true([])
+	  dummy.move_down([3])
+      expect(dummy.pop([])).to eq false
+	  expect(dummy.pop([])).to eq false
+	  expect(dummy.pop([])).to eq false
+	  expect(dummy.pop([])).to eq true
+    end
+  end
+  
+  describe '#set_local' do
+    it 'sets local' do
+	  dummy.current_stack_frame.locals[:var] = 15
+	  dummy.push_int([22])
+	  dummy.set_local([:var])
+	  expect(dummy.current_stack_frame.locals[:var]).to eq 22
+	end
+	it 'doesnt change top of stack' do
+	  dummy.current_stack_frame.locals[:var] = 15
+	  dummy.push_int([22])
+	  dummy.set_local([:var])
+	  expect(dummy.pop([])).to eq 22
+	end
+  end
+  
+  describe '#push_local' do
+    it 'pushes local' do
+	  dummy.current_stack_frame.locals[:var] = 15
+	  dummy.push_local([:var])
+	  expect(dummy.pop([])).to eq 15
+	end
+  end
+  
+  describe '#push_local_depth' do
+    it 'pushes local to depth' do
+	  parent = VMStackFrame.new
+	  parent.locals[:var] = 15
+	  parent.locals[:a] = 22	  
+	  dummy.current_stack_frame.parent = parent
+	  dummy.push_local_depth([1, 1])
+	  expect(dummy.pop([])).to eq 22
+	end
+  end
+  
+  describe '#set_local_depth' do
+    it 'sets local to depth' do
+	  parent = VMStackFrame.new
+	  parent.locals[:var] = 15
+	  parent.locals[:a] = 22	  
+	  dummy.current_stack_frame.parent = parent
+	  dummy.push_int([44])
+	  dummy.set_local_depth([1, 1])
+	  expect(parent.locals[:a]).to eq 44
+	end
+  end
+  
 end

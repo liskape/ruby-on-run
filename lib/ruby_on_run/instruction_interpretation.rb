@@ -73,14 +73,24 @@ module InstructionInterpretation
   
   def dup_top(args)
     top = @current_stack_frame.top
-    @current_stack_frame.push(top.clone)  
+	if top.class.name == "NilClass" || top.class.name == "FalseClass" || top.class.name == "TrueClass" || top.class.name == "Fixnum"
+      @current_stack_frame.push(top) 
+    else
+	  @current_stack_frame.push(top.clone)    
+	end
   end
   
   def dup_many(args)
     top_x = []
-    args[0].times top_x.push(@current_stack_frame.pop)  
+    args[0].times { top_x.push(@current_stack_frame.pop) }  
     top_x.reverse!
-    top_x.each { |x| @current_stack_frame.push(x.clone) }
+    top_x.each do |x|
+      if x.class.name == "NilClass" || x.class.name == "FalseClass" || x.class.name == "TrueClass" || x.class.name == "Fixnum"	 
+	    @current_stack_frame.push(x)
+	  else
+	    @current_stack_frame.push(x.clone)
+      end		
+    end
     top_x.each { |x| @current_stack_frame.push(x) }
   end
   
@@ -94,33 +104,39 @@ module InstructionInterpretation
   
   def rotate(args)
     top_x = []
-    args[0].times top_x.push(@current_stack_frame.pop)
+    args[0].times { top_x.push(@current_stack_frame.pop) }
     top_x.each { |x| @current_stack_frame.push(x) } 
   end
   
   def move_down(args)
     top = @current_stack_frame.pop
     top_x = []
-    args[0].times top_x.push(@current_stack_frame.pop)
+    args[0].times { top_x.push(@current_stack_frame.pop) }
     @current_stack_frame.push(top)
     top_x.reverse!
     top_x.each { |x| @current_stack_frame.push(x) }   
   end
   
   def set_local(args)
-    
+    @current_stack_frame.locals[args[0]] = @current_stack_frame.top
   end 
   
   def push_local(args)
-    
+    @current_stack_frame.push(@current_stack_frame.locals[args[0]])
   end 
   
   def push_local_depth(args)
-    
+    frame = @current_stack_frame
+	args[0].times { frame = frame.parent }
+	keys = frame.locals.keys
+	@current_stack_frame.push(frame.locals[keys[args[1]]])
   end 
 
   def set_local_depth(args)
-  
+    frame = @current_stack_frame
+	args[0].times { frame = frame.parent }
+	key = frame.locals.keys[args[1]]
+	frame.locals[key] = @current_stack_frame.top
   end
   
   def passed_arg(args)
