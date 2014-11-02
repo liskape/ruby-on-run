@@ -1,5 +1,7 @@
 module InstructionInterpretation
 
+  attr_accessor :return_value
+
   def method_missing(meth, *args, &block)
     raise "It is not defined how to interpret #{meth} with args #{args}"
   end
@@ -59,7 +61,7 @@ module InstructionInterpretation
       @current_stack_frame.parent.push(top)
       @current_stack_frame = @current_stack_frame.parent
     else
-	  # TODO: save the return value somewhere 
+	  @return_value = top
       @current_stack_frame = nil	  
     end
   end
@@ -189,7 +191,7 @@ module InstructionInterpretation
 
   def make_array(args)
     a = []
-    args[0].times a.push(@current_stack_frame.pop)
+    args[0].times { a.push(@current_stack_frame.pop) }
     a.reverse!
     @current_stack_frame.push(a)
   end
@@ -204,4 +206,20 @@ module InstructionInterpretation
     @current_stack_frame.push(a)
     @current_stack_frame.push(first)  
   end 
+  
+  def push_const(args)
+    @current_stack_frame.push(@current_stack_frame.constants[args[0]])
+  end
+  
+  def set_const(args)
+    @current_stack_frame.constants[args[0]] = @current_stack_frame.top
+  end
+  
+  def set_const_at(args)
+    top = @current_stack_frame.pop
+	mod = @current_stack_frame.pop
+	mod.send((args[0].to_s + "=").to_sym, top)
+	@current_stack_frame.push(top)
+  end
+  
 end

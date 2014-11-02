@@ -17,7 +17,7 @@ class RubyOnRun::VirtualMachine
     # repeat
       # instruction = RubyOnRun::InstructionSet.parse_instruction
       # send instruction.name, instruction.arg_map <- this will call methods defined bellow
-    # return top of stack or whatever
+	@return_value
   end
   
 end

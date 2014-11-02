@@ -12,6 +12,10 @@ class Dummy
   end
 end
 
+class DummyModule
+  attr_accessor :alfa
+end
+
 describe 'InstructionInterpretation' do
 
   subject(:dummy) { Dummy.new(VMStackFrame.new) }
@@ -129,6 +133,7 @@ describe 'InstructionInterpretation' do
 	  dummy.push_true([])
       dummy.ret([])
       expect(dummy.current_stack_frame).to eq nil
+	  expect(dummy.return_value).to eq true
     end
   end
   
@@ -253,6 +258,89 @@ describe 'InstructionInterpretation' do
 	  dummy.push_int([44])
 	  dummy.set_local_depth([1, 1])
 	  expect(parent.locals[:a]).to eq 44
+	end
+  end
+  
+  describe '#make_array' do
+    it 'makes array' do
+	  dummy.push_int([1])
+	  dummy.push_int([2])
+	  dummy.push_int([3])
+	  dummy.make_array([3])
+	  expect(dummy.current_stack_frame.top).to eq [1, 2, 3]
+	end
+  end
+  
+  describe '#cast_array' do
+    it 'casts array' do
+	  fail
+	end
+  end
+  
+  describe '#shift_array' do
+    it 'shifts array' do
+	  dummy.push_int([1])
+	  dummy.push_int([2])
+	  dummy.push_int([3])
+	  dummy.make_array([3])
+	  dummy.shift_array([])
+	  expect(dummy.current_stack_frame.pop).to eq 1
+	  expect(dummy.current_stack_frame.top).to eq [2, 3]
+	end
+  end
+  
+  describe '#set_ivar' do
+    it 'sets ivar' do
+	  fail
+	end
+  end
+  
+  describe '#push_ivar' do
+    it 'pushes ivar' do
+	  fail
+	end
+  end
+  
+  describe '#push_const' do
+    it 'pushes const' do
+	  dummy.current_stack_frame.constants[:var] = 15
+	  dummy.push_const([:var])
+	  expect(dummy.pop([])).to eq 15
+	end
+	it 'raises exception' do
+	  dummy.push_const([:xxx])
+	  expect(dummy.pop([]).class.name).to eq "NameError"
+	end
+  end
+  
+  describe '#set_const' do
+    it 'sets const' do
+	  dummy.current_stack_frame.constants[:var] = 15
+	  dummy.push_int([22])
+	  dummy.set_const([:var])
+	  expect(dummy.current_stack_frame.constants[:var]).to eq 22
+	end
+	it 'doesnt change top of stack' do
+	  dummy.current_stack_frame.constants[:var] = 15
+	  dummy.push_int([22])
+	  dummy.set_const([:var])
+	  expect(dummy.pop([])).to eq 22
+	end
+  end
+  
+  describe '#set_const_at' do
+    it 'sets const at' do
+	  mod = DummyModule.new
+	  dummy.current_stack_frame.push(mod)
+	  dummy.push_int([22])
+	  dummy.set_const_at([:alfa])
+	  expect(mod.alfa).to eq 22
+	end
+	it 'doesnt change top of stack' do
+	  dummy.current_stack_frame.push(DummyModule.new)
+	  dummy.push_int([22])
+	  dummy.set_const_at([:alfa])
+	  expect(dummy.pop([])).to eq 22
 	end
   end
   

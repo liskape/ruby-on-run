@@ -1,7 +1,7 @@
 # class representing a frame in VMStack
 class VMStackFrame
 
-  attr_accessor :literals, :bytecode_pointer, :parent, :locals
+  attr_accessor :literals, :bytecode_pointer, :parent, :locals, :constants
 
   @method
   @bytecode
@@ -13,6 +13,7 @@ class VMStackFrame
 	@literals = []
 	@bytecode_pointer = 0
 	@locals = Hash.new
+	@constants = Hash.new
   end  
   
   def push(x)
