@@ -1,12 +1,9 @@
 # class representing a frame in VMStack
 class VMStackFrame
 
-  attr_accessor :literals, :bytecode_pointer, :parent, :locals, :constants
-
-  @method
-  @bytecode
-  @args  
-  @stack
+  attr_accessor :literals, :bytecode_pointer, :parent, :locals, :constants, :instance, :method, :bytecode, :args 
+ 
+  @stack  
 
   def initialize()
     @stack = []

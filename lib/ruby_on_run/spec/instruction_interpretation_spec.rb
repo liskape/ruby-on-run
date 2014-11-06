@@ -291,13 +291,20 @@ describe 'InstructionInterpretation' do
   
   describe '#set_ivar' do
     it 'sets ivar' do
-	  fail
+	  dummy.current_stack_frame.instance = DummyModule.new
+	  dummy.push_int([22])
+	  dummy.set_ivar([:alfa])
+	  expect(dummy.current_stack_frame.instance.alfa).to eq 22
 	end
   end
   
   describe '#push_ivar' do
     it 'pushes ivar' do
-	  fail
+	  mod = DummyModule.new
+	  mod.alfa = 22
+	  dummy.current_stack_frame.instance = mod 
+	  dummy.push_ivar([:alfa])
+	  expect(dummy.pop([])).to eq 22
 	end
   end
   
@@ -341,6 +348,22 @@ describe 'InstructionInterpretation' do
 	  dummy.push_int([22])
 	  dummy.set_const_at([:alfa])
 	  expect(dummy.pop([])).to eq 22
+	end
+  end
+  
+  describe '#find_const' do
+    it 'finds const' do
+	  mod = DummyModule.new
+	  mod.alfa = 15
+	  dummy.current_stack_frame.push(mod)
+	  dummy.find_const([:alfa])
+	  expect(dummy.pop([])).to eq 15
+	end
+	it 'raises exception' do
+	  mod = DummyModule.new
+	  dummy.current_stack_frame.push(mod)
+	  dummy.find_const([:XXX])
+	  expect(dummy.pop([]).class.name).to eq "NameError"
 	end
   end
   

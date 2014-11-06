@@ -205,10 +205,23 @@ module InstructionInterpretation
     first = a.shift
     @current_stack_frame.push(a)
     @current_stack_frame.push(first)  
-  end 
+  end
+
+  def set_ivar(args)
+    top = @current_stack_frame.top
+	@current_stack_frame.instance.send(args[0].to_s + '=', top)
+  end
+
+  def push_ivar(args)
+    @current_stack_frame.push(@current_stack_frame.instance.send(args[0]))
+  end  
   
   def push_const(args)
-    @current_stack_frame.push(@current_stack_frame.constants[args[0]])
+    if @current_stack_frame.constants.keys.include?(args[0])
+      @current_stack_frame.push(@current_stack_frame.constants[args[0]])
+	else
+	  # TODO push NameError 
+	end
   end
   
   def set_const(args)
@@ -218,8 +231,19 @@ module InstructionInterpretation
   def set_const_at(args)
     top = @current_stack_frame.pop
 	mod = @current_stack_frame.pop
-	mod.send((args[0].to_s + "=").to_sym, top)
+	mod.send(args[0].to_s + "=", top)
 	@current_stack_frame.push(top)
   end
+  
+  def find_const(args)
+    mod = @current_stack_frame.pop
+	if mod.methods.include?(args[0])
+	  @current_stack_frame.push(mod.send(args[0]))  
+	else
+	  # TODO push NameError 
+	end
+  end
+  
+  
   
 end
