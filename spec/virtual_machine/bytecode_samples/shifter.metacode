@@ -1,0 +1,119 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      1: s
+Stack size:  6
+Literals:    9: :Shifter, :open_class, <compiled code>, :call_under, :new, :allocate, :initialize, :call, :puts
+Lines to IP: 1: 0..16, 12: 17..54, 14: 55..65, 15: 66..76, 16: 77..89
+
+0000:  push_rubinius              
+0001:  push_literal               :Shifter
+0003:  push_nil                   
+0004:  push_scope                 
+0005:  send_stack                 :open_class, 3
+0008:  create_block               #<Rubinius::CompiledCode Shifter file=shifter.rb>
+0010:  swap_stack                 
+0011:  push_scope                 
+0012:  push_true                  
+0013:  send_stack                 :call_under, 3
+0016:  pop                        
+0017:  push_const_fast            :Shifter
+0019:  dup_top                    
+0020:  check_serial               :new, 47
+0023:  goto_if_false              0043:
+0025:  allow_private              
+0026:  send_stack                 :allocate, 0
+0029:  dup_top                    
+0030:  meta_push_1                
+0031:  meta_push_2                
+0032:  push_int                   3
+0034:  make_array                 3
+0036:  allow_private              
+0037:  send_stack                 :initialize, 1
+0040:  pop                        
+0041:  goto                       0052:
+0043:  meta_push_1                
+0044:  meta_push_2                
+0045:  push_int                   3
+0047:  make_array                 3
+0049:  send_stack                 :new, 1
+0052:  set_local                  0    # s
+0054:  pop                        
+0055:  push_self                  
+0056:  push_local                 0    # s
+0058:  send_stack                 :call, 0
+0061:  allow_private              
+0062:  send_stack                 :puts, 1
+0065:  pop                        
+0066:  push_self                  
+0067:  push_local                 0    # s
+0069:  send_stack                 :call, 0
+0072:  allow_private              
+0073:  send_stack                 :puts, 1
+0076:  pop                        
+0077:  push_self                  
+0078:  push_local                 0    # s
+0080:  send_stack                 :call, 0
+0083:  allow_private              
+0084:  send_stack                 :puts, 1
+0087:  pop                        
+0088:  push_true                  
+0089:  ret                        
+----------------------------------------
+
+=============== :Shifter ===============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  5
+Literals:    6: :initialize, <compiled code>, :method_visibility, :add_defn_method, :call, <compiled code>
+Lines to IP: 3: 2..15, 7: 16..29
+
+0000:  push_self                  
+0001:  add_scope                  
+0002:  push_rubinius              
+0003:  push_literal               :initialize
+0005:  push_literal               #<Rubinius::CompiledCode initialize file=shifter.rb>
+0007:  push_scope                 
+0008:  push_variables             
+0009:  send_stack                 :method_visibility, 0
+0012:  send_stack                 :add_defn_method, 4
+0015:  pop                        
+0016:  push_rubinius              
+0017:  push_literal               :call
+0019:  push_literal               #<Rubinius::CompiledCode call file=shifter.rb>
+0021:  push_scope                 
+0022:  push_variables             
+0023:  send_stack                 :method_visibility, 0
+0026:  send_stack                 :add_defn_method, 4
+0029:  ret                        
+----------------------------------------
+
+============= :initialize ==============
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      1: wrapped
+Stack size:  2
+Literals:    1: :@wrapped
+Line:        3
+Lines to IP: 4: 0..4
+
+0000:  push_local                 0    # wrapped
+0002:  set_ivar                   :@wrapped
+0004:  ret                        
+----------------------------------------
+
+================ :call =================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    2: :@wrapped, :shift
+Line:        7
+Lines to IP: 8: 0..5
+
+0000:  push_ivar                  :@wrapped
+0002:  send_stack                 :shift, 0
+0005:  ret                        
+----------------------------------------

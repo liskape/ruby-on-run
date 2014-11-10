@@ -1,0 +1,177 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      1: b
+Stack size:  5
+Literals:    13: :Buffer, :Array, :open_class, <compiled code>, :call_under, :new, :allocate, :initialize, :<<, :first, :puts, :second, :last
+Lines to IP: 1: 0..17, 24: 18..43, 25: 44..64, 26: 65..75, 27: 76..86, 28: 87..99
+
+0000:  push_rubinius              
+0001:  push_literal               :Buffer
+0003:  push_const_fast            :Array
+0005:  push_scope                 
+0006:  send_stack                 :open_class, 3
+0009:  create_block               #<Rubinius::CompiledCode Buffer file=buffer.rb>
+0011:  swap_stack                 
+0012:  push_scope                 
+0013:  push_true                  
+0014:  send_stack                 :call_under, 3
+0017:  pop                        
+0018:  push_const_fast            :Buffer
+0020:  dup_top                    
+0021:  check_serial               :new, 47
+0024:  goto_if_false              0038:
+0026:  allow_private              
+0027:  send_stack                 :allocate, 0
+0030:  dup_top                    
+0031:  allow_private              
+0032:  send_stack                 :initialize, 0
+0035:  pop                        
+0036:  goto                       0041:
+0038:  send_stack                 :new, 0
+0041:  set_local                  0    # b
+0043:  pop                        
+0044:  push_local                 0    # b
+0046:  meta_push_1                
+0047:  send_stack                 :<<, 1
+0050:  meta_push_2                
+0051:  send_stack                 :<<, 1
+0054:  push_int                   3
+0056:  send_stack                 :<<, 1
+0059:  push_int                   4
+0061:  send_stack                 :<<, 1
+0064:  pop                        
+0065:  push_self                  
+0066:  push_local                 0    # b
+0068:  send_stack                 :first, 0
+0071:  allow_private              
+0072:  send_stack                 :puts, 1
+0075:  pop                        
+0076:  push_self                  
+0077:  push_local                 0    # b
+0079:  send_stack                 :second, 0
+0082:  allow_private              
+0083:  send_stack                 :puts, 1
+0086:  pop                        
+0087:  push_self                  
+0088:  push_local                 0    # b
+0090:  send_stack                 :last, 0
+0093:  allow_private              
+0094:  send_stack                 :puts, 1
+0097:  pop                        
+0098:  push_true                  
+0099:  ret                        
+----------------------------------------
+
+=============== :Buffer ================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  5
+Literals:    11: :first, <compiled code>, :method_visibility, :add_defn_method, :last, <compiled code>, :second, <compiled code>, :private, :get_element_at, <compiled code>
+Lines to IP: 3: 2..15, 7: 16..29, 11: 30..43, 15: 44..47, 17: 48..61
+
+0000:  push_self                  
+0001:  add_scope                  
+0002:  push_rubinius              
+0003:  push_literal               :first
+0005:  push_literal               #<Rubinius::CompiledCode first file=buffer.rb>
+0007:  push_scope                 
+0008:  push_variables             
+0009:  send_stack                 :method_visibility, 0
+0012:  send_stack                 :add_defn_method, 4
+0015:  pop                        
+0016:  push_rubinius              
+0017:  push_literal               :last
+0019:  push_literal               #<Rubinius::CompiledCode last file=buffer.rb>
+0021:  push_scope                 
+0022:  push_variables             
+0023:  send_stack                 :method_visibility, 0
+0026:  send_stack                 :add_defn_method, 4
+0029:  pop                        
+0030:  push_rubinius              
+0031:  push_literal               :second
+0033:  push_literal               #<Rubinius::CompiledCode second file=buffer.rb>
+0035:  push_scope                 
+0036:  push_variables             
+0037:  send_stack                 :method_visibility, 0
+0040:  send_stack                 :add_defn_method, 4
+0043:  pop                        
+0044:  push_self                  
+0045:  send_method                :private
+0047:  pop                        
+0048:  push_rubinius              
+0049:  push_literal               :get_element_at
+0051:  push_literal               #<Rubinius::CompiledCode get_element_at file=buffer.rb>
+0053:  push_scope                 
+0054:  push_variables             
+0055:  send_stack                 :method_visibility, 0
+0058:  send_stack                 :add_defn_method, 4
+0061:  ret                        
+----------------------------------------
+
+================ :first ================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    1: :first
+Line:        3
+Lines to IP: 4: 0..3
+
+0000:  push_block                 
+0001:  zsuper                     :first
+0003:  ret                        
+----------------------------------------
+
+================ :last =================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  3
+Literals:    3: :size, :-, :[]
+Line:        7
+Lines to IP: 8: 0..12
+
+0000:  push_self                  
+0001:  push_self                  
+0002:  send_method                :size
+0004:  meta_push_1                
+0005:  send_stack                 :-, 1
+0008:  allow_private              
+0009:  send_stack                 :[], 1
+0012:  ret                        
+----------------------------------------
+
+=============== :second ================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  2
+Literals:    1: :get_element_at
+Line:        11
+Lines to IP: 12: 0..6
+
+0000:  push_self                  
+0001:  meta_push_2                
+0002:  allow_private              
+0003:  send_stack                 :get_element_at, 1
+0006:  ret                        
+----------------------------------------
+
+=========== :get_element_at ============
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      1: position
+Stack size:  3
+Literals:    1: :[]
+Line:        17
+Lines to IP: 18: 0..7
+
+0000:  push_self                  
+0001:  push_local                 0    # position
+0003:  allow_private              
+0004:  send_stack                 :[], 1
+0007:  ret                        
+----------------------------------------

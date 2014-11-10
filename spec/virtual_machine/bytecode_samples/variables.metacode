@@ -1,0 +1,33 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      3: a, b, c
+Stack size:  6
+Literals:    3: :+, :*, :puts
+Lines to IP: 1: 0..4, 2: 5..9, 3: 10..14, 4: 15..19, 5: 20..39
+
+0000:  push_int                   10
+0002:  set_local                  0    # a
+0004:  pop                        
+0005:  push_int                   20
+0007:  set_local                  1    # b
+0009:  pop                        
+0010:  push_int                   30
+0012:  set_local                  2    # c
+0014:  pop                        
+0015:  push_local                 1    # b
+0017:  set_local                  0    # a
+0019:  pop                        
+0020:  push_self                  
+0021:  push_local                 0    # a
+0023:  push_local                 2    # c
+0025:  send_stack                 :+, 1
+0028:  push_local                 1    # b
+0030:  send_stack                 :*, 1
+0033:  allow_private              
+0034:  send_stack                 :puts, 1
+0037:  pop                        
+0038:  push_true                  
+0039:  ret                        
+----------------------------------------

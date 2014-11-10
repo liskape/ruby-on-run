@@ -127,11 +127,12 @@ module InstructionInterpretation
   end
   
   def set_local(args)
-    @current_stack_frame.locals[args[0]] = @current_stack_frame.top
+    @current_stack_frame.
+      binding[@current_stack_frame.locals[args[:local]]] = @current_stack_frame.top
   end 
   
   def push_local(args)
-    @current_stack_frame.push(@current_stack_frame.locals[args[0]])
+    @current_stack_frame.push @current_stack_frame.locals[args[:local]]
   end 
   
   def push_local_depth(args)
@@ -263,6 +264,8 @@ module InstructionInterpretation
     args[:count].times { parameters <<  @current_stack_frame.pop}
     receiver = @current_stack_frame.pop
     message  = @current_stack_frame.literals[args[:literal]]
+    receiver = resolve_receiver(receiver)
+    parameters = resolve_parameters(parameters)
     @current_stack_frame.push receiver.send message, *parameters
   end
 
@@ -270,6 +273,20 @@ module InstructionInterpretation
   end
 
   def allow_private(args)
+  end
+
+  private
+
+  def resolve_parameters(parameters)
+    parameters.map{ |p| resolve_receiver(p) }
+  end
+
+  def resolve_receiver(receiver)
+    if receiver.is_a? Symbol
+      resolve_receiver(@current_stack_frame.binding[receiver])
+    else
+      receiver
+    end
   end
   
 end

@@ -1,7 +1,7 @@
 # class representing a frame in VMStack
 class RubyOnRun::StackFrame
 
-  attr_accessor :literals, :bytecode_pointer, :parent, :locals, :constants, :instance, :method, :bytecode, :args, :self 
+  attr_accessor :literals, :bytecode_pointer, :parent, :locals, :constants, :instance, :method, :bytecode, :args, :self, :binding 
 
 
   def initialize(compiled_code)
@@ -12,7 +12,8 @@ class RubyOnRun::StackFrame
     @bytecode = compiled_code.iseq
     @self = MainContext.new
 
-    # @locals = compiled_code.locals
+    @locals = compiled_code.local_names
+    @binding = {}
   end
 
   def next_instruction
@@ -41,9 +42,9 @@ class RubyOnRun::StackFrame
 
   class MainContext
 
-    def method_missing(meth, *args, &block)
-      raise "Method #{meth} is not implemented yet"
-    end
+    # def send(meth, *args, &block)
+    #   raise "Method #{meth} is not implemented yet"
+    # end
 
   end
 

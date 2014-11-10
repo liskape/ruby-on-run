@@ -1,0 +1,199 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      1: rec
+Stack size:  8
+Literals:    10: :HighlyRecursiveClasss, :open_class, <compiled code>, :call_under, :new, :allocate, :initialize, :sum, :puts, :even_sum
+Lines to IP: 1: 0..16, 25: 17..42, 26: 43..63, 27: 64..86
+
+0000:  push_rubinius              
+0001:  push_literal               :HighlyRecursiveClasss
+0003:  push_nil                   
+0004:  push_scope                 
+0005:  send_stack                 :open_class, 3
+0008:  create_block               #<Rubinius::CompiledCode HighlyRecursiveClasss file=highly_recursive_class.rb>
+0010:  swap_stack                 
+0011:  push_scope                 
+0012:  push_true                  
+0013:  send_stack                 :call_under, 3
+0016:  pop                        
+0017:  push_const_fast            :HighlyRecursiveClasss
+0019:  dup_top                    
+0020:  check_serial               :new, 47
+0023:  goto_if_false              0037:
+0025:  allow_private              
+0026:  send_stack                 :allocate, 0
+0029:  dup_top                    
+0030:  allow_private              
+0031:  send_stack                 :initialize, 0
+0034:  pop                        
+0035:  goto                       0040:
+0037:  send_stack                 :new, 0
+0040:  set_local                  0    # rec
+0042:  pop                        
+0043:  push_self                  
+0044:  push_local                 0    # rec
+0046:  meta_push_1                
+0047:  meta_push_2                
+0048:  push_int                   3
+0050:  push_int                   4
+0052:  push_int                   5
+0054:  make_array                 5
+0056:  send_stack                 :sum, 1
+0059:  allow_private              
+0060:  send_stack                 :puts, 1
+0063:  pop                        
+0064:  push_self                  
+0065:  push_local                 0    # rec
+0067:  meta_push_1                
+0068:  meta_push_2                
+0069:  push_int                   3
+0071:  push_int                   4
+0073:  push_int                   5
+0075:  make_array                 5
+0077:  send_stack                 :even_sum, 1
+0080:  allow_private              
+0081:  send_stack                 :puts, 1
+0084:  pop                        
+0085:  push_true                  
+0086:  ret                        
+----------------------------------------
+
+======== :HighlyRecursiveClasss ========
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  5
+Literals:    8: :sum, <compiled code>, :method_visibility, :add_defn_method, :even_sum, <compiled code>, :do_nothing, <compiled code>
+Lines to IP: 3: 2..15, 11: 16..29, 19: 30..43
+
+0000:  push_self                  
+0001:  add_scope                  
+0002:  push_rubinius              
+0003:  push_literal               :sum
+0005:  push_literal               #<Rubinius::CompiledCode sum file=highly_recursive_class.rb>
+0007:  push_scope                 
+0008:  push_variables             
+0009:  send_stack                 :method_visibility, 0
+0012:  send_stack                 :add_defn_method, 4
+0015:  pop                        
+0016:  push_rubinius              
+0017:  push_literal               :even_sum
+0019:  push_literal               #<Rubinius::CompiledCode even_sum file=highly_recursive_class.rb>
+0021:  push_scope                 
+0022:  push_variables             
+0023:  send_stack                 :method_visibility, 0
+0026:  send_stack                 :add_defn_method, 4
+0029:  pop                        
+0030:  push_rubinius              
+0031:  push_literal               :do_nothing
+0033:  push_literal               #<Rubinius::CompiledCode do_nothing file=highly_recursive_class.rb>
+0035:  push_scope                 
+0036:  push_variables             
+0037:  send_stack                 :method_visibility, 0
+0040:  send_stack                 :add_defn_method, 4
+0043:  ret                        
+----------------------------------------
+
+================= :sum =================
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      1: ary
+Stack size:  8
+Literals:    8: :empty?, :first, :Range, :allocate, :initialize, :[], :sum, :+
+Line:        3
+Lines to IP: 4: 0..6, 5: 7..9, 7: 10..42, 0: 43..43
+
+0000:  push_local                 0    # ary
+0002:  send_stack                 :empty?, 0
+0005:  goto_if_false              0010:
+0007:  meta_push_0                
+0008:  goto                       0043:
+0010:  push_local                 0    # ary
+0012:  send_stack                 :first, 0
+0015:  push_self                  
+0016:  push_local                 0    # ary
+0018:  push_cpath_top             
+0019:  find_const_fast            :Range
+0021:  allow_private              
+0022:  send_stack                 :allocate, 0
+0025:  dup_top                    
+0026:  meta_push_1                
+0027:  meta_push_neg_1            
+0028:  allow_private              
+0029:  send_stack                 :initialize, 2
+0032:  pop                        
+0033:  send_stack                 :[], 1
+0036:  allow_private              
+0037:  send_stack                 :sum, 1
+0040:  send_stack                 :+, 1
+0043:  ret                        
+----------------------------------------
+
+============== :even_sum ===============
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      1: ary
+Stack size:  8
+Literals:    9: :nil?, :empty?, :first, :Range, :allocate, :initialize, :[], :do_nothing, :+
+Line:        11
+Lines to IP: 12: 0..15, 13: 16..18, 15: 19..51, 0: 52..52
+
+0000:  push_local                 0    # ary
+0002:  send_stack                 :nil?, 0
+0005:  dup_top                    
+0006:  goto_if_true               0014:
+0008:  pop                        
+0009:  push_local                 0    # ary
+0011:  send_stack                 :empty?, 0
+0014:  goto_if_false              0019:
+0016:  meta_push_0                
+0017:  goto                       0052:
+0019:  push_local                 0    # ary
+0021:  send_stack                 :first, 0
+0024:  push_self                  
+0025:  push_local                 0    # ary
+0027:  push_cpath_top             
+0028:  find_const_fast            :Range
+0030:  allow_private              
+0031:  send_stack                 :allocate, 0
+0034:  dup_top                    
+0035:  meta_push_1                
+0036:  meta_push_neg_1            
+0037:  allow_private              
+0038:  send_stack                 :initialize, 2
+0041:  pop                        
+0042:  send_stack                 :[], 1
+0045:  allow_private              
+0046:  send_stack                 :do_nothing, 1
+0049:  send_stack                 :+, 1
+0052:  ret                        
+----------------------------------------
+
+============= :do_nothing ==============
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      1: ary
+Stack size:  7
+Literals:    5: :Range, :allocate, :initialize, :[], :even_sum
+Line:        19
+Lines to IP: 20: 0..25
+
+0000:  push_self                  
+0001:  push_local                 0    # ary
+0003:  push_cpath_top             
+0004:  find_const_fast            :Range
+0006:  allow_private              
+0007:  send_stack                 :allocate, 0
+0010:  dup_top                    
+0011:  meta_push_1                
+0012:  meta_push_neg_1            
+0013:  allow_private              
+0014:  send_stack                 :initialize, 2
+0017:  pop                        
+0018:  send_stack                 :[], 1
+0021:  allow_private              
+0022:  send_stack                 :even_sum, 1
+0025:  ret                        
+----------------------------------------

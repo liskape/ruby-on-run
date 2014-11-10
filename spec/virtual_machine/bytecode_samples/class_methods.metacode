@@ -1,0 +1,122 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  4
+Literals:    8: :Adder, :open_class, <compiled code>, :call_under, :add_two, :puts, :add_three, :add_four
+Lines to IP: 1: 0..16, 18: 17..29, 19: 30..42, 20: 43..57
+
+0000:  push_rubinius              
+0001:  push_literal               :Adder
+0003:  push_nil                   
+0004:  push_scope                 
+0005:  send_stack                 :open_class, 3
+0008:  create_block               #<Rubinius::CompiledCode Adder file=class_methods.rb>
+0010:  swap_stack                 
+0011:  push_scope                 
+0012:  push_true                  
+0013:  send_stack                 :call_under, 3
+0016:  pop                        
+0017:  push_self                  
+0018:  push_const_fast            :Adder
+0020:  push_int                   10
+0022:  send_stack                 :add_two, 1
+0025:  allow_private              
+0026:  send_stack                 :puts, 1
+0029:  pop                        
+0030:  push_self                  
+0031:  push_const_fast            :Adder
+0033:  push_int                   10
+0035:  send_stack                 :add_three, 1
+0038:  allow_private              
+0039:  send_stack                 :puts, 1
+0042:  pop                        
+0043:  push_self                  
+0044:  push_const_fast            :Adder
+0046:  push_int                   10
+0048:  send_stack                 :add_four, 1
+0051:  allow_private              
+0052:  send_stack                 :puts, 1
+0055:  pop                        
+0056:  push_true                  
+0057:  ret                        
+----------------------------------------
+
+================ :Adder ================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  5
+Literals:    7: :add_two, <compiled code>, :attach_method, :add_three, <compiled code>, :add_four, <compiled code>
+Lines to IP: 3: 2..12, 7: 13..23, 11: 24..34
+
+0000:  push_self                  
+0001:  add_scope                  
+0002:  push_rubinius              
+0003:  push_literal               :add_two
+0005:  push_literal               #<Rubinius::CompiledCode add_two file=class_methods.rb>
+0007:  push_scope                 
+0008:  push_self                  
+0009:  send_stack                 :attach_method, 4
+0012:  pop                        
+0013:  push_rubinius              
+0014:  push_literal               :add_three
+0016:  push_literal               #<Rubinius::CompiledCode add_three file=class_methods.rb>
+0018:  push_scope                 
+0019:  push_self                  
+0020:  send_stack                 :attach_method, 4
+0023:  pop                        
+0024:  push_rubinius              
+0025:  push_literal               :add_four
+0027:  push_literal               #<Rubinius::CompiledCode add_four file=class_methods.rb>
+0029:  push_scope                 
+0030:  push_self                  
+0031:  send_stack                 :attach_method, 4
+0034:  ret                        
+----------------------------------------
+
+=============== :add_two ===============
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      1: arg
+Stack size:  3
+Literals:    1: :+
+Line:        3
+Lines to IP: 4: 0..6
+
+0000:  push_local                 0    # arg
+0002:  meta_push_2                
+0003:  send_stack                 :+, 1
+0006:  ret                        
+----------------------------------------
+
+============== :add_three ==============
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      1: arg
+Stack size:  3
+Literals:    1: :+
+Line:        7
+Lines to IP: 8: 0..7
+
+0000:  push_local                 0    # arg
+0002:  push_int                   3
+0004:  send_stack                 :+, 1
+0007:  ret                        
+----------------------------------------
+
+============== :add_four ===============
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      1: arg
+Stack size:  3
+Literals:    1: :+
+Line:        11
+Lines to IP: 12: 0..7
+
+0000:  push_local                 0    # arg
+0002:  push_int                   4
+0004:  send_stack                 :+, 1
+0007:  ret                        
+----------------------------------------
