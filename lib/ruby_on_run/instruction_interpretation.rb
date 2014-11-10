@@ -23,46 +23,53 @@ module InstructionInterpretation
   end
   
   def push_int(args)
-    @current_stack_frame.push(args[0])
+    @current_stack_frame.push args[:number]
   end
   
   def push_self(args)
-    # TODO
+    @current_stack_frame.push @current_stack_frame.self
   end
   
   def set_literal(args)
     @current_stack_frame.pop
-    literal = @current_stack_frame.literals[args[0]]
+    literal = @current_stack_frame.literals[args[:literal]]
     @current_stack_frame.push(literal)
   end
   
   def push_literal(args)
-    literal = @current_stack_frame.literals[args[0]]
+    literal = @current_stack_frame.literals[args[:literal]]
     @current_stack_frame.push(literal)
   end
   
   def goto(args)
-    @current_stack_frame.bytecode_pointer = args[0]
+    @current_stack_frame.bytecode_pointer = args[:location]
+    @jump = true
   end
   
   def goto_if_false(args)
     top = @current_stack_frame.pop
-    @current_stack_frame.bytecode_pointer = args[0] if top.nil? || !top
+    if top.nil? || !top
+      @current_stack_frame.bytecode_pointer = args[:location]
+      @jump = true
+    end
   end
   
   def goto_if_true(args)
     top = @current_stack_frame.pop
-    @current_stack_frame.bytecode_pointer = args[0] if !top.nil? && top
+    if !top.nil? && top
+      @current_stack_frame.bytecode_pointer = args[:location]
+      @jump = true
+    end
   end
   
   def ret(args)
     top = @current_stack_frame.pop
-    if !@current_stack_frame.parent.nil?  
+    if @current_stack_frame.parent.nil?
+      @return_value = top
+      @current_stack_frame = nil
+    else
       @current_stack_frame.parent.push(top)
       @current_stack_frame = @current_stack_frame.parent
-    else
-	  @return_value = top
-      @current_stack_frame = nil	  
     end
   end
   
@@ -129,16 +136,16 @@ module InstructionInterpretation
   
   def push_local_depth(args)
     frame = @current_stack_frame
-	args[0].times { frame = frame.parent }
-	keys = frame.locals.keys
-	@current_stack_frame.push(frame.locals[keys[args[1]]])
+    args[0].times { frame = frame.parent }
+    keys = frame.locals.keys
+    @current_stack_frame.push(frame.locals[keys[args[1]]])
   end 
 
   def set_local_depth(args)
     frame = @current_stack_frame
-	args[0].times { frame = frame.parent }
-	key = frame.locals.keys[args[1]]
-	frame.locals[key] = @current_stack_frame.top
+    args[0].times { frame = frame.parent }
+    key = frame.locals.keys[args[1]]
+    frame.locals[key] = @current_stack_frame.top
   end
   
   def passed_arg(args)
@@ -209,7 +216,7 @@ module InstructionInterpretation
 
   def set_ivar(args)
     top = @current_stack_frame.top
-	@current_stack_frame.instance.send(args[0].to_s + '=', top)
+    @current_stack_frame.instance.send(args[0].to_s + '=', top)
   end
 
   def push_ivar(args)
@@ -237,13 +244,32 @@ module InstructionInterpretation
   
   def find_const(args)
     mod = @current_stack_frame.pop
-	if mod.methods.include?(args[0])
-	  @current_stack_frame.push(mod.send(args[0]))  
-	else
-	  # TODO push NameError 
-	end
+    if mod.methods.include?(args[0])
+      @current_stack_frame.push(mod.send(args[0]))
+    else
+      # TODO push NameError
+    end
   end
-  
-  
+
+  def meta_push_1(args)
+    @current_stack_frame.push(1)
+  end
+
+  def meta_push_2(args)
+    @current_stack_frame.push(2)
+  end
+
+  def send_stack(args, parameters = [])
+    args[:count].times { parameters <<  @current_stack_frame.pop}
+    receiver = @current_stack_frame.pop
+    message  = @current_stack_frame.literals[args[:literal]]
+    @current_stack_frame.push receiver.send message, *parameters
+  end
+
+  def string_dup(args)
+  end
+
+  def allow_private(args)
+  end
   
 end

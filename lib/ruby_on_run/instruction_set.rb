@@ -18,6 +18,16 @@ module RubyOnRun
             define_method meth do
               options[meth]
             end
+
+            define_method :param_hash do
+              Hash[args.map { |arg| [arg, send(arg)] }]
+            end
+
+            define_method :print do
+              spaces = " " * (20 - name.size)
+              puts "#{name}#{spaces}#{param_hash}"
+
+            end
           end
 
           options[:args].each do |meth|

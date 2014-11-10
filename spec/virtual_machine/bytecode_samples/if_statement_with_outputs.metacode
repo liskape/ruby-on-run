@@ -1,0 +1,32 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  3
+Literals:    5: :*, :>, "YES", :puts, "HELL NO"
+Lines to IP: 1: 0..16, 2: 17..26, 4: 27..34, 0: 35..37
+
+0000:  push_int                   12
+0002:  meta_push_2                
+0003:  send_stack                 :*, 1
+0006:  push_int                   12
+0008:  meta_push_1                
+0009:  send_stack                 :*, 1
+0012:  send_stack                 :>, 1
+0015:  goto_if_false              0027:
+0017:  push_self                  
+0018:  push_literal               "YES"
+0020:  string_dup                 
+0021:  allow_private              
+0022:  send_stack                 :puts, 1
+0025:  goto                       0035:
+0027:  push_self                  
+0028:  push_literal               "HELL NO"
+0030:  string_dup                 
+0031:  allow_private              
+0032:  send_stack                 :puts, 1
+0035:  pop                        
+0036:  push_true                  
+0037:  ret                        
+----------------------------------------
