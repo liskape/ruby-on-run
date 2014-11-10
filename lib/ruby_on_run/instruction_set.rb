@@ -35,7 +35,7 @@ module RubyOnRun
     # expects array of bytes
     # fetch code
     # fetch params if any
-    # returns Instraction
+    # returns Instruction
     def self.parse_instruction(instruction_stream)
       opcodes[instruction_stream.shift].new.tap do |instruction|
         instruction.args.each do |arg|

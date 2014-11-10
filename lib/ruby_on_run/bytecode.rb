@@ -118,23 +118,23 @@ class RubyOnRun::Bytecode < Struct.new(:magic, :signature, :version, :stream)
         if version != 1
           raise "Unknown CompiledCode version #{version}"
         end
-        code = CompiledCode.new
-        code.metadata = unmarshal_data
-        code.primitive = unmarshal_data
-        code.name = unmarshal_data
-        code.iseq = unmarshal_data
-        code.stack_size = unmarshal_data
-        code.local_count = unmarshal_data
+        code               = CompiledCode.new
+        code.metadata      = unmarshal_data
+        code.primitive     = unmarshal_data
+        code.name          = unmarshal_data
+        code.iseq          = unmarshal_data
+        code.stack_size    = unmarshal_data
+        code.local_count   = unmarshal_data
         code.required_args = unmarshal_data
-        code.post_args = unmarshal_data
-        code.total_args = unmarshal_data
-        code.splat = unmarshal_data
-        code.keywords = unmarshal_data
-        code.arity = unmarshal_data
-        code.literals = unmarshal_data
-        code.lines = unmarshal_data
-        code.file = unmarshal_data
-        code.local_names = unmarshal_data
+        code.post_args     = unmarshal_data
+        code.total_args    = unmarshal_data
+        code.splat         = unmarshal_data
+        code.keywords      = unmarshal_data
+        code.arity         = unmarshal_data
+        code.literals      = unmarshal_data
+        code.lines         = unmarshal_data
+        code.file          = unmarshal_data
+        code.local_names   = unmarshal_data
         return code
       else
         raise "Unknown type '#{kind.chr}'"

@@ -1,0 +1,20 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  2
+Literals:    1: :>
+Lines to IP: 1: 0..7, 2: 8..11, 4: 12..13, 0: 14..16
+
+0000:  push_int                   4
+0002:  meta_push_1                
+0003:  send_stack                 :>, 1
+0006:  goto_if_false              0012:
+0008:  push_int                   10
+0010:  goto                       0014:
+0012:  push_int                   11
+0014:  pop                        
+0015:  push_true                  
+0016:  ret                        
+----------------------------------------

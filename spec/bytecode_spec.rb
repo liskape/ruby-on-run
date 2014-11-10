@@ -77,4 +77,41 @@ describe RubyOnRun::Bytecode do
         end
     end
   end
+
+  context 'classes' do
+    let(:stream) { File.open('spec/bytecode_samples/my_class.bytecode').read }
+    let(:bytecode) { RubyOnRun::Bytecode.load(stream) }
+    let(:bytecode_data) { RubyOnRun::Bytecode.load(stream).body }
+    let(:class_data) { bytecode_data.literals[2] }
+    let(:method_data) { class_data.literals[1] }
+
+
+    specify 'bytecode data' do
+      expect(bytecode_data.literals.size).to eq 8
+      expect(bytecode_data.file).to eq :"my_class.rb"
+      expect(bytecode_data.iseq.size).to eq 53
+
+    end
+
+    specify 'class data' do
+      expect(class_data.literals.size).to eq 4
+      expect(class_data.iseq.size).to eq 16
+    end
+
+    specify 'method datadata' do
+      expect(method_data.iseq).to eq [20, 0, 4, 4, 50, 0, 1, 11]
+    end
+  end
+
+  context 'if statement' do
+    let(:stream) { File.open('spec/bytecode_samples/if_statement.bytecode').read }
+    let(:bytecode) { RubyOnRun::Bytecode.load(stream) }
+    let(:bytecode_data) { RubyOnRun::Bytecode.load(stream).body }
+
+    specify do
+      expect(bytecode_data.iseq).
+        to eq [4, 4, 80, 50, 0, 1, 9, 12, 4, 10, 8, 14, 4, 11, 15, 2, 11]
+    end
+
+  end
 end
