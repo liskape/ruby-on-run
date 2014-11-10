@@ -275,6 +275,18 @@ module InstructionInterpretation
   def allow_private(args)
   end
 
+  def push_rubinius(args)
+    @current_stack_frame.push RubyOnRun::Rubinius.new
+  end
+
+  def push_scope(args)
+    @current_stack_frame.push RubyOnRun::Scope.new
+  end
+
+  def create_block(args)
+    
+  end
+
   private
 
   def resolve_parameters(parameters)

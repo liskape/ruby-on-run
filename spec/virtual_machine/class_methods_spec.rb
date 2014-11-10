@@ -6,6 +6,11 @@ describe RubyOnRun::VirtualMachine do
     let(:stream){ File.open(file).read }
 
     pending
+    
+    # specify do
+    #   RubyOnRun::VirtualMachine.new(stream).run
+
+    # end
   end
 
 end
