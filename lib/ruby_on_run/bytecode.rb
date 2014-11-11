@@ -137,7 +137,7 @@ class RubyOnRun::Bytecode < Struct.new(:magic, :signature, :version, :stream)
         code.local_names   = unmarshal_data
         return code
       else
-        raise "Unknown type '#{kind.chr}'"
+        raise "Unknown type '#{kind}'"
       end
     end
 
