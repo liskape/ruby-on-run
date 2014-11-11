@@ -91,7 +91,7 @@ module InstructionInterpretation
   
   def dup_many(args)
     top_x = []
-    args[0].times { top_x.push(@current_stack_frame.pop) }  
+    args[:count].times { top_x.push(@current_stack_frame.pop) }  
     top_x.reverse!
     top_x.each do |x|
       if x.class.name == "NilClass" || x.class.name == "FalseClass" || x.class.name == "TrueClass" || x.class.name == "Fixnum"	 
@@ -108,27 +108,26 @@ module InstructionInterpretation
   end
   
   def pop_many(args)
-    args[0].times @current_stack_frame.pop
+    args[:count].times @current_stack_frame.pop
   end
   
   def rotate(args)
     top_x = []
-    args[0].times { top_x.push(@current_stack_frame.pop) }
+    args[:count].times { top_x.push(@current_stack_frame.pop) }
     top_x.each { |x| @current_stack_frame.push(x) } 
   end
   
   def move_down(args)
     top = @current_stack_frame.pop
     top_x = []
-    args[0].times { top_x.push(@current_stack_frame.pop) }
+    args[:positions].times { top_x.push(@current_stack_frame.pop) }
     @current_stack_frame.push(top)
     top_x.reverse!
     top_x.each { |x| @current_stack_frame.push(x) }   
   end
   
   def set_local(args)
-    @current_stack_frame.
-      binding[@current_stack_frame.locals[args[:local]]] = @current_stack_frame.top
+    @current_stack_frame.binding[@current_stack_frame.locals[args[:local]]] = @current_stack_frame.top
   end 
   
   def push_local(args)
@@ -137,15 +136,15 @@ module InstructionInterpretation
   
   def push_local_depth(args)
     frame = @current_stack_frame
-    args[0].times { frame = frame.parent }
+    args[:depth].times { frame = frame.parent }
     keys = frame.locals.keys
-    @current_stack_frame.push(frame.locals[keys[args[1]]])
+    @current_stack_frame.push(frame.locals[keys[args[:index]]])
   end 
 
   def set_local_depth(args)
     frame = @current_stack_frame
-    args[0].times { frame = frame.parent }
-    key = frame.locals.keys[args[1]]
+    args[:depth].times { frame = frame.parent }
+    key = frame.locals.keys[args[:index]]
     frame.locals[key] = @current_stack_frame.top
   end
   
@@ -199,7 +198,7 @@ module InstructionInterpretation
 
   def make_array(args)
     a = []
-    args[0].times { a.push(@current_stack_frame.pop) }
+    args[:count].times { a.push(@current_stack_frame.pop) }
     a.reverse!
     @current_stack_frame.push(a)
   end
@@ -217,36 +216,36 @@ module InstructionInterpretation
 
   def set_ivar(args)
     top = @current_stack_frame.top
-    @current_stack_frame.instance.send(args[0].to_s + '=', top)
+    @current_stack_frame.instance.send(args[:literal].to_s + '=', top)
   end
 
   def push_ivar(args)
-    @current_stack_frame.push(@current_stack_frame.instance.send(args[0]))
+    @current_stack_frame.push(@current_stack_frame.instance.send(args[:literal]))
   end  
   
   def push_const(args)
-    if @current_stack_frame.constants.keys.include?(args[0])
-      @current_stack_frame.push(@current_stack_frame.constants[args[0]])
+    if @current_stack_frame.constants.keys.include?(args[:literal])
+      @current_stack_frame.push(@current_stack_frame.constants[args[:literal]])
 	else
 	  # TODO push NameError 
 	end
   end
   
   def set_const(args)
-    @current_stack_frame.constants[args[0]] = @current_stack_frame.top
+    @current_stack_frame.constants[args[:literal]] = @current_stack_frame.top
   end
   
   def set_const_at(args)
     top = @current_stack_frame.pop
 	mod = @current_stack_frame.pop
-	mod.send(args[0].to_s + "=", top)
+	mod.send(args[:literal].to_s + "=", top)
 	@current_stack_frame.push(top)
   end
   
   def find_const(args)
     mod = @current_stack_frame.pop
-    if mod.methods.include?(args[0])
-      @current_stack_frame.push(mod.send(args[0]))
+    if mod.methods.include?(args[:literal])
+      @current_stack_frame.push(mod.send(args[:literal]))
     else
       # TODO push NameError
     end
