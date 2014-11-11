@@ -1,0 +1,17 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  3
+Literals:    0
+Lines to IP: 1: 0..8
+
+0000:  meta_push_1                
+0001:  meta_push_2                
+0002:  push_int                   3
+0004:  make_array                 3
+0006:  pop                        
+0007:  push_true                  
+0008:  ret                        
+----------------------------------------
