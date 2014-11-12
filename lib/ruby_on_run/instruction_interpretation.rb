@@ -82,7 +82,8 @@ module InstructionInterpretation
   
   def dup_top(args)
     top = @current_stack_frame.top
-	if top.class.name == "NilClass" || top.class.name == "FalseClass" || top.class.name == "TrueClass" || top.class.name == "Fixnum"
+    # what about top.respons_to? :clone
+  	if top.class.name == "NilClass" || top.class.name == "FalseClass" || top.class.name == "TrueClass" || top.class.name == "Fixnum" || top.class.name == "Symbol"
       @current_stack_frame.push(top) 
     else
 	  @current_stack_frame.push(top.clone)    
@@ -265,7 +266,7 @@ module InstructionInterpretation
     message  = @current_stack_frame.literals[args[:literal]]
     receiver = resolve_receiver(receiver)
     parameters = resolve_parameters(parameters)
-    @current_stack_frame.push receiver.send message, *parameters
+    @current_stack_frame.push receiver.send(message, *parameters)
   end
 
   def string_dup(args)
@@ -275,7 +276,7 @@ module InstructionInterpretation
   end
 
   def push_rubinius(args)
-    @current_stack_frame.push RubyOnRun::Rubinius.new
+    @current_stack_frame.push self
   end
 
   def push_scope(args)
@@ -283,7 +284,8 @@ module InstructionInterpretation
   end
 
   def create_block(args)
-    
+    code = @current_stack_frame.literals[args[:literal]]
+    @current_stack_frame.push RubyOnRun::BlockEnvironment.new(code)
   end
 
   private
@@ -294,10 +296,18 @@ module InstructionInterpretation
 
   def resolve_receiver(receiver)
     if receiver.is_a? Symbol
-      resolve_receiver(@current_stack_frame.binding[receiver])
+      resolve_receiver(@current_stack_frame.binding[receiver]) || receiver
     else
       receiver
     end
   end
+
+  def push_const_fast(args)
+    constant = @current_stack_frame.literals[args[:literal]]
+    @current_stack_frame.push constant
+  end
   
+  def check_serial(args) #optimization
+    @current_stack_frame.push false
+  end
 end

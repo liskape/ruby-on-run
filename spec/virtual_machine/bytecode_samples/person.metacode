@@ -1,0 +1,146 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      1: p
+Stack size:  5
+Literals:    11: :Person, :open_class, <compiled code>, :call_under, :new, :allocate, "Adam", "Sandler", :initialize, :full_name, :puts
+Lines to IP: 1: 0..16, 13: 17..54, 14: 55..67
+
+0000:  push_rubinius              
+0001:  push_literal               :Person
+0003:  push_nil                   
+0004:  push_scope                 
+0005:  send_stack                 :open_class, 3
+0008:  create_block               #<Rubinius::CompiledCode Person file=person.rb>
+0010:  swap_stack                 
+0011:  push_scope                 
+0012:  push_true                  
+0013:  send_stack                 :call_under, 3
+0016:  pop                        
+0017:  push_const_fast            :Person
+0019:  dup_top                    
+0020:  check_serial               :new, 47
+0023:  goto_if_false              0043:
+0025:  allow_private              
+0026:  send_stack                 :allocate, 0
+0029:  dup_top                    
+0030:  push_literal               "Adam"
+0032:  string_dup                 
+0033:  push_literal               "Sandler"
+0035:  string_dup                 
+0036:  allow_private              
+0037:  send_stack                 :initialize, 2
+0040:  pop                        
+0041:  goto                       0052:
+0043:  push_literal               "Adam"
+0045:  string_dup                 
+0046:  push_literal               "Sandler"
+0048:  string_dup                 
+0049:  send_stack                 :new, 2
+0052:  set_local                  0    # p
+0054:  pop                        
+0055:  push_self                  
+0056:  push_local                 0    # p
+0058:  send_stack                 :full_name, 0
+0061:  allow_private              
+0062:  send_stack                 :puts, 1
+0065:  pop                        
+0066:  push_true                  
+0067:  ret                        
+----------------------------------------
+
+=============== :Person ================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  5
+Literals:    6: :initialize, <compiled code>, :method_visibility, :add_defn_method, :full_name, <compiled code>
+Lines to IP: 3: 2..15, 7: 16..29
+
+0000:  push_self                  
+0001:  add_scope                  
+0002:  push_rubinius              
+0003:  push_literal               :initialize
+0005:  push_literal               #<Rubinius::CompiledCode initialize file=person.rb>
+0007:  push_scope                 
+0008:  push_variables             
+0009:  send_stack                 :method_visibility, 0
+0012:  send_stack                 :add_defn_method, 4
+0015:  pop                        
+0016:  push_rubinius              
+0017:  push_literal               :full_name
+0019:  push_literal               #<Rubinius::CompiledCode full_name file=person.rb>
+0021:  push_scope                 
+0022:  push_variables             
+0023:  send_stack                 :method_visibility, 0
+0026:  send_stack                 :add_defn_method, 4
+0029:  ret                        
+----------------------------------------
+
+============= :initialize ==============
+Arguments:   2 required, 0 post, 2 total
+Arity:       2
+Locals:      2: first, last
+Stack size:  10
+Literals:    5: :size, :+, :[], :@first_name, :@last_name
+Line:        3
+Lines to IP: 4: 0..58
+
+0000:  push_local                 0    # first
+0002:  push_local                 1    # last
+0004:  make_array                 2
+0006:  dup_top                    
+0007:  dup_top                    
+0008:  allow_private              
+0009:  send_stack                 :size, 0
+0012:  set_stack_local            0
+0014:  pop                        
+0015:  meta_push_0                
+0016:  set_stack_local            1
+0018:  pop                        
+0019:  dup_top                    
+0020:  push_stack_local           1
+0022:  dup_top                    
+0023:  meta_push_1                
+0024:  allow_private              
+0025:  send_stack                 :+, 1
+0028:  set_stack_local            1
+0030:  pop                        
+0031:  allow_private              
+0032:  send_stack                 :[], 1
+0035:  set_ivar                   :@first_name
+0037:  pop                        
+0038:  dup_top                    
+0039:  push_stack_local           1
+0041:  dup_top                    
+0042:  meta_push_1                
+0043:  allow_private              
+0044:  send_stack                 :+, 1
+0047:  set_stack_local            1
+0049:  pop                        
+0050:  allow_private              
+0051:  send_stack                 :[], 1
+0054:  set_ivar                   :@last_name
+0056:  pop                        
+0057:  pop                        
+0058:  ret                        
+----------------------------------------
+
+============== :full_name ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  2
+Literals:    4: :@first_name, " ", :+, :@last_name
+Line:        7
+Lines to IP: 8: 0..13
+
+0000:  push_ivar                  :@first_name
+0002:  push_literal               " "
+0004:  string_dup                 
+0005:  send_stack                 :+, 1
+0008:  push_ivar                  :@last_name
+0010:  send_stack                 :+, 1
+0013:  ret                        
+----------------------------------------
