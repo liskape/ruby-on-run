@@ -1,0 +1,33 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      1: a
+Stack size:  5
+Literals:    3: :[]=, :[], :p
+Lines to IP: 1: 0..8, 2: 9..21, 3: 22..35
+
+0000:  meta_push_1                
+0001:  meta_push_2                
+0002:  push_int                   3
+0004:  make_array                 3
+0006:  set_local                  0    # a
+0008:  pop                        
+0009:  push_local                 0    # a
+0011:  meta_push_0                
+0012:  push_int                   5
+0014:  dup_top                    
+0015:  move_down                  3
+0017:  send_stack                 :[]=, 2
+0020:  pop                        
+0021:  pop                        
+0022:  push_self                  
+0023:  push_local                 0    # a
+0025:  meta_push_0                
+0026:  send_stack                 :[], 1
+0029:  allow_private              
+0030:  send_stack                 :p, 1
+0033:  pop                        
+0034:  push_true                  
+0035:  ret                        
+----------------------------------------

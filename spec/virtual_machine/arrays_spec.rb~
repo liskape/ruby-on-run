@@ -11,7 +11,7 @@ describe RubyOnRun::VirtualMachine do
     end
   end
 
-  context 'array modification' do
+  context 'array modification'
     let(:file){ File.expand_path("../bytecode_samples/array_modification.bytecode", __FILE__) }
     let(:stream){ File.open(file).read }
 
