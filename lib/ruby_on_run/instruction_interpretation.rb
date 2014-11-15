@@ -252,6 +252,18 @@ module InstructionInterpretation
     end
   end
 
+  def push_cpath_top(args)
+    @current_stack_frame.push(Object)
+  end
+
+  def find_const_fast(args)
+    find_const(args)
+  end
+
+  def meta_push_0(args)
+    @current_stack_frame.push(0)
+  end
+
   def meta_push_1(args)
     @current_stack_frame.push(1)
   end
@@ -273,6 +285,7 @@ module InstructionInterpretation
   end
 
   def allow_private(args)
+    @current_stack_frame.self.allow_private = true
   end
 
   def push_rubinius(args)
@@ -286,10 +299,6 @@ module InstructionInterpretation
   def create_block(args)
     code = @current_stack_frame.literals[args[:literal]]
     @current_stack_frame.push RubyOnRun::BlockEnvironment.new(code)
-  end
-  
-  def allow_private(args)
-    self.allow_private = true
   end
 
   private
@@ -309,7 +318,7 @@ module InstructionInterpretation
   def push_const_fast(args)
     constant = @current_stack_frame.literals[args[:literal]]
     @current_stack_frame.push constant
-  end
+  end  
   
   def check_serial(args) #optimization
     @current_stack_frame.push false

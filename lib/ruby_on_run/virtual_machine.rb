@@ -17,7 +17,7 @@ class RubyOnRun::VirtualMachine
   def run
     while @current_stack_frame
       instruction = @current_stack_frame.next_instruction
-      # instruction.print
+      #instruction.print
       send instruction.name, instruction.param_hash
     end
 

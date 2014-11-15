@@ -1,8 +1,6 @@
 # class representing a frame in VMStack
 class RubyOnRun::StackFrame
-
   attr_accessor :literals, :bytecode_pointer, :parent, :locals, :constants, :instance, :method, :bytecode, :args, :self, :binding 
-
 
   def initialize(compiled_code)
     @compiled_code = compiled_code
@@ -44,11 +42,13 @@ class RubyOnRun::StackFrame
 
     attr_accessor :allow_private
   
+    def initialize
+      @allow_private = false
+    end
+
     # def send(meth, *args, &block)
     #   raise "Method #{meth} is not implemented yet"
-    # end
-	
-	
+    # end	
 
   end
 

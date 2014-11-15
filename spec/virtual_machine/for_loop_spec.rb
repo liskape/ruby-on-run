@@ -1,6 +1,6 @@
 describe RubyOnRun::VirtualMachine do
 
-  context 'if statements with output' do
+  context 'for loop' do
 
     let(:file){ File.expand_path("../bytecode_samples/for_loop.bytecode", __FILE__) }
     let(:stream){ File.open(file).read }
