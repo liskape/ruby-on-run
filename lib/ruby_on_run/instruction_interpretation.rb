@@ -311,8 +311,17 @@ module InstructionInterpretation
   end
 
   def resolve_receiver(receiver)
+    frame = @current_stack_frame
     if receiver.is_a? Symbol
-      resolve_receiver(@current_stack_frame.binding[receiver]) || receiver
+      while (true)
+        if !frame.binding.has_key?(receiver)
+          frame = frame.parent 
+        else
+          break
+        end        
+        return nil if frame.nil?
+      end
+      resolve_receiver(frame.binding[receiver]) || receiver
     else
       receiver
     end
