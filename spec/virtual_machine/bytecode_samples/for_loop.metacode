@@ -42,19 +42,18 @@ Lines to IP: 1: 0..8, 2: 9..12, 3: 13..33, 6: 34..43
 Arguments:   1 required, 0 post, 1 total
 Arity:       1
 Locals:      1: $for_args
-Stack size:  5
+Stack size:  6
 Literals:    2: :[], :+
 Line:        3
-Lines to IP: 4: 6..24
+Lines to IP: 4: 5..23
 
 0000:  push_local                 0
 0002:  set_local_depth            1, 2
-0005:  pop                        
-0006:  push_local_depth           1, 1
-0009:  push_local_depth           1, 0
-0012:  push_local_depth           1, 2
-0015:  send_stack                 :[], 1
-0018:  send_stack                 :+, 1
-0021:  set_local_depth            1, 1
-0024:  ret                        
+0005:  push_local_depth           1, 1
+0008:  push_local_depth           1, 0
+0011:  push_local_depth           1, 2
+0014:  send_stack                 :[], 1
+0017:  send_stack                 :+, 1
+0020:  set_local_depth            1, 1
+0023:  ret                        
 ----------------------------------------
