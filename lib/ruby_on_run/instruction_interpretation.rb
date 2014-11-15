@@ -287,6 +287,10 @@ module InstructionInterpretation
     code = @current_stack_frame.literals[args[:literal]]
     @current_stack_frame.push RubyOnRun::BlockEnvironment.new(code)
   end
+  
+  def allow_private(args)
+    self.allow_private = true
+  end
 
   private
 

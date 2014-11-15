@@ -42,9 +42,13 @@ class RubyOnRun::StackFrame
 
   class MainContext
 
+    attr_accessor :allow_private
+  
     # def send(meth, *args, &block)
     #   raise "Method #{meth} is not implemented yet"
     # end
+	
+	
 
   end
 
