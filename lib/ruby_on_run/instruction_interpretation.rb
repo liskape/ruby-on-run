@@ -132,7 +132,7 @@ module InstructionInterpretation
   end 
   
   def push_local(args)
-    @current_stack_frame.push @current_stack_frame.locals[args[:local]]
+    @current_stack_frame.push @current_stack_frame.binding[@current_stack_frame.locals[args[:local]]]
   end 
   
   def push_local_depth(args)
@@ -277,7 +277,9 @@ module InstructionInterpretation
     receiver = @current_stack_frame.pop
     message  = @current_stack_frame.literals[args[:literal]]
     receiver = resolve_receiver(receiver)
+    #p 'receiver = ' + receiver.to_s 
     parameters = resolve_parameters(parameters)
+    #p 'parameters = ' + parameters.to_s
     @current_stack_frame.push receiver.send(message, *parameters)
   end
 
@@ -305,6 +307,7 @@ module InstructionInterpretation
 
   def resolve_parameters(parameters)
     parameters.map{ |p| resolve_receiver(p) }
+    parameters.reverse!
   end
 
   def resolve_receiver(receiver)
