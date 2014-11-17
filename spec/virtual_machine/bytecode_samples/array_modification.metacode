@@ -4,7 +4,7 @@ Arguments:   0 required, 0 post, 0 total
 Arity:       0
 Locals:      1: a
 Stack size:  5
-Literals:    3: :[]=, :[], :p
+Literals:    3: :[]=, :[], :puts
 Lines to IP: 1: 0..8, 2: 9..21, 3: 22..35
 
 0000:  meta_push_1                
@@ -26,7 +26,7 @@ Lines to IP: 1: 0..8, 2: 9..21, 3: 22..35
 0025:  meta_push_0                
 0026:  send_stack                 :[], 1
 0029:  allow_private              
-0030:  send_stack                 :p, 1
+0030:  send_stack                 :puts, 1
 0033:  pop                        
 0034:  push_true                  
 0035:  ret                        

@@ -16,7 +16,7 @@ describe RubyOnRun::VirtualMachine do
     let(:stream){ File.open(file).read }
 
     specify 'program output 5 via puts' do
-      expect(STDOUT).to receive(:p).with(5)
+      expect(STDOUT).to receive(:puts).with(5)
       RubyOnRun::VirtualMachine.new(stream).run
     end
   end
