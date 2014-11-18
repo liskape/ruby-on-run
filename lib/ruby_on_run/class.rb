@@ -8,6 +8,7 @@ class RubyOnRun::RClass #< RubyOnRun::Object
 
   def initialize
     @alocator = BasicAllocator.new
+	@method_table = []
   end
 
   def new(*args)
@@ -15,6 +16,10 @@ class RubyOnRun::RClass #< RubyOnRun::Object
   end
 
   def define_method
+  end
+  
+  def send(message, *args)
+    #@method_table.each { |x| interpret if x.name == message }
   end
 
 end

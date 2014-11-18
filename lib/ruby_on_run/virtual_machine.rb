@@ -23,6 +23,7 @@ class RubyOnRun::VirtualMachine
       if debug
         p 'top = ' + @current_stack_frame.top.to_s
         p 'locals = ' + @current_stack_frame.locals.to_s
+		p 'binding = ' + @current_stack_frame.binding.to_s
         p '==========='
       end      
     end
