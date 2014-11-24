@@ -22,7 +22,7 @@ class RubyOnRun::VirtualMachine
     while @current_stack_frame
       instruction = @current_stack_frame.next_instruction
       instruction.print if debug     
-      send instruction.name, instruction.param_hash
+      send instruction.name, instruction.param_hash, @current_stack_frame
       if debug
         p 'top = ' + @current_stack_frame.top.to_s if @current_stack_frame.top
         p 'locals = ' + @current_stack_frame.locals.to_s
