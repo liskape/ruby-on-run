@@ -11,142 +11,142 @@ module InstructionInterpretation
   end
   
   def push_nil(args, frame)
-    @current_stack_frame.push(nil)
+    frame.push(nil)
   end
   
   def push_true(args, frame)
-    @current_stack_frame.push(true)
+    frame.push(true)
   end
   
   def push_false(args, frame)
-    @current_stack_frame.push(false)
+    frame.push(false)
   end
   
   def push_int(args, frame)
-    @current_stack_frame.push args[:number]
+    frame.push args[:number]
   end
   
   def push_self(args, frame)
-    @current_stack_frame.push @current_stack_frame.self
+    frame.push frame.self
   end
   
   def set_literal(args, frame)
-    @current_stack_frame.pop
-    literal = @current_stack_frame.literals[args[:literal]]
-    @current_stack_frame.push(literal)
+    frame.pop
+    literal = frame.literals[args[:literal]]
+    frame.push(literal)
   end
   
   def push_literal(args, frame)
-    literal = @current_stack_frame.literals[args[:literal]]
-    @current_stack_frame.push(literal)
+    literal = frame.literals[args[:literal]]
+    frame.push(literal)
   end
   
   def goto(args, frame)
-    @current_stack_frame.bytecode_pointer = args[:location]
+    frame.bytecode_pointer = args[:location]
     @jump = true
   end
   
   def goto_if_false(args, frame)
-    top = @current_stack_frame.pop
+    top = frame.pop
     if top.nil? || !top
-      @current_stack_frame.bytecode_pointer = args[:location]
+      frame.bytecode_pointer = args[:location]
       @jump = true
     end
   end
   
   def goto_if_true(args, frame)
-    top = @current_stack_frame.pop
+    top = frame.pop
     if !top.nil? && top
-      @current_stack_frame.bytecode_pointer = args[:location]
+      frame.bytecode_pointer = args[:location]
       @jump = true
     end
   end
   
   def ret(args, frame)
-    top = @current_stack_frame.pop
-    if @current_stack_frame.parent.nil?
+    top = frame.pop
+    if frame.parent.nil?
       @return_value = top
-      @current_stack_frame = nil
+      frame = nil
     else
-      @current_stack_frame.parent.push(top)
-      @current_stack_frame = @current_stack_frame.parent
+      frame.parent.push(top)
+      frame = frame.parent
     end
   end
   
   def swap_stack(args, frame)
-    top1 = @current_stack_frame.pop
-    top2 = @current_stack_frame.pop
-    @current_stack_frame.push(top1)
-    @current_stack_frame.push(top2)
+    top1 = frame.pop
+    top2 = frame.pop
+    frame.push(top1)
+    frame.push(top2)
   end
   
   def dup_top(args, frame)
-    top = @current_stack_frame.top
+    top = frame.top
     # what about top.respons_to? :clone
   	if top.class.name == "NilClass" || top.class.name == "FalseClass" || top.class.name == "TrueClass" || top.class.name == "Fixnum" || top.class.name == "Symbol"
-      @current_stack_frame.push(top) 
+      frame.push(top) 
     else
-	  @current_stack_frame.push(top.clone)    
+	  frame.push(top.clone)    
 	end
   end
   
   def dup_many(args, frame)
     top_x = []
-    args[:count].times { top_x.push(@current_stack_frame.pop) }  
+    args[:count].times { top_x.push(frame.pop) }  
     top_x.reverse!
     top_x.each do |x|
       if x.class.name == "NilClass" || x.class.name == "FalseClass" || x.class.name == "TrueClass" || x.class.name == "Fixnum"	 
-	    @current_stack_frame.push(x)
+	    frame.push(x)
 	  else
-	    @current_stack_frame.push(x.clone)
+	    frame.push(x.clone)
       end		
     end
-    top_x.each { |x| @current_stack_frame.push(x) }
+    top_x.each { |x| frame.push(x) }
   end
   
   def pop(args, frame)
-    @current_stack_frame.pop
+    frame.pop
   end
   
   def pop_many(args, frame)
-    args[:count].times @current_stack_frame.pop
+    args[:count].times frame.pop
   end
   
   def rotate(args, frame)
     top_x = []
-    args[:count].times { top_x.push(@current_stack_frame.pop) }
-    top_x.each { |x| @current_stack_frame.push(x) } 
+    args[:count].times { top_x.push(frame.pop) }
+    top_x.each { |x| frame.push(x) } 
   end
   
   def move_down(args, frame)
-    top = @current_stack_frame.pop
+    top = frame.pop
     top_x = []
-    args[:positions].times { top_x.push(@current_stack_frame.pop) }
-    @current_stack_frame.push(top)
+    args[:positions].times { top_x.push(frame.pop) }
+    frame.push(top)
     top_x.reverse!
-    top_x.each { |x| @current_stack_frame.push(x) }   
+    top_x.each { |x| frame.push(x) }   
   end
   
   def set_local(args, frame)
-    @current_stack_frame.binding[@current_stack_frame.locals[args[:local]]] = @current_stack_frame.top
+    frame.binding[frame.locals[args[:local]]] = frame.top
   end 
   
   def push_local(args, frame)
-    @current_stack_frame.push @current_stack_frame.binding[@current_stack_frame.locals[args[:local]]]
+    frame.push frame.binding[frame.locals[args[:local]]]
   end 
   
   def push_local_depth(args, frame)
-    frame = @current_stack_frame
+    frame = frame
     args[:depth].times { frame = frame.parent }
     keys = frame.locals.keys
-    @current_stack_frame.push(frame.locals[keys[args[:index]]])
+    frame.push(frame.locals[keys[args[:index]]])
   end 
 
   def set_local_depth(args, frame)
-    frame = @current_stack_frame
+    frame = frame
     args[:depth].times { frame = frame.parent }
     key = frame.locals.keys[args[:index]]
-    frame.locals[key] = @current_stack_frame.top
+    frame.locals[key] = frame.top
   end
   
   def passed_arg(args, frame)
@@ -199,9 +199,9 @@ module InstructionInterpretation
 
   def make_array(args, frame)
     a = []
-    args[:count].times { a.push(@current_stack_frame.pop) }
+    args[:count].times { a.push(frame.pop) }
     a.reverse!
-    @current_stack_frame.push(a)
+    frame.push(a)
   end
   
   def cast_array(args, frame)
@@ -209,51 +209,51 @@ module InstructionInterpretation
   end
 
   def shift_array(args, frame)
-    a = @current_stack_frame.pop
+    a = frame.pop
     first = a.shift
-    @current_stack_frame.push(a)
-    @current_stack_frame.push(first)  
+    frame.push(a)
+    frame.push(first)  
   end
 
   def set_ivar(args, frame)
-    top = @current_stack_frame.top
-    @current_stack_frame.instance.send(args[:literal].to_s + '=', top)
+    top = frame.top
+    frame.instance.send(args[:literal].to_s + '=', top)
   end
 
   def push_ivar(args, frame)
-    @current_stack_frame.push(@current_stack_frame.instance.send(args[:literal]))
+    frame.push(frame.instance.send(args[:literal]))
   end  
   
   def push_const(args, frame)
-    if @current_stack_frame.constants.keys.include?(args[:literal])
-      @current_stack_frame.push(@current_stack_frame.constants[args[:literal]])
+    if frame.constants.keys.include?(args[:literal])
+      frame.push(frame.constants[args[:literal]])
 	else
 	  # TODO push NameError 
 	end
   end
   
   def set_const(args, frame)
-    @current_stack_frame.constants[args[:literal]] = @current_stack_frame.top
+    frame.constants[args[:literal]] = frame.top
   end
   
   def set_const_at(args, frame)
-    top = @current_stack_frame.pop
-	mod = @current_stack_frame.pop
+    top = frame.pop
+	mod = frame.pop
 	mod.send(args[:literal].to_s + "=", top)
-	@current_stack_frame.push(top)
+	frame.push(top)
   end
   
   def find_const(args, frame)
-    mod = @current_stack_frame.pop
+    mod = frame.pop
     if mod.methods.include?(args[:literal])
-      @current_stack_frame.push(mod.send(args[:literal]))
+      frame.push(mod.send(args[:literal]))
     else
       # TODO push NameError
     end
   end
 
   def push_cpath_top(args, frame)
-    @current_stack_frame.push(Object)
+    frame.push(Object)
   end
 
   def find_const_fast(args, frame)
@@ -261,46 +261,46 @@ module InstructionInterpretation
   end
 
   def meta_push_0(args, frame)
-    @current_stack_frame.push(0)
+    frame.push(0)
   end
 
   def meta_push_1(args, frame)
-    @current_stack_frame.push(1)
+    frame.push(1)
   end
 
   def meta_push_2(args, frame)
-    @current_stack_frame.push(2)
+    frame.push(2)
   end
 
   def send_stack(args, parameters = [], frame)
-    args[:count].times { parameters << @current_stack_frame.pop}
-    receiver = @current_stack_frame.pop
-    message  = @current_stack_frame.literals[args[:literal]]
+    args[:count].times { parameters << frame.pop}
+    receiver = frame.pop
+    message  = frame.literals[args[:literal]]
     receiver = resolve_receiver(receiver, frame)
     #p 'receiver = ' + receiver.to_s 
     parameters = resolve_parameters(parameters, frame)
     #p 'parameters = ' + parameters.to_s
-    @current_stack_frame.push receiver.send(message, *parameters)
+    frame.push receiver.send(message, *parameters)
   end
 
   def string_dup(args, frame)
   end
 
   def allow_private(args, frame)
-    @current_stack_frame.self.allow_private = true
+    frame.self.allow_private = true
   end
 
   def push_rubinius(args, frame)
-    @current_stack_frame.push self
+    frame.push self
   end
 
   def push_scope(args, frame)
-    @current_stack_frame.push RubyOnRun::Scope.new
+    frame.push RubyOnRun::Scope.new
   end
 
   def create_block(args, frame)
-    code = @current_stack_frame.literals[args[:literal]]
-    @current_stack_frame.push RubyOnRun::BlockEnvironment.new(code)
+    code = frame.literals[args[:literal]]
+    frame.push RubyOnRun::BlockEnvironment.new(code)
   end
 
   private
@@ -311,7 +311,7 @@ module InstructionInterpretation
   end
 
   def resolve_receiver(receiver, frame)
-    frame = @current_stack_frame
+    frame = frame
     if receiver.is_a? Symbol
       while (true)
         if !frame.binding.has_key?(receiver)
@@ -328,11 +328,11 @@ module InstructionInterpretation
   end
 
   def push_const_fast(args, frame)
-    constant = @current_stack_frame.literals[args[:literal]]
-    @current_stack_frame.push constant
+    constant = frame.literals[args[:literal]]
+    frame.push constant
   end  
   
   def check_serial(args, frame) #optimization
-    @current_stack_frame.push false
+    frame.push false
   end
 end

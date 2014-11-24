@@ -7,7 +7,7 @@ class RubyOnRun::VirtualMachine
     @stream = stream
 
     @code = RubyOnRun::Bytecode.load(@stream).body    
-    @classes = []
+    @classes = {}
     # initialize other things ...    
   end
 
@@ -16,26 +16,26 @@ class RubyOnRun::VirtualMachine
   end
 
   def interpret(code, scope, klass)
-    @current_stack_frame = RubyOnRun::StackFrame.new(@code)
-    @vm_stack = RubyOnRun::Stack.new @current_stack_frame
+    frame = RubyOnRun::StackFrame.new(@code)
+    @vm_stack = RubyOnRun::Stack.new frame
     debug = false
-    while @current_stack_frame
-      instruction = @current_stack_frame.next_instruction
+    while frame
+      instruction = frame.next_instruction
+      break if instruction.nil?
       instruction.print if debug     
-      send instruction.name, instruction.param_hash, @current_stack_frame
+      send instruction.name, instruction.param_hash, frame
       if debug
-        p 'top = ' + @current_stack_frame.top.to_s if @current_stack_frame.top
-        p 'locals = ' + @current_stack_frame.locals.to_s
-		p 'binding = ' + @current_stack_frame.binding.to_s
+        p 'top = ' + frame.top.to_s if frame.top
+        p 'locals = ' + frame.locals.to_s
+		p 'binding = ' + frame.binding.to_s
         p '==========='
       end      
     end
-
     @return_value
   end
 
   def open_class(scope, dunno1, class_name)
-    @current_stack_frame.binding[class_name] = RubyOnRun::RClass.new
+    classes[class_name] = RubyOnRun::RClass.new
   end
 
   # def call_under(dunno1, scope, klass)

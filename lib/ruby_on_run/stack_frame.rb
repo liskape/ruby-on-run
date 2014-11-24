@@ -15,6 +15,7 @@ class RubyOnRun::StackFrame
   end
 
   def next_instruction
+    return nil if @bytecode_pointer >= @bytecode.length
     i = RubyOnRun::InstructionSet.parse_instruction(@bytecode[@bytecode_pointer..-1])
     if @jump
       @jump = false
