@@ -11,7 +11,7 @@ class RubyOnRun::RClass #< RubyOnRun::Object
   end
 
   def new(*args)
-    allocate(self, *args)
+    _allocate(self, *args)
   end
 
   def define_method(name, code)
@@ -32,7 +32,7 @@ class RubyOnRun::RClass #< RubyOnRun::Object
 
   private
 
-  def allocate(klass, *args)
+  def _allocate(klass, *args)
     obj = RubyOnRun::RObject.new(klass)
     context = RubyOnRun::Context.new(klass.method(:initialize), klass, obj)
     context.add_binding create_binding(klass.method(:initialize).local_names, args)

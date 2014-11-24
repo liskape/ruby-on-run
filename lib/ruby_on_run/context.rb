@@ -25,8 +25,8 @@ class RubyOnRun::Context
     i
   end
 
-  def add_binding(binding)
-    @binding.merge(binding)
+  def add_binding(to_add_binding)
+    @binding.merge!(to_add_binding)
   end
 
 

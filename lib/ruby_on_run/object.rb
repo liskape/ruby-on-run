@@ -5,11 +5,16 @@ class RubyOnRun::RObject
   def initialize(klass)
     @class = klass
     @allow_private = false
+    @instance_variables = {}
+  end
+
+  def set_instance_variable(name, value)
+    @instance_variables[name] = value
   end
 
 
 
-  @instance_variables = {}
+  
   @flags        # for GC
   @class
   @method_table # - implementation of metaclasses

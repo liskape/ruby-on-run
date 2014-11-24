@@ -218,7 +218,8 @@ module InstructionInterpretation
 
   def set_ivar(args, context)
     top = context.top
-    context.instance.send(args[:literal].to_s + '=', top)
+    name = context.literals[args[:literal]]    
+    context.self.set_instance_variable(name, top)
   end
 
   def push_ivar(args, context)
