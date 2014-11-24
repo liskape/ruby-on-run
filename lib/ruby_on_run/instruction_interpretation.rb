@@ -276,9 +276,9 @@ module InstructionInterpretation
     args[:count].times { parameters << @current_stack_frame.pop}
     receiver = @current_stack_frame.pop
     message  = @current_stack_frame.literals[args[:literal]]
-    receiver = resolve_receiver(receiver)
+    receiver = resolve_receiver(receiver, frame)
     #p 'receiver = ' + receiver.to_s 
-    parameters = resolve_parameters(parameters)
+    parameters = resolve_parameters(parameters, frame)
     #p 'parameters = ' + parameters.to_s
     @current_stack_frame.push receiver.send(message, *parameters)
   end
@@ -305,12 +305,12 @@ module InstructionInterpretation
 
   private
 
-  def resolve_parameters(parameters)
-    parameters.map{ |p| resolve_receiver(p) }
+  def resolve_parameters(parameters, frame)
+    parameters.map{ |p| resolve_receiver(p, frame) }
     parameters.reverse!
   end
 
-  def resolve_receiver(receiver)
+  def resolve_receiver(receiver, frame)
     frame = @current_stack_frame
     if receiver.is_a? Symbol
       while (true)
@@ -321,7 +321,7 @@ module InstructionInterpretation
         end        
         return nil if frame.nil?
       end
-      resolve_receiver(frame.binding[receiver]) || receiver
+      resolve_receiver(frame.binding[receiver], frame) || receiver
     else
       receiver
     end
