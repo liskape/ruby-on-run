@@ -1,9 +1,9 @@
 class RubyOnRun::RObject
 
-  attr_accessor :class, :allow_private
+  attr_accessor :klass, :allow_private
 
   def initialize(klass)
-    @class = klass
+    @klass = klass
     @allow_private = false
     @instance_variables = {}
   end
@@ -12,7 +12,9 @@ class RubyOnRun::RObject
     @instance_variables[name] = value
   end
 
-
+  def get_instance_variable(name)
+    @instance_variables[name]
+  end
 
   
   @flags        # for GC

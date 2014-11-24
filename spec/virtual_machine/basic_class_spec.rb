@@ -7,7 +7,7 @@ describe RubyOnRun::VirtualMachine do
 
     
     specify do
-      # expect(STDOUT).to receive(:puts).with("Adam Sandler")
+      expect(STDOUT).to receive(:puts).with("Adam Sandler")
       RubyOnRun::VirtualMachine.new(stream).run
     end
   end

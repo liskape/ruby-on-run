@@ -25,11 +25,6 @@ class RubyOnRun::RClass #< RubyOnRun::Object
   def method_visibility
   end
 
-  # def send(message, *args)
-
-    #@method_table.each { |x| interpret if x.name == message }
-  # end
-
   private
 
   def _allocate(klass, *args)

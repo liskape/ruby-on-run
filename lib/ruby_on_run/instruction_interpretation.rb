@@ -223,7 +223,8 @@ module InstructionInterpretation
   end
 
   def push_ivar(args, context)
-    context.push(context.instance.send(args[:literal]))
+    var_name = context.literals[args[:literal]]
+    context.push context.self.get_instance_variable(var_name)
   end  
   
   def push_const(args, context)
@@ -319,7 +320,18 @@ module InstructionInterpretation
     #p 'receiver = ' + receiver.to_s 
     parameters = resolve_parameters(parameters, context)
     #p 'parameters = ' + parameters.to_s
-    context.push receiver.send(message, *parameters)
+
+    result = if receiver.is_a? RubyOnRun::RObject
+      # heavy lifting here
+      # method lookup and shit
+      code = receiver.klass.method(message)
+      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver)
+      interpret(new_context)
+    else
+      # primitive for now
+      receiver.send(message, *parameters)
+    end
+    context.push result
   end
 
 
