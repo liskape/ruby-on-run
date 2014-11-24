@@ -1,7 +1,8 @@
 class Person
 
   def initialize(first, last)
-    @first_name, @last_name = first, last
+    @first_name = first
+    @last_name = last
   end
 
   def full_name

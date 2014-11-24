@@ -1,12 +1,22 @@
-class RubyOnRun::RObject < BasicObject
+class RubyOnRun::RObject
 
-  attr_accessor :class
+  attr_accessor :klass, :allow_private
 
   def initialize(klass)
-    @class = klass
+    @klass = klass
+    @allow_private = false
+    @instance_variables = {}
   end
 
-  @instance_variables = {}
+  def set_instance_variable(name, value)
+    @instance_variables[name] = value
+  end
+
+  def get_instance_variable(name)
+    @instance_variables[name]
+  end
+
+  
   @flags        # for GC
   @class
   @method_table # - implementation of metaclasses
