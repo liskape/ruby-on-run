@@ -6,333 +6,334 @@ module InstructionInterpretation
     raise "It is not defined how to interpret #{meth} with args #{args}"
   end
 
-  def noop(args, frame)
+  def noop(args, context)
   
   end
   
-  def push_nil(args, frame)
-    frame.push(nil)
+  def push_nil(args, context)
+    context.push(nil)
   end
   
-  def push_true(args, frame)
-    frame.push(true)
+  def push_true(args, context)
+    context.push(true)
   end
   
-  def push_false(args, frame)
-    frame.push(false)
+  def push_false(args, context)
+    context.push(false)
   end
   
-  def push_int(args, frame)
-    frame.push args[:number]
+  def push_int(args, context)
+    context.push args[:number]
   end
   
-  def push_self(args, frame)
-    frame.push frame.self
+  def push_self(args, context)
+    context.push context.self
   end
   
-  def set_literal(args, frame)
-    frame.pop
-    literal = frame.literals[args[:literal]]
-    frame.push(literal)
+  def set_literal(args, context)
+    context.pop
+    literal = context.literals[args[:literal]]
+    context.push(literal)
   end
   
-  def push_literal(args, frame)
-    literal = frame.literals[args[:literal]]
-    frame.push(literal)
+  def push_literal(args, context)
+    literal = context.literals[args[:literal]]
+    context.push(literal)
   end
   
-  def goto(args, frame)
-    frame.bytecode_pointer = args[:location]
+  def goto(args, context)
+    context.bytecode_pointer = args[:location]
     @jump = true
   end
   
-  def goto_if_false(args, frame)
-    top = frame.pop
+  def goto_if_false(args, context)
+    top = context.pop
     if top.nil? || !top
-      frame.bytecode_pointer = args[:location]
+      context.bytecode_pointer = args[:location]
       @jump = true
     end
   end
   
-  def goto_if_true(args, frame)
-    top = frame.pop
+  def goto_if_true(args, context)
+    top = context.pop
     if !top.nil? && top
-      frame.bytecode_pointer = args[:location]
+      context.bytecode_pointer = args[:location]
       @jump = true
     end
   end
   
-  def ret(args, frame)
-    top = frame.pop
-    if frame.parent.nil?
+  def ret(args, context)
+    top = context.pop
+    if context.parent.nil?
       @return_value = top
-      frame = nil
+      context = nil
     else
-      frame.parent.push(top)
-      frame = frame.parent
+      context.parent.push(top)
+      context = context.parent
     end
   end
   
-  def swap_stack(args, frame)
-    top1 = frame.pop
-    top2 = frame.pop
-    frame.push(top1)
-    frame.push(top2)
+  def swap_stack(args, context)
+    top1 = context.pop
+    top2 = context.pop
+    context.push(top1)
+    context.push(top2)
   end
   
-  def dup_top(args, frame)
-    top = frame.top
+  def dup_top(args, context)
+    top = context.top
     # what about top.respons_to? :clone
   	if top.class.name == "NilClass" || top.class.name == "FalseClass" || top.class.name == "TrueClass" || top.class.name == "Fixnum" || top.class.name == "Symbol"
-      frame.push(top) 
+      context.push(top) 
     else
-	  frame.push(top.clone)    
+	  context.push(top.clone)    
 	end
   end
   
-  def dup_many(args, frame)
+  def dup_many(args, context)
     top_x = []
-    args[:count].times { top_x.push(frame.pop) }  
+    args[:count].times { top_x.push(context.pop) }  
     top_x.reverse!
     top_x.each do |x|
       if x.class.name == "NilClass" || x.class.name == "FalseClass" || x.class.name == "TrueClass" || x.class.name == "Fixnum"	 
-	    frame.push(x)
+	    context.push(x)
 	  else
-	    frame.push(x.clone)
+	    context.push(x.clone)
       end		
     end
-    top_x.each { |x| frame.push(x) }
+    top_x.each { |x| context.push(x) }
   end
   
-  def pop(args, frame)
-    frame.pop
+  def pop(args, context)
+    context.pop
   end
   
-  def pop_many(args, frame)
-    args[:count].times frame.pop
+  def pop_many(args, context)
+    args[:count].times context.pop
   end
   
-  def rotate(args, frame)
+  def rotate(args, context)
     top_x = []
-    args[:count].times { top_x.push(frame.pop) }
-    top_x.each { |x| frame.push(x) } 
+    args[:count].times { top_x.push(context.pop) }
+    top_x.each { |x| context.push(x) } 
   end
   
-  def move_down(args, frame)
-    top = frame.pop
+  def move_down(args, context)
+    top = context.pop
     top_x = []
-    args[:positions].times { top_x.push(frame.pop) }
-    frame.push(top)
+    args[:positions].times { top_x.push(context.pop) }
+    context.push(top)
     top_x.reverse!
-    top_x.each { |x| frame.push(x) }   
+    top_x.each { |x| context.push(x) }   
   end
   
-  def set_local(args, frame)
-    frame.binding[frame.locals[args[:local]]] = frame.top
+  def set_local(args, context)
+    context.binding[context.locals[args[:local]]] = context.top
   end 
   
-  def push_local(args, frame)
-    frame.push frame.binding[frame.locals[args[:local]]]
+  def push_local(args, context)
+    context.push context.binding[context.locals[args[:local]]]
   end 
   
-  def push_local_depth(args, frame)
-    frame = frame
-    args[:depth].times { frame = frame.parent }
-    keys = frame.locals.keys
-    frame.push(frame.locals[keys[args[:index]]])
+  def push_local_depth(args, context)
+    context = context
+    args[:depth].times { context = context.parent }
+    keys = context.locals.keys
+    context.push(context.locals[keys[args[:index]]])
   end 
 
-  def set_local_depth(args, frame)
-    frame = frame
-    args[:depth].times { frame = frame.parent }
-    key = frame.locals.keys[args[:index]]
-    frame.locals[key] = frame.top
+  def set_local_depth(args, context)
+    context = context
+    args[:depth].times { context = context.parent }
+    key = context.locals.keys[args[:index]]
+    context.locals[key] = context.top
   end
   
-  def passed_arg(args, frame)
-  
-  end
-  
-  def push_current_exception(args, frame)
+  def passed_arg(args, context)
   
   end
   
-  def clear_exception(args, frame)
+  def push_current_exception(args, context)
   
   end
   
-  def push_exception_state(args, frame)
+  def clear_exception(args, context)
   
   end
   
-  def restore_exception_state(args, frame)
+  def push_exception_state(args, context)
   
   end
   
-  def raise_exc(args, frame)
+  def restore_exception_state(args, context)
   
   end
   
-  def setup_unwind(args, frame)
+  def raise_exc(args, context)
   
   end
   
-  def pop_unwind(args, frame)
+  def setup_unwind(args, context)
   
   end
   
-  def raise_return(args, frame)
+  def pop_unwind(args, context)
   
   end
   
-  def ensure_return(args, frame)
+  def raise_return(args, context)
   
   end
   
-  def raise_break(args, frame)
+  def ensure_return(args, context)
   
   end
   
-  def reraise(args, frame)
+  def raise_break(args, context)
+  
+  end
+  
+  def reraise(args, context)
   
   end
 
-  def make_array(args, frame)
+  def make_array(args, context)
     a = []
-    args[:count].times { a.push(frame.pop) }
+    args[:count].times { a.push(context.pop) }
     a.reverse!
-    frame.push(a)
+    context.push(a)
   end
   
-  def cast_array(args, frame)
+  def cast_array(args, context)
     # TODO
   end
 
-  def shift_array(args, frame)
-    a = frame.pop
+  def shift_array(args, context)
+    a = context.pop
     first = a.shift
-    frame.push(a)
-    frame.push(first)  
+    context.push(a)
+    context.push(first)  
   end
 
-  def set_ivar(args, frame)
-    top = frame.top
-    frame.instance.send(args[:literal].to_s + '=', top)
+  def set_ivar(args, context)
+    top = context.top
+    context.instance.send(args[:literal].to_s + '=', top)
   end
 
-  def push_ivar(args, frame)
-    frame.push(frame.instance.send(args[:literal]))
+  def push_ivar(args, context)
+    context.push(context.instance.send(args[:literal]))
   end  
   
-  def push_const(args, frame)
-    if frame.constants.keys.include?(args[:literal])
-      frame.push(frame.constants[args[:literal]])
+  def push_const(args, context)
+    if context.constants.keys.include?(args[:literal])
+      context.push(context.constants[args[:literal]])
 	else
 	  # TODO push NameError 
 	end
   end
   
-  def set_const(args, frame)
-    frame.constants[args[:literal]] = frame.top
+  def set_const(args, context)
+    context.constants[args[:literal]] = context.top
   end
   
-  def set_const_at(args, frame)
-    top = frame.pop
-	mod = frame.pop
+  def set_const_at(args, context)
+    top = context.pop
+	mod = context.pop
 	mod.send(args[:literal].to_s + "=", top)
-	frame.push(top)
+	context.push(top)
   end
   
-  def find_const(args, frame)
-    mod = frame.pop
+  def find_const(args, context)
+    mod = context.pop
     if mod.methods.include?(args[:literal])
-      frame.push(mod.send(args[:literal]))
+      context.push(mod.send(args[:literal]))
     else
       # TODO push NameError
     end
   end
 
-  def push_cpath_top(args, frame)
-    frame.push(Object)
+  def push_cpath_top(args, context)
+    context.push(Object)
   end
 
-  def find_const_fast(args, frame)
-    find_const(args, frame)
+  def find_const_fast(args, context)
+    find_const(args, context)
   end
 
-  def meta_push_0(args, frame)
-    frame.push(0)
+  def meta_push_0(args, context)
+    context.push(0)
   end
 
-  def meta_push_1(args, frame)
-    frame.push(1)
+  def meta_push_1(args, context)
+    context.push(1)
   end
 
-  def meta_push_2(args, frame)
-    frame.push(2)
+  def meta_push_2(args, context)
+    context.push(2)
   end
 
-  def send_stack(args, parameters = [], frame)
-    args[:count].times { parameters << frame.pop}
-    receiver = frame.pop
-    message  = frame.literals[args[:literal]]
-    receiver = resolve_receiver(receiver, frame)
+  def string_dup(args, context)
+  end
+
+  def allow_private(args, context)
+    context.self.allow_private = true
+  end
+
+  def push_rubinius(args, context)
+    context.push self
+  end
+
+  def push_scope(args, context)
+    context.push RubyOnRun::Scope.new
+  end
+
+  def create_block(args, context)
+    code = context.literals[args[:literal]]
+    context.push RubyOnRun::BlockEnvironment.new(code)
+  end
+
+  def send_stack(args, parameters = [], context)
+    args[:count].times { parameters << context.pop}
+    receiver = context.pop
+    message  = context.literals[args[:literal]]
+    receiver = resolve_receiver(receiver, context)
     #p 'receiver = ' + receiver.to_s 
-    parameters = resolve_parameters(parameters, frame)
+    parameters = resolve_parameters(parameters, context)
     #p 'parameters = ' + parameters.to_s
-    frame.push receiver.send(message, *parameters)
+    context.push receiver.send(message, *parameters)
   end
 
-  def string_dup(args, frame)
-  end
-
-  def allow_private(args, frame)
-    frame.self.allow_private = true
-  end
-
-  def push_rubinius(args, frame)
-    frame.push self
-  end
-
-  def push_scope(args, frame)
-    frame.push RubyOnRun::Scope.new
-  end
-
-  def create_block(args, frame)
-    code = frame.literals[args[:literal]]
-    frame.push RubyOnRun::BlockEnvironment.new(code)
-  end
 
   private
 
-  def resolve_parameters(parameters, frame)
-    parameters.map{ |p| resolve_receiver(p, frame) }
+  def resolve_parameters(parameters, context)
+    parameters.map{ |p| resolve_receiver(p, context) }
     parameters.reverse!
   end
 
-  def resolve_receiver(receiver, frame)
-    frame = frame
+  def resolve_receiver(receiver, context)
+    context = context
     if receiver.is_a? Symbol
       while (true)
-        if !frame.binding.has_key?(receiver)
-          frame = frame.parent 
+        if !context.binding.has_key?(receiver)
+          context = context.parent 
         else
           break
         end        
-        return nil if frame.nil?
+        return nil if context.nil?
       end
-      resolve_receiver(frame.binding[receiver], frame) || receiver
+      resolve_receiver(context.binding[receiver], context) || receiver
     else
       receiver
     end
   end
 
-  def push_const_fast(args, frame)
-    constant = frame.literals[args[:literal]]
-    frame.push constant
+  def push_const_fast(args, context)
+    constant = context.literals[args[:literal]]
+    context.push constant
   end  
   
-  def check_serial(args, frame) #optimization
-    frame.push false
+  def check_serial(args, context) #optimization
+    context.push false
   end
 end
