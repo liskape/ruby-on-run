@@ -86,8 +86,9 @@ module InstructionInterpretation
   	if top.class.name == "NilClass" || top.class.name == "FalseClass" || top.class.name == "TrueClass" || top.class.name == "Fixnum" || top.class.name == "Symbol"
       context.push(top) 
     else
-	  context.push(top.clone)    
-	end
+  	  context.push(top.clone)    
+  	end
+    true
   end
   
   def dup_many(args, context)
@@ -238,9 +239,9 @@ module InstructionInterpretation
   
   def set_const_at(args, context)
     top = context.pop
-	mod = context.pop
-	mod.send(args[:literal].to_s + "=", top)
-	context.push(top)
+    mod = context.pop
+    mod.send(args[:literal].to_s + "=", top)
+    context.push(top)
   end
   
   def find_const(args, context)
@@ -284,7 +285,24 @@ module InstructionInterpretation
   end
 
   def push_scope(args, context)
-    context.push RubyOnRun::Scope.new
+    context.push context.current_class
+  end
+
+  def add_scope(args, context)
+    _module = context.pop
+    context.current_class = _module
+  end
+
+  def set_stack_local(args, context)
+  end
+
+  def push_stack_local(args, context)
+    true
+  end
+
+  # Push the VariableScope for the current method/block invocation on the stack.
+  def push_variables(args, context)
+    context.push context.current_class
   end
 
   def create_block(args, context)
@@ -312,8 +330,10 @@ module InstructionInterpretation
   end
 
   def resolve_receiver(receiver, context)
-    context = context
     if receiver.is_a? Symbol
+    
+      return @classes[receiver] if receiver[0].upcase == receiver[0]
+
       while (true)
         if !context.binding.has_key?(receiver)
           context = context.parent 

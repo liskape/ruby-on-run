@@ -8,7 +8,6 @@ class RubyOnRun::BlockEnvironment
   end
 
   def call_under(klass, scope, dummy)
-    binding.pry
     # zacit vykonavat @compiled_code.iseq
     # binding.pry
     context = RubyOnRun::Context.new(@compiled_code, klass, klass)

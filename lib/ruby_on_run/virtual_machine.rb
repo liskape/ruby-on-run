@@ -36,20 +36,19 @@ class RubyOnRun::VirtualMachine
   end
 
   def open_class(class_name, dunno1, scope)
-    binding.pry
-    @classes[class_name] ||= RubyOnRun::RClass.new
+    @classes[class_name] ||= RubyOnRun::RClass.new(self)
     @classes[class_name]
   end
 
-  def call_under(dunno1, scope, klass)
-    binding.pry
-    true
+  def add_defn_method(method_name, compiled_code, scope, dunno)
+    scope.define_method(method_name, compiled_code)
   end
 
-   class MainContext # RClass
+
+  class MainContext # RClass
 
     attr_accessor :allow_private
-  
+
     def initialize
       @allow_private = false
     end
@@ -58,7 +57,7 @@ class RubyOnRun::VirtualMachine
     #   raise "Method #{meth} is not implemented yet"
     # end 
 
-  end
+end
 
 
 
