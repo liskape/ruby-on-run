@@ -8,7 +8,7 @@ class RubyOnRun::RClass #< RubyOnRun::Object
 
   def initialize
     @alocator = BasicAllocator.new
-	@method_table = []
+    @method_table = []
   end
 
   def new(*args)

@@ -1,15 +1,15 @@
 # class representing a frame in VMStack
-class RubyOnRun::StackFrame
+class RubyOnRun::Context
   attr_accessor :literals, :bytecode_pointer, :parent, :locals, :constants, :instance, :method, :bytecode, :args, :self, :binding 
 
-  def initialize(compiled_code)
+  def initialize(compiled_code, current_class, selfie)
     @compiled_code = compiled_code
+    @current_class = current_class
+    @self = selfie
     @stack = []
     @literals = compiled_code.literals
     @bytecode_pointer = 0
     @bytecode = compiled_code.iseq
-    @self = MainContext.new
-
     @locals = compiled_code.local_names
     @binding = {}
   end
@@ -37,20 +37,6 @@ class RubyOnRun::StackFrame
     top = @stack.pop
     @stack.push(top)
     top
-  end
-
-  class MainContext
-
-    attr_accessor :allow_private
-  
-    def initialize
-      @allow_private = false
-    end
-
-    # def send(meth, *args, &block)
-    #   raise "Method #{meth} is not implemented yet"
-    # end	
-
   end
 
 end

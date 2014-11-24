@@ -289,7 +289,7 @@ module InstructionInterpretation
 
   def create_block(args, context)
     code = context.literals[args[:literal]]
-    context.push RubyOnRun::BlockEnvironment.new(code)
+    context.push RubyOnRun::BlockEnvironment.new(code, self)
   end
 
   def send_stack(args, parameters = [], context)
