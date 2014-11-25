@@ -22,7 +22,7 @@ class RubyOnRun::VirtualMachine
       instruction.print if DEBUG     
       send instruction.name, instruction.param_hash, context
       if DEBUG
-        p 'top = ' + context.top.to_s if context.top
+        p 'top = ' + context.top.to_s 
         p 'locals = ' + context.locals.to_s
         p 'binding = ' + context.binding.to_s
         p '==========='
@@ -52,6 +52,10 @@ class RubyOnRun::VirtualMachine
     def initialize
       @allow_private = false
     end
+
+    def Range
+      RubyOnRun::RRange
+    end 
 
     # def send(meth, *args, &block)
     #   raise "Method #{meth} is not implemented yet"

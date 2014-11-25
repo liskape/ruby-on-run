@@ -3,4 +3,4 @@ s = 0
 for i in 0..2 do
   s += a[i]
 end
-p s
+puts s

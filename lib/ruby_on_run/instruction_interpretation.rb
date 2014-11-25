@@ -82,13 +82,7 @@ module InstructionInterpretation
   
   def dup_top(args, context)
     top = context.top
-    # what about top.respons_to? :clone
-  	if top.class.name == "NilClass" || top.class.name == "FalseClass" || top.class.name == "TrueClass" || top.class.name == "Fixnum" || top.class.name == "Symbol"
-      context.push(top) 
-    else
-  	  context.push(top.clone)    
-  	end
-    true
+    context.push(top)
   end
   
   def dup_many(args, context)
@@ -228,35 +222,36 @@ module InstructionInterpretation
   end  
   
   def push_const(args, context)
-    if context.constants.keys.include?(args[:literal])
-      context.push(context.constants[args[:literal]])
+    if context.constants.keys.include?(context.literals[args[:literal]])
+      context.push(context.constants[context.literals[args[:literal]]])
 	else
 	  # TODO push NameError 
 	end
   end
   
   def set_const(args, context)
-    context.constants[args[:literal]] = context.top
+    context.constants[context.literals[args[:literal]]] = context.top
   end
   
   def set_const_at(args, context)
     top = context.pop
     mod = context.pop
-    mod.send(args[:literal].to_s + "=", top)
+    mod.send(context.literals[args[:literal]].to_s + "=", top)
     context.push(top)
   end
   
   def find_const(args, context)
     mod = context.pop
-    if mod.methods.include?(args[:literal])
-      context.push(mod.send(args[:literal]))
+    # p context.literals[args[:literal]]
+    if mod.methods.include?(context.literals[args[:literal]])
+      context.push(mod.send(context.literals[args[:literal]]))
     else
       # TODO push NameError
     end
   end
 
   def push_cpath_top(args, context)
-    context.push(Object)
+    context.push(context.self)
   end
 
   def find_const_fast(args, context)
@@ -313,14 +308,17 @@ module InstructionInterpretation
   end
 
   def send_stack(args, parameters = [], context)
+    debug = false
     args[:count].times { parameters << context.pop}
     receiver = context.pop
-    message  = context.literals[args[:literal]]
-    receiver = resolve_receiver(receiver, context)
-    #p 'receiver = ' + receiver.to_s 
+    message  = context.literals[args[:literal]]    
+    receiver = resolve_receiver(receiver, context)    
     parameters = resolve_parameters(parameters, context)
-    #p 'parameters = ' + parameters.to_s
-
+    if debug
+      p 'receiver = ' + receiver.to_s 
+      p 'parameters = ' + parameters.to_s
+      p 'message = ' + message.to_s
+    end
     result = if receiver.is_a? RubyOnRun::RObject
       # heavy lifting here
       # method lookup and shit
@@ -329,8 +327,10 @@ module InstructionInterpretation
       interpret(new_context)
     else
       # primitive for now
+      # p receiver.methods
       receiver.send(message, *parameters)
     end
+    p 'result = ' + result.to_s if debug 
     context.push result
   end
 
