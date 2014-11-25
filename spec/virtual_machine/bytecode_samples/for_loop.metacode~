@@ -1,0 +1,59 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      3: a, s, i
+Stack size:  7
+Literals:    6: :Range, :allocate, :initialize, <compiled code>, :each, :p
+Lines to IP: 1: 0..8, 2: 9..12, 3: 13..33, 6: 34..43
+
+0000:  meta_push_1                
+0001:  meta_push_2                
+0002:  push_int                   3
+0004:  make_array                 3
+0006:  set_local                  0    # a
+0008:  pop                        
+0009:  meta_push_0                
+0010:  set_local                  1    # s
+0012:  pop                        
+0013:  push_cpath_top             
+0014:  find_const_fast            :Range
+0016:  allow_private              
+0017:  send_stack                 :allocate, 0
+0020:  dup_top                    
+0021:  meta_push_0                
+0022:  meta_push_2                
+0023:  allow_private              
+0024:  send_stack                 :initialize, 2
+0027:  pop                        
+0028:  create_block               #<Rubinius::CompiledCode __block__ file=for_loop.rb>
+0030:  send_stack_with_block      :each, 0
+0033:  pop                        
+0034:  push_self                  
+0035:  push_local                 1    # s
+0037:  allow_private              
+0038:  send_stack                 :p, 1
+0041:  pop                        
+0042:  push_true                  
+0043:  ret                        
+----------------------------------------
+
+============== :__block__ ==============
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      1: $for_args
+Stack size:  6
+Literals:    2: :[], :+
+Line:        3
+Lines to IP: 4: 5..23
+
+0000:  push_local                 0
+0002:  set_local_depth            1, 2
+0005:  push_local_depth           1, 1
+0008:  push_local_depth           1, 0
+0011:  push_local_depth           1, 2
+0014:  send_stack                 :[], 1
+0017:  send_stack                 :+, 1
+0020:  set_local_depth            1, 1
+0023:  ret                        
+----------------------------------------
