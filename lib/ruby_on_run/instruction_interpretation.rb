@@ -89,14 +89,7 @@ module InstructionInterpretation
     top_x = []
     args[:count].times { top_x.push(context.pop) }  
     top_x.reverse!
-    top_x.each do |x|
-      if x.class.name == "NilClass" || x.class.name == "FalseClass" || x.class.name == "TrueClass" || x.class.name == "Fixnum"	 
-	    context.push(x)
-	  else
-	    context.push(x.clone)
-      end		
-    end
-    top_x.each { |x| context.push(x) }
+    2.times { top_x.each { |x| context.push(x) } }		
   end
   
   def pop(args, context)
