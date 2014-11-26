@@ -4,7 +4,7 @@ Arguments:   0 required, 0 post, 0 total
 Arity:       0
 Locals:      3: a, s, i
 Stack size:  7
-Literals:    6: :Range, :allocate, :initialize, <compiled code>, :each, :p
+Literals:    6: :Range, :allocate, :initialize, <compiled code>, :each, :puts
 Lines to IP: 1: 0..8, 2: 9..12, 3: 13..33, 6: 34..43
 
 0000:  meta_push_1                
@@ -32,7 +32,7 @@ Lines to IP: 1: 0..8, 2: 9..12, 3: 13..33, 6: 34..43
 0034:  push_self                  
 0035:  push_local                 1    # s
 0037:  allow_private              
-0038:  send_stack                 :p, 1
+0038:  send_stack                 :puts, 1
 0041:  pop                        
 0042:  push_true                  
 0043:  ret                        
