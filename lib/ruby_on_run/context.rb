@@ -30,7 +30,6 @@ class RubyOnRun::Context
     @binding.merge!(to_add_binding)
   end
 
-
   def push(x)
     @stack.push(x)
   end

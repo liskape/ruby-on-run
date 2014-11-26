@@ -1,8 +1,8 @@
 class RubyOnRun::BlockEnvironment
 
-  attr_accessor :code
+  attr_accessor :compiled_code, :parent_context
 
-  def initialize(code, parent_context, vm)
+  def initialize(code, vm, parent_context)
     @compiled_code = code
     @parent_context = parent_context
     @vm = vm

@@ -29,7 +29,7 @@ class RubyOnRun::RClass #< RubyOnRun::Object
 
   def _allocate(klass, *args)
     obj = RubyOnRun::RObject.new(klass)
-    context = RubyOnRun::Context.new(klass.method(:initialize), klass, obj)
+    context = RubyOnRun::Context.new(klass.method(:initialize), klass, obj, nil) # PARENT CONTEXT IS NIL!!!
     context.add_binding create_binding(klass.method(:initialize).local_names, args)
     @vm.interpret context  # PARENT!!!
     obj

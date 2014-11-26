@@ -131,17 +131,17 @@ module InstructionInterpretation
   end 
   
   def push_local_depth(args, context)
-    context = context
-    args[:depth].times { context = context.parent }
-    keys = context.locals.keys
-    context.push(context.locals[keys[args[:index]]])
+    ancestor_context = context
+    args[:depth].times { ancestor_context = ancestor_context.parent }
+    context.push(ancestor_context.binding[ancestor_context.locals[args[:index]]])
+    # p 'binding in ancestor context: ' + ancestor_context.binding.to_s
   end 
 
   def set_local_depth(args, context)
-    context = context
-    args[:depth].times { context = context.parent }
-    key = context.locals.keys[args[:index]]
-    context.locals[key] = context.top
+    ancestor_context = context
+    args[:depth].times { ancestor_context = ancestor_context.parent }
+    ancestor_context.binding[ancestor_context.locals[args[:index]]] = context.top
+    # p 'binding in ancestor context: ' + ancestor_context.binding.to_s
   end
   
   def passed_arg(args, context)
@@ -304,12 +304,11 @@ module InstructionInterpretation
 
   def create_block(args, context)
     code = context.literals[args[:literal]]
-    p code
     context.push RubyOnRun::BlockEnvironment.new(code, self, context)
   end
 
   def send_stack_with_block(args, parameters = [], context)
-    debug = true
+    debug = false
     block = context.pop
     args[:count].times { parameters << context.pop}
     receiver = context.pop
@@ -326,7 +325,7 @@ module InstructionInterpretation
       # heavy lifting here
       # method lookup and shit
       code = receiver.klass.method(message)
-      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver)
+      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context)
       interpret(new_context)
     else
       # primitive for now
@@ -334,6 +333,7 @@ module InstructionInterpretation
       receiver.send(message, *parameters)
     end
     p 'result = ' + result.to_s if debug 
+    evaluate_block(result, parameters, block)
     context.push result
   end
 
@@ -353,7 +353,7 @@ module InstructionInterpretation
       # heavy lifting here
       # method lookup and shit
       code = receiver.klass.method(message)
-      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver)
+      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context)
       interpret(new_context)
     else
       # primitive for now
@@ -365,6 +365,14 @@ module InstructionInterpretation
   end
 
   private
+  
+  def evaluate_block(enumerator, parameters, block)
+    enumerator.each do |x|      
+      new_context = RubyOnRun::Context.new(block.compiled_code, nil, nil, block.parent_context)
+      new_context.binding[new_context.locals[0]] = x      
+      interpret(new_context)
+    end
+  end
 
   def resolve_parameters(parameters, context)
     parameters.map{ |p| resolve_receiver(p, context) }

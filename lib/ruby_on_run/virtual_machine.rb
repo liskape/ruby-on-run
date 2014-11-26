@@ -3,7 +3,7 @@ class RubyOnRun::VirtualMachine
 
   include InstructionInterpretation
 
-  DEBUG = true
+  DEBUG = false
 
   def initialize(stream)
     @code = RubyOnRun::Bytecode.load(stream).body # compiledCode
