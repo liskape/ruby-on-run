@@ -304,7 +304,37 @@ module InstructionInterpretation
 
   def create_block(args, context)
     code = context.literals[args[:literal]]
-    context.push RubyOnRun::BlockEnvironment.new(code, self)
+    p code
+    context.push RubyOnRun::BlockEnvironment.new(code, self, context)
+  end
+
+  def send_stack_with_block(args, parameters = [], context)
+    debug = true
+    block = context.pop
+    args[:count].times { parameters << context.pop}
+    receiver = context.pop
+    message  = context.literals[args[:literal]]    
+    receiver = resolve_receiver(receiver, context)    
+    parameters = resolve_parameters(parameters, context)
+    if debug
+      p 'block = ' + block.to_s
+      p 'receiver = ' + receiver.to_s 
+      p 'parameters = ' + parameters.to_s
+      p 'message = ' + message.to_s
+    end
+    result = if receiver.is_a? RubyOnRun::RObject
+      # heavy lifting here
+      # method lookup and shit
+      code = receiver.klass.method(message)
+      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver)
+      interpret(new_context)
+    else
+      # primitive for now
+      # p receiver.methods
+      receiver.send(message, *parameters)
+    end
+    p 'result = ' + result.to_s if debug 
+    context.push result
   end
 
   def send_stack(args, parameters = [], context)
@@ -333,7 +363,6 @@ module InstructionInterpretation
     p 'result = ' + result.to_s if debug 
     context.push result
   end
-
 
   private
 

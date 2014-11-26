@@ -3,7 +3,7 @@ class RubyOnRun::VirtualMachine
 
   include InstructionInterpretation
 
-  DEBUG = false
+  DEBUG = true
 
   def initialize(stream)
     @code = RubyOnRun::Bytecode.load(stream).body # compiledCode
@@ -12,7 +12,8 @@ class RubyOnRun::VirtualMachine
   end
 
   def run
-    interpret RubyOnRun::Context.new(@code, nil, MainContext.new)
+    @main_context = MainContext.new
+    interpret RubyOnRun::Context.new(@code, nil, @main_context, nil)
   end
 
   def interpret(context)

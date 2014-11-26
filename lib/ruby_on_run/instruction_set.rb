@@ -24,7 +24,7 @@ module RubyOnRun
             end
 
             define_method :print do
-              spaces = " " * (20 - name.size)
+              spaces = " " * (30 - name.size)
               puts "#{name}#{spaces}#{param_hash}"
 
             end
