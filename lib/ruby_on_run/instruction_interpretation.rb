@@ -67,9 +67,9 @@ module InstructionInterpretation
     if context.parent.nil?
       @return_value = top
       context = nil
-    else
-      context.parent.push(top)
-      context = context.parent
+    else      
+      # p 'parent top: ' + context.parent.top.to_s
+      context.parent.push(top)      
     end
   end
   
@@ -264,6 +264,8 @@ module InstructionInterpretation
   end
 
   def string_dup(args, context)
+    top = context.pop
+    context.push(top.clone)
   end
 
   def allow_private(args, context)
@@ -342,19 +344,17 @@ module InstructionInterpretation
       p 'parameters = ' + parameters.to_s
       p 'message = ' + message.to_s
     end
-    result = if receiver.is_a? RubyOnRun::RObject
+    if receiver.is_a? RubyOnRun::RObject
       # heavy lifting here
       # method lookup and shit
       code = receiver.klass.method(message)
       new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context)
-      interpret(new_context)
+      interpret(new_context) # result is pushed on parent context stack in ret instruction
     else
       # primitive for now
-      # p receiver.methods
-      receiver.send(message, *parameters)
-    end
-    p 'result = ' + result.to_s if debug 
-    context.push result
+      # p receiver.methods      
+      context.push receiver.send(message, *parameters)
+    end    
   end
 
   private

@@ -25,7 +25,7 @@ class RubyOnRun::VirtualMachine
       if DEBUG
         p 'top = ' + context.top.to_s 
         p 'locals = ' + context.locals.to_s
-        p 'binding = ' + context.binding.to_s
+        # p 'binding = ' + context.binding.to_s
         p '==========='
       end      
     end
