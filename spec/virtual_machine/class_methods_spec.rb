@@ -4,13 +4,14 @@ describe RubyOnRun::VirtualMachine do
 
     let(:file){ File.expand_path("../bytecode_samples/class_methods.bytecode", __FILE__) }
     let(:stream){ File.open(file).read }
-
-    pending
     
-    # specify do
-    #   RubyOnRun::VirtualMachine.new(stream).run
-
-    # end
+    specify do
+      pending
+      expect(STDOUT).to receive(:puts).with(12)
+      expect(STDOUT).to receive(:puts).with(13)
+      expect(STDOUT).to receive(:puts).with(14)
+      RubyOnRun::VirtualMachine.new(stream).run
+    end
   end
 
 end
