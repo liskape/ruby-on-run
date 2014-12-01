@@ -11,7 +11,7 @@ class RubyOnRun::BlockEnvironment
   def call_under(klass, scope, dummy)
     # zacit vykonavat @compiled_code.iseq
     # binding.pry
-    context = RubyOnRun::Context.new(@compiled_code, klass, klass, @parent_context)
+    context = RubyOnRun::Context.new(@compiled_code, klass, klass, @parent_context, {})
     @vm.interpret context
   end
 

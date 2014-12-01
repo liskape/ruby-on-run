@@ -1,5 +1,6 @@
-# require 'object'
-class RubyOnRun::RClass #< RubyOnRun::Object
+require_relative './object'
+
+class RubyOnRun::RClass < RubyOnRun::RObject
 
   @superclass     # inheritance
   @constant_table # constants
@@ -8,6 +9,7 @@ class RubyOnRun::RClass #< RubyOnRun::Object
   def initialize(vm)
     @vm = vm
     @method_table = {}
+    super(self)
   end
 
   def new(*args)
@@ -29,7 +31,7 @@ class RubyOnRun::RClass #< RubyOnRun::Object
 
   def _allocate(klass, *args)
     obj = RubyOnRun::RObject.new(klass)
-    context = RubyOnRun::Context.new(klass.method(:initialize), klass, obj, nil) # PARENT CONTEXT IS NIL!!!
+    context = RubyOnRun::Context.new(klass.method(:initialize), klass, obj, nil, {}) # PARENT CONTEXT IS NIL!!!
     context.add_binding create_binding(klass.method(:initialize).local_names, args)
     @vm.interpret context  # PARENT!!!
     obj

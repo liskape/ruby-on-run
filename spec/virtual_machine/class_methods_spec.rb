@@ -6,7 +6,6 @@ describe RubyOnRun::VirtualMachine do
     let(:stream){ File.open(file).read }
     
     specify do
-      pending
       expect(STDOUT).to receive(:puts).with(12)
       expect(STDOUT).to receive(:puts).with(13)
       expect(STDOUT).to receive(:puts).with(14)

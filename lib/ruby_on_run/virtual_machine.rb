@@ -13,7 +13,7 @@ class RubyOnRun::VirtualMachine
 
   def run
     @main_context = MainContext.new
-    interpret RubyOnRun::Context.new(@code, nil, @main_context, nil)
+    interpret RubyOnRun::Context.new(@code, nil, @main_context, nil, {})
   end
 
   def interpret(context)
@@ -43,6 +43,10 @@ class RubyOnRun::VirtualMachine
 
   def add_defn_method(method_name, compiled_code, scope, dunno)
     scope.define_method(method_name, compiled_code)
+  end
+
+  def attach_method(method_name, compiled_code, scope, _self)
+    _self.add_singleton_method method_name, compiled_code
   end
 
 

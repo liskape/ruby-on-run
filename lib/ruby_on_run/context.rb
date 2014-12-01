@@ -2,7 +2,7 @@
 class RubyOnRun::Context
   attr_accessor :literals, :stack, :bytecode_pointer, :parent, :locals, :constants, :instance, :method, :bytecode, :args, :self, :binding, :current_class
 
-  def initialize(compiled_code, current_class, selfie, parent)
+  def initialize(compiled_code, current_class, selfie, parent, binding)
     @compiled_code = compiled_code
     @current_class = current_class
     @self = selfie
@@ -11,7 +11,7 @@ class RubyOnRun::Context
     @bytecode_pointer = 0
     @bytecode = compiled_code.iseq
     @locals = compiled_code.local_names
-    @binding = {}
+    @binding = binding
     @parent = parent
   end
 

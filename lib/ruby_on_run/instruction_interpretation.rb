@@ -277,6 +277,7 @@ module InstructionInterpretation
   end
 
   def push_scope(args, context)
+    # what can be scope? 
     context.push context.current_class
   end
 
@@ -320,7 +321,7 @@ module InstructionInterpretation
       # heavy lifting here
       # method lookup and shit
       code = receiver.klass.method(message)
-      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context)
+      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context, {})
       interpret(new_context)
     else
       # primitive for now
@@ -336,7 +337,8 @@ module InstructionInterpretation
     debug = false
     args[:count].times { parameters << context.pop}
     receiver = context.pop
-    message  = context.literals[args[:literal]]    
+    message  = context.literals[args[:literal]]
+
     receiver = resolve_receiver(receiver, context)    
     parameters = resolve_parameters(parameters, context)
     if debug
@@ -344,24 +346,40 @@ module InstructionInterpretation
       p 'parameters = ' + parameters.to_s
       p 'message = ' + message.to_s
     end
-    if receiver.is_a? RubyOnRun::RObject
+    if receiver.class == RubyOnRun::RObject
       # heavy lifting here
       # method lookup and shit
       code = receiver.klass.method(message)
-      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context)
+      binding = create_binding(code, parameters)
+      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context, binding)
       interpret(new_context) # result is pushed on parent context stack in ret instruction
+    elsif receiver.class == RubyOnRun::RClass
+      if receiver.get_singleton_method(message) # dynamicaly added
+        code = receiver.get_singleton_method(message)
+        binding = create_binding(code, parameters)
+        new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context, binding)
+        interpret(new_context) # result is pushed on parent context stack in ret instruction
+      else
+        # should have precompiled methods
+        context.push receiver.send(message, *parameters)
+      end
     else
-      # primitive for now
-      # p receiver.methods      
+        # primitive for now
       context.push receiver.send(message, *parameters)
+
     end    
   end
 
+
   private
+
+  def create_binding(code, parameters)
+    Hash[code.local_names.zip(parameters)]
+  end
   
   def evaluate_block(enumerator, parameters, block)
     enumerator.each do |x|      
-      new_context = RubyOnRun::Context.new(block.compiled_code, nil, nil, block.parent_context)
+      new_context = RubyOnRun::Context.new(block.compiled_code, nil, nil, block.parent_context, {})
       new_context.binding[new_context.locals[0]] = x      
       interpret(new_context)
     end

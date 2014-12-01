@@ -6,6 +6,7 @@ class RubyOnRun::RObject
     @klass = klass
     @allow_private = false
     @instance_variables = {}
+    @singleton_methods = {}
   end
 
   def set_instance_variable(name, value)
@@ -16,6 +17,13 @@ class RubyOnRun::RObject
     @instance_variables[name]
   end
 
+  def add_singleton_method(name, code)
+    @singleton_methods[name] = code
+  end
+
+  def get_singleton_method(name)
+    @singleton_methods[name]
+  end
   
   @flags        # for GC
   @class
