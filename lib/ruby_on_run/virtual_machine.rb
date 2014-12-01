@@ -3,12 +3,12 @@ class RubyOnRun::VirtualMachine
 
   include InstructionInterpretation
 
-  DEBUG = false
+  DEBUG = true
 
   def initialize(stream)
     @code = RubyOnRun::Bytecode.load(stream).body # compiledCode
     # @vm_stack = RubyOnRun::Stack.new context
-    @classes = {} # HEAP in the future
+    @classes = { Range: RubyOnRun::RRange } # HEAP in the future
   end
 
   def run
@@ -50,7 +50,7 @@ class RubyOnRun::VirtualMachine
   end
 
 
-  class MainContext # RClass
+  class MainContext < RubyOnRun::RObject
 
     attr_accessor :allow_private
 
