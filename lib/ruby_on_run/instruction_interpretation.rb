@@ -372,7 +372,6 @@ module InstructionInterpretation
         context.push receiver.send(message, *parameters)
       end
     else # VM methods + bultin classes
-      binding.pry
       context.push receiver.send(message, *parameters)
     end    
   end
