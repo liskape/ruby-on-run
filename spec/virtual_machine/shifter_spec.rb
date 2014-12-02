@@ -1,4 +1,4 @@
-describe RubyOnRun::VirtualMachine do
+describe RubyOnRun::VM::VirtualMachine do
 
   context 'instance variables' do
 
@@ -9,7 +9,7 @@ describe RubyOnRun::VirtualMachine do
       expect(STDOUT).to receive(:puts).with(1)
       expect(STDOUT).to receive(:puts).with(2)
       expect(STDOUT).to receive(:puts).with(3)
-      expect(RubyOnRun::VirtualMachine.new(stream).run).to eq true      
+      expect(RubyOnRun::VM::VirtualMachine.new(stream).run).to eq true      
     end
   end
 

@@ -1,9 +1,9 @@
-describe RubyOnRun::Bytecode do
+describe RubyOnRun::VM::Bytecode do
 
   context 'expression only' do
     let(:stream) { File.open('spec/bytecode_samples/sample1.bytecode').read }
-    let(:bytecode) { RubyOnRun::Bytecode.load(stream) }
-    let(:bytecode_data) { RubyOnRun::Bytecode.load(stream).body }
+    let(:bytecode) { RubyOnRun::VM::Bytecode.load(stream) }
+    let(:bytecode_data) { RubyOnRun::VM::Bytecode.load(stream).body }
 
     it 'has magic number' do
       expect(bytecode.magic).to eq "!RBIX"
@@ -41,8 +41,8 @@ describe RubyOnRun::Bytecode do
 
   context 'expression and local variables' do
     let(:stream) { File.open('spec/bytecode_samples/expr2.bytecode').read }
-    let(:bytecode) { RubyOnRun::Bytecode.load(stream) }
-    let(:bytecode_data) { RubyOnRun::Bytecode.load(stream).body }
+    let(:bytecode) { RubyOnRun::VM::Bytecode.load(stream) }
+    let(:bytecode_data) { RubyOnRun::VM::Bytecode.load(stream).body }
 
     it 'has magic number' do
       expect(bytecode.magic).to eq "!RBIX"
@@ -80,8 +80,8 @@ describe RubyOnRun::Bytecode do
 
   context 'classes' do
     let(:stream) { File.open('spec/bytecode_samples/my_class.bytecode').read }
-    let(:bytecode) { RubyOnRun::Bytecode.load(stream) }
-    let(:bytecode_data) { RubyOnRun::Bytecode.load(stream).body }
+    let(:bytecode) { RubyOnRun::VM::Bytecode.load(stream) }
+    let(:bytecode_data) { RubyOnRun::VM::Bytecode.load(stream).body }
     let(:class_data) { bytecode_data.literals[2] }
     let(:method_data) { class_data.literals[1] }
 
@@ -105,8 +105,8 @@ describe RubyOnRun::Bytecode do
 
   context 'if statement' do
     let(:stream) { File.open('spec/bytecode_samples/if_statement.bytecode').read }
-    let(:bytecode) { RubyOnRun::Bytecode.load(stream) }
-    let(:bytecode_data) { RubyOnRun::Bytecode.load(stream).body }
+    let(:bytecode) { RubyOnRun::VM::Bytecode.load(stream) }
+    let(:bytecode_data) { RubyOnRun::VM::Bytecode.load(stream).body }
 
     specify do
       expect(bytecode_data.iseq).

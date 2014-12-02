@@ -1,4 +1,4 @@
-describe RubyOnRun::VirtualMachine do
+describe RubyOnRun::VM::VirtualMachine do
 
   context 'recursion' do
 
@@ -8,7 +8,7 @@ describe RubyOnRun::VirtualMachine do
     specify do
       expect(STDOUT).to receive(:puts).with(15)
       expect(STDOUT).to receive(:puts).with(9)
-      RubyOnRun::VirtualMachine.new(stream).run
+      RubyOnRun::VM::VirtualMachine.new(stream).run
     end
   end
 

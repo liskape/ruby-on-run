@@ -1,4 +1,4 @@
-describe RubyOnRun::VirtualMachine do
+describe RubyOnRun::VM::VirtualMachine do
 
   context 'inheritance, super, private method' do
 

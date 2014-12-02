@@ -1,4 +1,4 @@
-describe RubyOnRun::VirtualMachine do
+describe RubyOnRun::VM::VirtualMachine do
 
   context 'for loop' do
 
@@ -7,7 +7,7 @@ describe RubyOnRun::VirtualMachine do
   
     specify 'program output 6 via puts' do
       expect(STDOUT).to receive(:puts).with(6)
-      expect(RubyOnRun::VirtualMachine.new(stream).run).to eq true      
+      expect(RubyOnRun::VM::VirtualMachine.new(stream).run).to eq true      
     end
   end
 
