@@ -1,4 +1,4 @@
-describe RubyOnRun::VirtualMachine do
+describe RubyOnRun::VM::VirtualMachine do
 
   context 'class methods' do
 
@@ -9,7 +9,7 @@ describe RubyOnRun::VirtualMachine do
       expect(STDOUT).to receive(:puts).with(12)
       expect(STDOUT).to receive(:puts).with(13)
       expect(STDOUT).to receive(:puts).with(14)
-      RubyOnRun::VirtualMachine.new(stream).run
+      RubyOnRun::VM::VirtualMachine.new(stream).run
     end
   end
 

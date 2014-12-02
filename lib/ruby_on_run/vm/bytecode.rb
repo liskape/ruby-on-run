@@ -1,7 +1,7 @@
 # https://github.com/rubinius/rubinius-compiler/blob/2.0/lib/rubinius/compiler/compiled_file.rb
 require 'ostruct'
 
-class RubyOnRun::Bytecode < Struct.new(:magic, :signature, :version, :stream)
+class RubyOnRun::VM::Bytecode < Struct.new(:magic, :signature, :version, :stream)
 
   CompiledCode        = Class.new OpenStruct
   InstructionSequence = Class.new Array

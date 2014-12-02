@@ -1,4 +1,4 @@
-module InstructionInterpretation
+module RubyOnRun::VM::InstructionInterpretation
 
   attr_accessor :return_value
 
@@ -7,7 +7,6 @@ module InstructionInterpretation
   end
 
   def noop(args, context)
-  
   end
   
   def push_nil(args, context)
@@ -137,56 +136,8 @@ module InstructionInterpretation
     # p 'binding in ancestor context: ' + ancestor_context.binding.to_s
   end
   
-  def passed_arg(args, context)
-  
-  end
-  
-  def push_current_exception(args, context)
-  
-  end
-  
-  def clear_exception(args, context)
-  
-  end
-  
-  def push_exception_state(args, context)
-  
-  end
-  
-  def restore_exception_state(args, context)
-  
-  end
-  
-  def raise_exc(args, context)
-  
-  end
-  
-  def setup_unwind(args, context)
-  
-  end
-  
-  def pop_unwind(args, context)
-  
-  end
-  
-  def raise_return(args, context)
-  
-  end
-  
-  def ensure_return(args, context)
-  
-  end
-  
-  def raise_break(args, context)
-  
-  end
-  
-  def reraise(args, context)
-  
-  end
-
   def make_array(args, context)
-    a = RubyOnRun::RArray.new
+    a = RubyOnRun::Builtin::RArray.new
     args[:count].times { a.push(context.pop) }
     a.reverse!
     context.push(a)
@@ -293,9 +244,6 @@ module InstructionInterpretation
     context.current_class = _module
   end
 
-  def set_stack_local(args, context)
-  end
-
   def push_stack_local(args, context)
     true
   end
@@ -307,7 +255,7 @@ module InstructionInterpretation
 
   def create_block(args, context)
     code = context.literals[args[:literal]]
-    context.push RubyOnRun::BlockEnvironment.new(code, self, context)
+    context.push RubyOnRun::VM::BlockEnvironment.new(code, self, context)
   end
 
   def send_stack_with_block(args, parameters = [], context)
@@ -324,11 +272,11 @@ module InstructionInterpretation
       p 'parameters = ' + parameters.to_s
       p 'message = ' + message.to_s
     end
-    result = if receiver.is_a? RubyOnRun::RObject
+    result = if receiver.is_a? RubyOnRun::VM::RObject
       # heavy lifting here
       # method lookup and shit
       code = receiver.klass.method(message)
-      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context, {})
+      new_context = RubyOnRun::VM::Context.new(code, receiver.klass, receiver, context, {})
       interpret(new_context)
     else
       # primitive for now
@@ -354,18 +302,18 @@ module InstructionInterpretation
       p 'message = ' + message.to_s
     end
 
-    if receiver.class == RubyOnRun::RObject
+    if receiver.class == RubyOnRun::VM::RObject
       # heavy lifting here
       # method lookup and shit
       code = receiver.klass.method(message)
       _binding = create_binding(code, parameters)
-      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context, _binding)
+      new_context = RubyOnRun::VM::Context.new(code, receiver.klass, receiver, context, _binding)
       interpret(new_context) # result is pushed on parent context stack in ret instruction
-    elsif receiver.class == RubyOnRun::RClass
+    elsif receiver.class == RubyOnRun::VM::RClass
       if receiver.get_singleton_method(message) # dynamicaly added
         code = receiver.get_singleton_method(message)
         _binding = create_binding(code, parameters)
-        new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context, _binding)
+        new_context = RubyOnRun::VM::Context.new(code, receiver.klass, receiver, context, _binding)
         interpret(new_context) # result is pushed on parent context stack in ret instruction
       else
         # should have precompiled methods
@@ -385,7 +333,7 @@ module InstructionInterpretation
   
   def evaluate_block(enumerator, parameters, block)
     enumerator.each do |x|      
-      new_context = RubyOnRun::Context.new(block.compiled_code, nil, nil, block.parent_context, {})
+      new_context = RubyOnRun::VM::Context.new(block.compiled_code, nil, nil, block.parent_context, {})
       new_context.binding[new_context.locals[0]] = x      
       interpret(new_context)
     end

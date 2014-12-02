@@ -2,6 +2,6 @@
 
 require 'ruby_on_run'
 
-vm = RubyOnRun::VirtualMachine.new nil
+vm = RubyOnRun::VM::VirtualMachine.new nil
 
 puts 'our VM'

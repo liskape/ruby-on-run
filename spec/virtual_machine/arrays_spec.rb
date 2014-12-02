@@ -1,4 +1,4 @@
-describe RubyOnRun::VirtualMachine do
+describe RubyOnRun::VM::VirtualMachine do
 
   context 'arrays' do
 
@@ -6,7 +6,7 @@ describe RubyOnRun::VirtualMachine do
     let(:stream){ File.open(file).read }
 
     specify 'return value is true' do
-      machine = RubyOnRun::VirtualMachine.new(stream)
+      machine = RubyOnRun::VM::VirtualMachine.new(stream)
       expect(machine.run).to eq true
     end
   end
@@ -17,7 +17,7 @@ describe RubyOnRun::VirtualMachine do
 
     specify 'program output 5 via puts' do
       expect(STDOUT).to receive(:puts).with(5)
-      RubyOnRun::VirtualMachine.new(stream).run
+      RubyOnRun::VM::VirtualMachine.new(stream).run
     end
   end
 

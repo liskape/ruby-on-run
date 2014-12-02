@@ -1,4 +1,4 @@
-describe RubyOnRun::VirtualMachine do
+describe RubyOnRun::VM::VirtualMachine do
 
   context 'if statements with output' do
 
@@ -7,7 +7,7 @@ describe RubyOnRun::VirtualMachine do
 
     specify 'program output YES via puts' do
       expect(STDOUT).to receive(:puts).with('YES')
-      RubyOnRun::VirtualMachine.new(stream).run
+      RubyOnRun::VM::VirtualMachine.new(stream).run
     end
   end
 
