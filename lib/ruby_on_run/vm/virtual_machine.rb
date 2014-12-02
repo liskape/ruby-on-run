@@ -12,22 +12,34 @@ module RubyOnRun::VM
       @classes = { Range: RubyOnRun::Builtin::RRange } # HEAP in the future
     end
 
+    def compile_bultin_classes
+       @classes[:ParentObject] = RubyOnRun::Builtin::Object.new
+    end
+
     def run
+      compile_bultin_classes
       main = MainContext.new(RubyOnRun::Builtin::Object.new)
       interpret RubyOnRun::VM::Context.new(@code, nil, main, nil, {})
     end
 
     def interpret(context)
+
+      if context.compiled_code.is_a? RubyOnRun::Builtin::NativeCompiledCode
+        native_code({}, context)
+        ret({}, context)
+        return @return_value
+      end
+
       while true
         instruction = context.next_instruction
         break if instruction.nil?
         instruction.print if DEBUG
         send instruction.name, instruction.param_hash, context
         if DEBUG
-          p 'top = ' + context.top.to_s 
-          p 'locals = ' + context.locals.to_s
+          # p 'top = ' + context.top.to_s 
+          # p 'locals = ' + context.locals.to_s
           # p 'binding = ' + context.binding.to_s
-          p '==========='
+          # p '==========='
         end      
       end
       @return_value
@@ -38,7 +50,7 @@ module RubyOnRun::VM
       @classes[class_name]
     end
 
-    def add_defn_method(method_name, compiled_code, scope, dunno)
+    def add_defn_method(method_name, compiled_code, scope, method_visibility)
       scope.define_method(method_name, compiled_code)
     end
 
@@ -51,9 +63,9 @@ module RubyOnRun::VM
 
       attr_accessor :allow_private
 
-      def Range
-        RubyOnRun::Builtin::RRange
-      end 
+      # def Range
+      #   RubyOnRun::Builtin::RRange
+      # end 
     
     end
   end

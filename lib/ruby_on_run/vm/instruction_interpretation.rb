@@ -22,7 +22,7 @@ module RubyOnRun::VM::InstructionInterpretation
   end
   
   def push_int(args, context)
-    context.push args[:number]
+    context.push RubyOnRun::Builtin::RFixnum.new(args[:number])
   end
   
   def push_self(args, context)
@@ -37,7 +37,12 @@ module RubyOnRun::VM::InstructionInterpretation
   
   def push_literal(args, context)
     literal = context.literals[args[:literal]]
-    context.push(literal)
+    if literal.is_a? String
+      context.push RubyOnRun::Builtin::RString.new(literal)
+    else
+      # symbols
+      context.push(literal)
+    end
   end
   
   def goto(args, context)
@@ -231,7 +236,7 @@ module RubyOnRun::VM::InstructionInterpretation
   end
 
   def push_rubinius(args, context)
-    context.push self
+    context.push self # VirtualMachine takes care of this
   end
 
   def push_scope(args, context)
@@ -294,6 +299,7 @@ module RubyOnRun::VM::InstructionInterpretation
     receiver = context.pop
     message  = context.literals[args[:literal]]
 
+
     receiver = resolve_receiver(receiver, context)    
     parameters = resolve_parameters(parameters, context)
     if debug
@@ -302,30 +308,44 @@ module RubyOnRun::VM::InstructionInterpretation
       p 'message = ' + message.to_s
     end
 
-    if receiver.class == RubyOnRun::VM::RObject
-      # heavy lifting here
-      # method lookup and shit
-      code = receiver.klass.method(message)
+    if receiver.is_a? RubyOnRun::Builtin
+      binding.pry
+      true
+    elsif receiver.is_a?(RubyOnRun::VM::VirtualMachine) || receiver.is_a?(RubyOnRun::VM::BlockEnvironment)
+      context.push receiver.send(message, *parameters)
+    else
+      code = receiver.get_singleton_method(message)
+      code ||= find_method_in_chain(receiver.klass, message, context)
+
       _binding = create_binding(code, parameters)
       new_context = RubyOnRun::VM::Context.new(code, receiver.klass, receiver, context, _binding)
       interpret(new_context) # result is pushed on parent context stack in ret instruction
-    elsif receiver.class == RubyOnRun::VM::RClass
-      if receiver.get_singleton_method(message) # dynamicaly added
-        code = receiver.get_singleton_method(message)
-        _binding = create_binding(code, parameters)
-        new_context = RubyOnRun::VM::Context.new(code, receiver.klass, receiver, context, _binding)
-        interpret(new_context) # result is pushed on parent context stack in ret instruction
-      else
-        # should have precompiled methods
-        context.push receiver.send(message, *parameters)
-      end
-    else # VM methods + bultin classes
-      context.push receiver.send(message, *parameters)
-    end    
+    end
   end
 
+  # not in rubinius
+  def native_code(args, context)
+    # in future NativeCompiledCode will have this instruction + ret
+    # maybe send to kernel or something
+    context.push context.compiled_code.method.call(*context.binding.values.compact)
+  end
 
   private
+
+  # called as native code from ParentObject
+  def method_visibility(arg)
+    true
+  end
+
+  def find_method_in_chain(klass, method_name, context)
+    raise "No method error #{method_name}" if klass.nil?
+
+    if klass.method(method_name)
+      klass.method(method_name)
+    else
+      find_method_in_chain(resolve_receiver(klass.superklass, context), method_name, context)
+    end
+  end
 
   def create_binding(code, parameters)
     Hash[code.local_names.zip(parameters)]
@@ -345,8 +365,9 @@ module RubyOnRun::VM::InstructionInterpretation
   end
 
   def resolve_receiver(receiver, context)
+
     if receiver.is_a? Symbol
-    
+      # that means Constant
       return @classes[receiver] if receiver[0].upcase == receiver[0] #its a our class!
 
       while (true)

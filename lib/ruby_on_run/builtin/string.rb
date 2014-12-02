@@ -1,17 +1,15 @@
 require_relative './builtin'
 
 module RubyOnRun::Builtin
-  class RRange
+  class RString < String
     
     include RubyOnRun::Builtin::Builtin
-    extend RubyOnRun::Builtin::Builtin
 
-    def new(*args)
-      
+    def +(other)
+      RString.new super(other)
     end
 
-    def self.allocate()
-      new
+    def allocate    
     end
   end
 end
