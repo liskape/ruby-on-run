@@ -31,9 +31,14 @@ class RubyOnRun::RClass < RubyOnRun::RObject
 
   def _allocate(klass, *args)
     obj = RubyOnRun::RObject.new(klass)
-    context = RubyOnRun::Context.new(klass.method(:initialize), klass, obj, nil, {}) # PARENT CONTEXT IS NIL!!!
-    context.add_binding create_binding(klass.method(:initialize).local_names, args)
-    @vm.interpret context  # PARENT!!!
+
+    # has initialize method
+    if klass.method(:initialize)
+      context = RubyOnRun::Context.new(klass.method(:initialize), klass, obj, nil, {}) # PARENT CONTEXT IS NIL!!!
+      context.add_binding create_binding(klass.method(:initialize).local_names, args)
+      @vm.interpret context  # PARENT!!!
+    end
+    
     obj
   end
 

@@ -186,7 +186,7 @@ module InstructionInterpretation
   end
 
   def make_array(args, context)
-    a = []
+    a = RubyOnRun::RArray.new
     args[:count].times { a.push(context.pop) }
     a.reverse!
     context.push(a)
@@ -235,10 +235,13 @@ module InstructionInterpretation
   
   def find_const(args, context)
     mod = context.pop
-    # p context.literals[args[:literal]]
     if mod.methods.include?(context.literals[args[:literal]])
+      # this means constant registered inside this module
       context.push(mod.send(context.literals[args[:literal]]))
     else
+      #go up
+      context.push context.literals[args[:literal]]
+    # else
       # TODO push NameError
     end
   end
@@ -261,6 +264,10 @@ module InstructionInterpretation
 
   def meta_push_2(args, context)
     context.push(2)
+  end
+
+  def meta_push_neg_1(args, context)
+    context.push(-1)
   end
 
   def string_dup(args, context)
@@ -346,27 +353,26 @@ module InstructionInterpretation
       p 'parameters = ' + parameters.to_s
       p 'message = ' + message.to_s
     end
+
     if receiver.class == RubyOnRun::RObject
       # heavy lifting here
       # method lookup and shit
       code = receiver.klass.method(message)
-      binding = create_binding(code, parameters)
-      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context, binding)
+      _binding = create_binding(code, parameters)
+      new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context, _binding)
       interpret(new_context) # result is pushed on parent context stack in ret instruction
     elsif receiver.class == RubyOnRun::RClass
       if receiver.get_singleton_method(message) # dynamicaly added
         code = receiver.get_singleton_method(message)
-        binding = create_binding(code, parameters)
-        new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context, binding)
+        _binding = create_binding(code, parameters)
+        new_context = RubyOnRun::Context.new(code, receiver.klass, receiver, context, _binding)
         interpret(new_context) # result is pushed on parent context stack in ret instruction
       else
         # should have precompiled methods
         context.push receiver.send(message, *parameters)
       end
-    else
-        # primitive for now
+    else # VM methods + bultin classes
       context.push receiver.send(message, *parameters)
-
     end    
   end
 
@@ -393,7 +399,7 @@ module InstructionInterpretation
   def resolve_receiver(receiver, context)
     if receiver.is_a? Symbol
     
-      return @classes[receiver] if receiver[0].upcase == receiver[0]
+      return @classes[receiver] if receiver[0].upcase == receiver[0] #its a our class!
 
       while (true)
         if !context.binding.has_key?(receiver)

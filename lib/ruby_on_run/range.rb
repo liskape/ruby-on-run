@@ -1,5 +1,11 @@
 class RubyOnRun::RRange
-  def self.allocate()    
-    Range.allocate  
+
+
+  # def initialize(left, right)
+  #   @range = (left..right)
+  # end
+
+  def self.allocate()
+    Range.allocate
   end
 end

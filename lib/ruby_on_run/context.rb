@@ -1,6 +1,6 @@
 # class representing a frame in VMStack
 class RubyOnRun::Context
-  attr_accessor :literals, :stack, :bytecode_pointer, :parent, :locals, :constants, :instance, :method, :bytecode, :args, :self, :binding, :current_class
+  attr_accessor :literals, :stack, :bytecode_pointer, :parent, :locals, :constants, :instance, :method, :bytecode, :args, :self, :binding, :current_class, :compiled_code
 
   def initialize(compiled_code, current_class, selfie, parent, binding)
     @compiled_code = compiled_code
