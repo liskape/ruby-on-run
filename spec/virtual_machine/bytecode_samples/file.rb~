@@ -1,0 +1,7 @@
+File.write("files/file.txt", "h\ne\nl\nl\no\n")
+f = File.open("files/file.txt", "r")
+s = ''
+f.each_line do |line|
+  s += line
+end
+puts s
