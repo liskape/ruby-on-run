@@ -5,7 +5,7 @@ require_relative 'creature'
 class Solver
   attr_accessor :formula_length, :pop_size, :gen_count
 
-  MUT_CHANCE = 5
+  MUT_CHANCE = 10
 
   def initialize(instance, pop_size, gen_count)
     @instance = instance
@@ -65,32 +65,35 @@ class Solver
   end
 
   def iterate
-    @creatures = @creatures.sort_by(&:fitness).reverse
-    selected = []
-    for i in 0..(@pop_size / 2) - 1
-      selected << @creatures[i]
-    end
-    breed(selected)
+    @creatures = @creatures.sort_by(&:fitness).reverse    
+    breed(part_selection(@creatures, 4), 2)
     mutate(@creatures)
     evaluate_creatures
     p 'Best: ' + @instance.best_satisfied_count.to_s + '/' + @formula_length.to_s if @instance.best_satisfied_count > @last_best
     @last_best = @instance.best_satisfied_count
   end
-
-  def breed(selected)
-    @creatures = []
-    (selected.size * 2).times do
-      a = rand(0..selected.size - 1)
-      b = rand(0..selected.size - 1)
-      while a == b
-        a = rand(0..selected.size - 1)
-      end
-      @creatures << Creature.new(combine(selected[a].solution, selected[b].solution, rand(0..@var_count)))
+  
+  def part_selection(creatures, divider)
+    selected = []
+    for i in 0..(@pop_size / divider) - 1
+      selected << @creatures[i]
     end
+	selected
   end
 
-  def mutate(_creatures)
-    @creatures.each do |c|
+  def breed(selected, multiplier)
+    @creatures = []
+	multiplier.times do
+		for i in 0..selected.size - 1
+		  a = rand(0..selected.size - 1)
+		  a = (a + 1) % selected.size if a == i 
+		  @creatures << Creature.new(combine(selected[a].solution, selected[i].solution, rand(0..@var_count)))
+		end 
+    end	
+  end
+
+  def mutate(creatures)
+    creatures.each do |c|
       next if rand(0..99) <= MUT_CHANCE
       (c.solution.size / 10).times do
         r = rand(0..c.solution.size - 1)
