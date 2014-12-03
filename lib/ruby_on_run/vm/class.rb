@@ -15,7 +15,12 @@ module RubyOnRun::VM
       @vm = vm
       @superklass = superklass
       @method_table = {}
-      super(self) # why self? because fuck you, thats why
+
+      # should by Constant :Class <- but we dont have bootstrapped
+      # we dont support so much reflection
+      # classes Object and Class are closed
+      # this way it searches here as it would in Class class, but ends here
+      super(self)
     end
 
     def new(*args)
@@ -30,6 +35,7 @@ module RubyOnRun::VM
       @method_table[name] || native_method(name)
     end
 
+    # hack for method defined by class Class
     def native_method(name)
       RubyOnRun::Builtin::NativeCompiledCode.new original_method(name)
 
@@ -46,13 +52,26 @@ module RubyOnRun::VM
       obj = RubyOnRun::VM::RObject.new(klass)
 
       # has initialize method that is dynamically added
-      if klass.method(:initialize) && !klass.method(:initialize).is_a?(RubyOnRun::Builtin::NativeCompiledCode) 
-        context = RubyOnRun::VM::Context.new(klass.method(:initialize), klass, obj, nil, {}) # PARENT CONTEXT IS NIL!!!
-        context.add_binding create_binding(klass.method(:initialize).local_names, args)
+      initialize_method = find_initialize(klass)
+      if initialize_method
+        context = RubyOnRun::VM::Context.new(initialize_method, klass, obj, nil, {}) # PARENT CONTEXT IS NIL!!!
+        context.add_binding create_binding(initialize_method.local_names, args)
         @vm.interpret context  # PARENT!!!
       end
-      
+
       obj
+    end
+
+    # TODO dry out with method lookup in invoke_instruction
+    def find_initialize(klass)
+      return false if klass.nil?
+      initialize_method = klass.method(:initialize)
+      
+      if initialize_method.is_a?(RubyOnRun::Builtin::NativeCompiledCode)
+        find_initialize(@vm.classes[klass.superklass])
+      else
+        initialize_method
+      end
     end
 
     def create_binding(keys, values)
