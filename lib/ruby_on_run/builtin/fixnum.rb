@@ -1,5 +1,5 @@
 require_relative './builtin'
 
-class Array
+class Fixnum
   include RubyOnRun::Builtin::Builtin
 end

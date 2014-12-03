@@ -7,7 +7,6 @@ class RubyOnRun::VM::Bytecode < Struct.new(:magic, :signature, :version, :stream
   InstructionSequence = Class.new Array
   Tuple               = Class.new Array
 
-
   ##
   # From a stream-like object +stream+ load the data in and return a
   # CompiledFile object.

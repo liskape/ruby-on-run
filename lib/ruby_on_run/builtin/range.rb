@@ -1,8 +1,10 @@
-module RubyOnRun::Builtin
-  class RRange
+require_relative './builtin'
 
-    def self.allocate()
-      Range.allocate
-    end
+module RubyOnRun::Builtin
+  class RRange < Range
+    
+    include RubyOnRun::Builtin::Builtin
+    extend RubyOnRun::Builtin::Builtin
+
   end
 end
