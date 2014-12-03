@@ -26,6 +26,9 @@ module RubyOnRun::VM
     def get_singleton_method(name)
       @singleton_methods[name]
     end
+
+    def private
+    end
     
     @flags        # for GC
   end

@@ -57,6 +57,22 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
     context.push context.compiled_code.method.call(*context.binding.values.compact)
   end
 
+  def send_method(args, context)
+    send_stack(args.merge(count: 0), context)
+  end
+
+  def zsuper(args, context)
+    message  = context.literals[args[:literal]]
+    receiver = context.pop
+
+    # TODO arity
+    code = find_method_in_chain(resolve_receiver(receiver.klass.superklass, context), message, context)
+    _binding = create_binding(code, [])
+    
+    new_context = RubyOnRun::VM::Context.new(code, receiver.klass, receiver, context, _binding)
+    interpret(new_context) # result is pushed on parent context stack in ret instruction
+  end
+    
   private
   
   # method lookup in ancesstor chain
@@ -87,6 +103,8 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
     parameters.reverse!
   end
 
+  # TODO: its job of context
+  # tell dont ask is violated here
   def resolve_receiver(receiver, context)
 
     if receiver.is_a? Symbol

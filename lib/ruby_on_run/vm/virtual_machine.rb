@@ -15,12 +15,21 @@ module RubyOnRun::VM
     end
 
     def compile_bultin_classes
-       @classes[:ParentObject] = RubyOnRun::Builtin::Object.new
+      file =  File.expand_path('lib/ruby_on_run/bootstrap/array.bytecode')
+      stream =  File.open(file).read
+      code = RubyOnRun::VM::Bytecode.load(stream).body
+      main = RubyOnRun::VM::RObject.new(RubyOnRun::Builtin::Object.new)
+      interpret RubyOnRun::VM::Context.new(code, nil, main, nil, {})
+      @classes[:ParentObject] = RubyOnRun::Builtin::Object.new
     end
 
     def run
       main = RubyOnRun::VM::RObject.new(RubyOnRun::Builtin::Object.new)
       interpret RubyOnRun::VM::Context.new(@code, nil, main, nil, {})
+    end
+
+    def classes
+      @classes
     end
 
     def interpret(context)
@@ -35,8 +44,8 @@ module RubyOnRun::VM
       @return_value
     end
     
-    def open_class(class_name, dunno1, scope)
-      @classes[class_name] ||= RubyOnRun::VM::RClass.new(self)
+    def open_class(class_name, superklass, scope)
+      @classes[class_name] ||= RubyOnRun::VM::RClass.new(self, superklass)
     end
 
     def add_defn_method(method_name, compiled_code, scope, method_visibility)

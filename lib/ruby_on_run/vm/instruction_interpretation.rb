@@ -168,9 +168,14 @@ module RubyOnRun::VM::GeneralInstructionInterpretation
   def push_const(args, context)
     if context.constants.keys.include?(context.literals[args[:literal]])
       context.push(context.constants[context.literals[args[:literal]]])
-	else
-	  # TODO push NameError 
-	end
+  	else
+  	  # TODO push NameError 
+  	end
+  end
+
+  # TODO: Push block here
+  def push_block(args, context)
+    context.push context.self
   end
   
   def set_const(args, context)
