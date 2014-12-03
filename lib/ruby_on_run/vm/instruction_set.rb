@@ -177,5 +177,7 @@ module RubyOnRun
     opcode 102, :meta_to_s, :stack => [1, 1], :args => [:literal], :control_flow => :send
     opcode 103, :push_type, :stack => [0, 1], :args => [], :control_flow => :next
     opcode 104, :push_mirror, :stack => [0, 1], :args => [], :control_flow => :next
+
+    opcode 105, :invoke_native, :stack => [0, 1], :args => [], :control_flow => :next
   end
 end

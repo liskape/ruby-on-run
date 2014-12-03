@@ -23,10 +23,10 @@ module RubyOnRun
       end
 
       def literals
-        {}
       end
 
       def iseq
+        [105, 11]
       end
     end
   end
