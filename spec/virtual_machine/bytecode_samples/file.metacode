@@ -1,0 +1,56 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      2: f, s
+Stack size:  5
+Literals:    9: :File, "files/file.txt", "1\n2\n3\n4\n5\n", :write, "r", :open, <compiled code>, :each_line, :puts
+Lines to IP: 1: 0..11, 2: 12..25, 3: 26..29, 4: 30..37, 7: 38..47
+
+0000:  push_const_fast            :File
+0002:  push_literal               "files/file.txt"
+0004:  string_dup                 
+0005:  push_literal               "1\n2\n3\n4\n5\n"
+0007:  string_dup                 
+0008:  send_stack                 :write, 2
+0011:  pop                        
+0012:  push_const_fast            :File
+0014:  push_literal               "files/file.txt"
+0016:  string_dup                 
+0017:  push_literal               "r"
+0019:  string_dup                 
+0020:  send_stack                 :open, 2
+0023:  set_local                  0    # f
+0025:  pop                        
+0026:  meta_push_0                
+0027:  set_local                  1    # s
+0029:  pop                        
+0030:  push_local                 0    # f
+0032:  create_block               #<Rubinius::CompiledCode __block__ file=file.rb>
+0034:  send_stack_with_block      :each_line, 0
+0037:  pop                        
+0038:  push_self                  
+0039:  push_local                 1    # s
+0041:  allow_private              
+0042:  send_stack                 :puts, 1
+0045:  pop                        
+0046:  push_true                  
+0047:  ret                        
+----------------------------------------
+
+============== :__block__ ==============
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      1: line
+Stack size:  4
+Literals:    2: :to_i, :+
+Line:        4
+Lines to IP: 5: 0..14
+
+0000:  push_local_depth           1, 1
+0003:  push_local                 0
+0005:  send_stack                 :to_i, 0
+0008:  send_stack                 :+, 1
+0011:  set_local_depth            1, 1
+0014:  ret                        
+----------------------------------------
