@@ -10,7 +10,7 @@ module RubyOnRun::VM
 
     def initialize(stream)
       @code = RubyOnRun::VM::Bytecode.load(stream).body # compiledCode
-      @classes = { Range: RubyOnRun::Builtin::RRange } # HEAP in the future
+      @classes = { Range: RubyOnRun::Builtin::RRange, File: RubyOnRun::Builtin::RFile } # HEAP in the future
       compile_bultin_classes
     end
 
