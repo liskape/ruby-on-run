@@ -1,0 +1,37 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  4
+Literals:    8: "circle", :require_relative, :Circle, :new, :allocate, :initialize, :space, :puts
+Lines to IP: 1: 0..8, 3: 9..46
+
+0000:  push_self                  
+0001:  push_literal               "circle"
+0003:  string_dup                 
+0004:  allow_private              
+0005:  send_stack                 :require_relative, 1
+0008:  pop                        
+0009:  push_self                  
+0010:  push_const_fast            :Circle
+0012:  dup_top                    
+0013:  check_serial               :new, 47
+0016:  goto_if_false              0032:
+0018:  allow_private              
+0019:  send_stack                 :allocate, 0
+0022:  dup_top                    
+0023:  push_int                   10
+0025:  allow_private              
+0026:  send_stack                 :initialize, 1
+0029:  pop                        
+0030:  goto                       0037:
+0032:  push_int                   10
+0034:  send_stack                 :new, 1
+0037:  send_stack                 :space, 0
+0040:  allow_private              
+0041:  send_stack                 :puts, 1
+0044:  pop                        
+0045:  push_true                  
+0046:  ret                        
+----------------------------------------
