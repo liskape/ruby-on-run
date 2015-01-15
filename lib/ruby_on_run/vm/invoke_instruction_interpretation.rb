@@ -55,6 +55,7 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
   end
 
   # not in rubinius
+  # native code comes from builtin
   def invoke_native(args, context)
     # in future NativeCompiledCode will have this instruction + ret
     # maybe send to kernel or something

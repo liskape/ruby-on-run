@@ -1,5 +1,7 @@
 module RubyOnRun
   module Builtin
+
+    # top class for instance
     class Object
 
       # usually C/C++ implementation

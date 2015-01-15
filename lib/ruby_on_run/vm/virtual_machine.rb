@@ -15,7 +15,7 @@ module RubyOnRun::VM
     end
 
     def compile_bultin_classes
-      file =  File.expand_path('lib/ruby_on_run/bootstrap/array.bytecode')
+      file =  File.expand_path('lib/ruby_on_run/stdlib/array.bytecode')
       stream =  File.open(file).read
       code = RubyOnRun::VM::Bytecode.load(stream).body
       main_wrapper = RubyOnRun::VM::RObject.new(RubyOnRun::Builtin::Object.new)
