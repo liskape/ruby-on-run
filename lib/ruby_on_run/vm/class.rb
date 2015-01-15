@@ -1,6 +1,7 @@
 require_relative './object'
 # require_relative '../builtin/object'
-# structure that holds information about opened class
+
+# structure that holds information about opened classes
 # this class itself is RubyOnRun::VM::RObject 
 # (has instance variables, singleton methods known as class methods)
 module RubyOnRun::VM

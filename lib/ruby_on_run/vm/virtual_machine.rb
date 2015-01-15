@@ -18,14 +18,14 @@ module RubyOnRun::VM
       file =  File.expand_path('lib/ruby_on_run/bootstrap/array.bytecode')
       stream =  File.open(file).read
       code = RubyOnRun::VM::Bytecode.load(stream).body
-      main = RubyOnRun::VM::RObject.new(RubyOnRun::Builtin::Object.new)
-      interpret RubyOnRun::VM::Context.new(code, nil, main, nil, {})
-      @classes[:ParentObject] = RubyOnRun::Builtin::Object.new
+      main_wrapper = RubyOnRun::VM::RObject.new(RubyOnRun::Builtin::Object.new)
+      interpret RubyOnRun::VM::Context.new(code, nil, main_wrapper, nil, {})
+      @classes[:ParentObject] = RubyOnRun::Builtin::Object.new # default
     end
 
     def run
-      main = RubyOnRun::VM::RObject.new(RubyOnRun::Builtin::Object.new)
-      interpret RubyOnRun::VM::Context.new(@code, nil, main, nil, {})
+      main_wrapper = RubyOnRun::VM::RObject.new(RubyOnRun::Builtin::Object.new)
+      interpret RubyOnRun::VM::Context.new(@code, nil, main_wrapper, nil, {})
     end
 
     def classes
