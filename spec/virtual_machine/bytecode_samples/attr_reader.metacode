@@ -1,0 +1,96 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      1: nasty
+Stack size:  5
+Literals:    12: :NastyClass, :open_class, <compiled code>, :call_under, :new, :allocate, :initialize, :var1, :var2, :*, :var3, :puts
+Lines to IP: 1: 0..16, 12: 17..42, 13: 43..71
+
+0000:  push_rubinius              
+0001:  push_literal               :NastyClass
+0003:  push_nil                   
+0004:  push_scope                 
+0005:  send_stack                 :open_class, 3
+0008:  create_block               #<Rubinius::CompiledCode NastyClass file=attr_reader.rb>
+0010:  swap_stack                 
+0011:  push_scope                 
+0012:  push_true                  
+0013:  send_stack                 :call_under, 3
+0016:  pop                        
+0017:  push_const_fast            :NastyClass
+0019:  dup_top                    
+0020:  check_serial               :new, 47
+0023:  goto_if_false              0037:
+0025:  allow_private              
+0026:  send_stack                 :allocate, 0
+0029:  dup_top                    
+0030:  allow_private              
+0031:  send_stack                 :initialize, 0
+0034:  pop                        
+0035:  goto                       0040:
+0037:  send_stack                 :new, 0
+0040:  set_local                  0    # nasty
+0042:  pop                        
+0043:  push_self                  
+0044:  push_local                 0    # nasty
+0046:  send_stack                 :var1, 0
+0049:  push_local                 0    # nasty
+0051:  send_stack                 :var2, 0
+0054:  send_stack                 :*, 1
+0057:  push_local                 0    # nasty
+0059:  send_stack                 :var3, 0
+0062:  send_stack                 :*, 1
+0065:  allow_private              
+0066:  send_stack                 :puts, 1
+0069:  pop                        
+0070:  push_true                  
+0071:  ret                        
+----------------------------------------
+
+============= :NastyClass ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  5
+Literals:    8: :var1, :var2, :var3, :attr_reader, :initialize, <compiled code>, :method_visibility, :add_defn_method
+Lines to IP: 3: 2..13, 5: 14..27
+
+0000:  push_self                  
+0001:  add_scope                  
+0002:  push_self                  
+0003:  push_literal               :var1
+0005:  push_literal               :var2
+0007:  push_literal               :var3
+0009:  allow_private              
+0010:  send_stack                 :attr_reader, 3
+0013:  pop                        
+0014:  push_rubinius              
+0015:  push_literal               :initialize
+0017:  push_literal               #<Rubinius::CompiledCode initialize file=attr_reader.rb>
+0019:  push_scope                 
+0020:  push_variables             
+0021:  send_stack                 :method_visibility, 0
+0024:  send_stack                 :add_defn_method, 4
+0027:  ret                        
+----------------------------------------
+
+============= :initialize ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    3: :@var1, :@var2, :@var3
+Line:        5
+Lines to IP: 6: 0..3, 7: 4..8, 8: 9..13
+
+0000:  meta_push_2                
+0001:  set_ivar                   :@var1
+0003:  pop                        
+0004:  push_int                   12
+0006:  set_ivar                   :@var2
+0008:  pop                        
+0009:  push_int                   42
+0011:  set_ivar                   :@var3
+0013:  ret                        
+----------------------------------------
