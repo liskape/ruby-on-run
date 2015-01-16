@@ -269,6 +269,6 @@ module RubyOnRun::VM::GeneralInstructionInterpretation
   end  
   
   def check_serial(args, context) #optimization
-    context.push false
+    context.push true
   end
 end

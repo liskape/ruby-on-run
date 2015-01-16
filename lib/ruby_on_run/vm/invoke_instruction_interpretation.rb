@@ -34,7 +34,7 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
     args[:count].times { parameters << context.pop }
     receiver = context.pop
     message  = context.literals[args[:literal]]
-
+    
     receiver = resolve_receiver(receiver, context)
     parameters = resolve_parameters(parameters, context)
 

@@ -1,6 +1,6 @@
 module VirtualMachineMethods
   def open_class(class_name, superklass, scope)
-    @classes[class_name] ||= RubyOnRun::VM::RClass.new(self, superklass)
+    @classes[class_name] ||= RubyOnRun::VM::RClass.new(self, class_name, superklass)
   end
 
   def add_defn_method(method_name, compiled_code, scope, method_visibility)
