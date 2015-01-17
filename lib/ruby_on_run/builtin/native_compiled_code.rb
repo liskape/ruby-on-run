@@ -1,16 +1,5 @@
 module RubyOnRun
   module Builtin
-    class Object
-
-      def method(name)
-        NativeCompiledCode.new(super)
-      end
-
-      def nil?
-        false
-      end
-    end
-
     class NativeCompiledCode < Struct.new(:method)
 
       def call(*args)
@@ -30,5 +19,4 @@ module RubyOnRun
       end
     end
   end
-
 end

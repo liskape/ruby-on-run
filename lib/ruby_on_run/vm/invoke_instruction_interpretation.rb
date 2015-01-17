@@ -31,16 +31,20 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
   end
 
   def send_stack(args, parameters = [], context)
-    args[:count].times { parameters << context.pop}
+    args[:count].times { parameters << context.pop }
     receiver = context.pop
     message  = context.literals[args[:literal]]
-
+    
     receiver = resolve_receiver(receiver, context)
     parameters = resolve_parameters(parameters, context)
 
     if receiver.is_a?(RubyOnRun::VM::VirtualMachine) || receiver.is_a?(RubyOnRun::VM::BlockEnvironment)
+      # not program specific - management only
       context.push receiver.send(message, *parameters)
     else
+      # programmer wrote this
+      # or is builtin - has no klass, but knows get_singleton_method
+      # [].is_a? RubyOnRun::Builtin::Builtin => true
       code = receiver.get_singleton_method(message)
       code ||= find_method_in_chain(receiver.klass, message, context)
 
@@ -51,6 +55,7 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
   end
 
   # not in rubinius
+  # native code comes from builtin
   def invoke_native(args, context)
     # in future NativeCompiledCode will have this instruction + ret
     # maybe send to kernel or something

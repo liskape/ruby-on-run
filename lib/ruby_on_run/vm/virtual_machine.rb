@@ -1,35 +1,46 @@
 require_relative './object'
+require_relative './virtual_machine_methods'
 
 module RubyOnRun::VM
   class VirtualMachine
 
     include GeneralInstructionInterpretation
     include InvokeInstructionInterpretation
+    include VirtualMachineMethods
 
-    DEBUG = false
+    DEBUG = true
 
     def initialize(stream)
+      fetch_builtin_classes
+      fetch_standard_library #TODO: builtin classes are used only by standard lib classes
       @code = RubyOnRun::VM::Bytecode.load(stream).body # compiledCode
-      @classes = { Range: RubyOnRun::Builtin::RRange, File: RubyOnRun::Builtin::RFile } # HEAP in the future
-      compile_bultin_classes
     end
 
-    def compile_bultin_classes
-      file =  File.expand_path('lib/ruby_on_run/bootstrap/array.bytecode')
-      stream =  File.open(file).read
-      code = RubyOnRun::VM::Bytecode.load(stream).body
-      main = RubyOnRun::VM::RObject.new(RubyOnRun::Builtin::Object.new)
-      interpret RubyOnRun::VM::Context.new(code, nil, main, nil, {})
-      @classes[:ParentObject] = RubyOnRun::Builtin::Object.new
+    def fetch_builtin_classes
+      @classes = {}
+      @classes[:Range] = RubyOnRun::Builtin::RRange
+      @classes[:File] = RubyOnRun::Builtin::RFile
+      @classes[:ParentObject] = RubyOnRun::Builtin::ParentObject.new(self, nil) # default
+    end
+
+    def fetch_standard_library
+      interpret_file File.expand_path('lib/ruby_on_run/stdlib/array.bytecode')
     end
 
     def run
-      main = RubyOnRun::VM::RObject.new(RubyOnRun::Builtin::Object.new)
-      interpret RubyOnRun::VM::Context.new(@code, nil, main, nil, {})
+      main_wrapper = RubyOnRun::VM::RObject.new(RubyOnRun::Builtin::ParentObject.new(self, nil))
+      interpret RubyOnRun::VM::Context.new(@code, nil, main_wrapper, nil, {})
     end
 
     def classes
       @classes
+    end
+
+    def interpret_file(file)
+      stream =  File.open(file).read
+      code = RubyOnRun::VM::Bytecode.load(stream).body
+      main_wrapper = RubyOnRun::VM::RObject.new(RubyOnRun::Builtin::ParentObject.new(self, nil))
+      interpret RubyOnRun::VM::Context.new(code, nil, main_wrapper, nil, {})
     end
 
     def interpret(context)
@@ -43,18 +54,5 @@ module RubyOnRun::VM
      
       @return_value
     end
-    
-    def open_class(class_name, superklass, scope)
-      @classes[class_name] ||= RubyOnRun::VM::RClass.new(self, superklass)
-    end
-
-    def add_defn_method(method_name, compiled_code, scope, method_visibility)
-      scope.define_method(method_name, compiled_code)
-    end
-
-    def attach_method(method_name, compiled_code, scope, _self)
-      _self.add_singleton_method method_name, compiled_code
-    end
-
   end
 end
