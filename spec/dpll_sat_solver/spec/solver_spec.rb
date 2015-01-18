@@ -18,13 +18,13 @@ describe Solver do
   
   context 'solves' do
     it { expect(@sol.solve(@inst)).to eq true }
-	it { expect(test("input/sat_5_10.in")). to eq true }
-	it { expect(test("input/sat_5_20.in")). to eq true }
-	it { expect(test("input/sat_5_40.in")). to eq false }
-	it { expect(test("input/sat_10_50.in")). to eq true }
-	it { expect(test("input/sat_20_100.in")). to eq false }
-	it { expect(test("input/sat_30_100.in")). to eq true }
-	it { expect(test("input/sat_30_200.in")). to eq false }
+	it { expect(test("spec/dpll_sat_solver/input/sat_5_10.in")). to eq true }
+	it { expect(test("spec/dpll_sat_solver/input/sat_5_20.in")). to eq true }
+	it { expect(test("spec/dpll_sat_solver/input/sat_5_40.in")). to eq false }
+	it { expect(test("spec/dpll_sat_solver/input/sat_10_50.in")). to eq true }
+	it { expect(test("spec/dpll_sat_solver/input/sat_20_100.in")). to eq false }
+	it { expect(test("spec/dpll_sat_solver/input/sat_30_100.in")). to eq true }
+	it { expect(test("spec/dpll_sat_solver/input/sat_30_200.in")). to eq false }
   end
   
   def test(file)
