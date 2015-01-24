@@ -99,67 +99,58 @@ Lines to IP: 6: 0..4, 7: 5..8, 8: 9..21, 9: 22..29, 17: 30..35, 18: 36..67
 Arguments:   1 required, 0 post, 1 total
 Arity:       1
 Locals:      3: line, t, clause
-Stack size:  8
-Literals:    13: nil, :Regexp, " ", :new, :split, "p", :start_with?, :[], :to_i, "c", <compiled code>, :each, :<<
+Stack size:  6
+Literals:    10: " ", :split, "p", :start_with?, :[], :to_i, "c", <compiled code>, :each, :<<
 Line:        9
-Lines to IP: 10: 0..25, 11: 26..50, 0: 51..51, 12: 52..78, 0: 79..79, 13: 80..84, 14: 85..92, 15: 93..101
+Lines to IP: 10: 0..10, 11: 11..35, 0: 36..36, 12: 37..63, 0: 64..64, 13: 65..69, 14: 70..77, 15: 78..86
 
 0000:  push_local                 0
-0002:  push_literal               nil
-0004:  dup_top                    
-0005:  is_nil                     
-0006:  goto_if_false              0020:
-0008:  pop                        
-0009:  push_cpath_top             
-0010:  find_const_fast            :Regexp
-0012:  push_literal               " "
-0014:  meta_push_0                
-0015:  send_stack                 :new, 2
-0018:  set_literal                nil
-0020:  send_stack                 :split, 1
-0023:  set_local                  1
-0025:  pop                        
-0026:  push_local                 0
-0028:  push_literal               "p"
-0030:  string_dup                 
-0031:  send_stack                 :start_with?, 1
-0034:  goto_if_false              0050:
-0036:  push_local                 1
-0038:  meta_push_2                
-0039:  send_stack                 :[], 1
-0042:  send_stack                 :to_i, 0
-0045:  set_local_depth            1, 2
-0048:  goto                       0051:
-0050:  push_nil                   
-0051:  pop                        
-0052:  push_local                 0
-0054:  push_literal               "p"
-0056:  string_dup                 
-0057:  send_stack                 :start_with?, 1
-0060:  dup_top                    
-0061:  goto_if_true               0072:
-0063:  pop                        
-0064:  push_local                 0
-0066:  push_literal               "c"
-0068:  string_dup                 
-0069:  send_stack                 :start_with?, 1
-0072:  goto_if_false              0078:
-0074:  push_nil                   
-0075:  ret                        
-0076:  goto                       0079:
-0078:  push_nil                   
-0079:  pop                        
-0080:  make_array                 0
-0082:  set_local                  2
-0084:  pop                        
-0085:  push_local                 1
-0087:  create_block               #<Rubinius::CompiledCode load file=loader.rb>
-0089:  send_stack_with_block      :each, 0
-0092:  pop                        
-0093:  push_local_depth           1, 1
-0096:  push_local                 2
-0098:  send_stack                 :<<, 1
-0101:  ret                        
+0002:  push_literal               " "
+0004:  string_dup                 
+0005:  send_stack                 :split, 1
+0008:  set_local                  1
+0010:  pop                        
+0011:  push_local                 0
+0013:  push_literal               "p"
+0015:  string_dup                 
+0016:  send_stack                 :start_with?, 1
+0019:  goto_if_false              0035:
+0021:  push_local                 1
+0023:  meta_push_2                
+0024:  send_stack                 :[], 1
+0027:  send_stack                 :to_i, 0
+0030:  set_local_depth            1, 2
+0033:  goto                       0036:
+0035:  push_nil                   
+0036:  pop                        
+0037:  push_local                 0
+0039:  push_literal               "p"
+0041:  string_dup                 
+0042:  send_stack                 :start_with?, 1
+0045:  dup_top                    
+0046:  goto_if_true               0057:
+0048:  pop                        
+0049:  push_local                 0
+0051:  push_literal               "c"
+0053:  string_dup                 
+0054:  send_stack                 :start_with?, 1
+0057:  goto_if_false              0063:
+0059:  push_nil                   
+0060:  ret                        
+0061:  goto                       0064:
+0063:  push_nil                   
+0064:  pop                        
+0065:  make_array                 0
+0067:  set_local                  2
+0069:  pop                        
+0070:  push_local                 1
+0072:  create_block               #<Rubinius::CompiledCode load file=loader.rb>
+0074:  send_stack_with_block      :each, 0
+0077:  pop                        
+0078:  push_local_depth           1, 1
+0081:  push_local                 2
+0083:  send_stack                 :<<, 1
+0086:  ret                        
 ----------------------------------------
 
 ================ :load =================

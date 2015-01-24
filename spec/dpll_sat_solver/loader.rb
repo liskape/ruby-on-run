@@ -7,7 +7,7 @@ class Loader
     var_count = 0
     f = File.open(file, 'r')
     f.each_line do |line|
-      t = line.split(/ /)
+      t = line.split(' ')
       var_count = t[2].to_i if line.start_with? 'p'
       next if line.start_with?('p') || line.start_with?('c')
       clause = []
