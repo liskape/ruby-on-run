@@ -27,8 +27,8 @@ Arguments:   0 required, 0 post, 0 total
 Arity:       0
 Locals:      0
 Stack size:  5
-Literals:    14: :initialize, <compiled code>, :method_visibility, :add_defn_method, :evaluate_solution, <compiled code>, :evaluate_clause, <compiled code>, :best_solution, :var_count, :solved, :attr_reader, :size, <compiled code>
-Lines to IP: 3: 2..15, 9: 16..29, 23: 30..43, 34: 44..55, 36: 56..69
+Literals:    16: :initialize, <compiled code>, :method_visibility, :add_defn_method, :evaluate_solution, <compiled code>, :evaluate_clause, <compiled code>, :best_solution, <compiled code>, :var_count, <compiled code>, :solved, <compiled code>, :size, <compiled code>
+Lines to IP: 3: 2..15, 9: 16..29, 23: 30..43, 34: 44..57, 38: 58..71, 42: 72..85, 46: 86..99
 
 0000:  push_self                  
 0001:  add_scope                  
@@ -56,21 +56,38 @@ Lines to IP: 3: 2..15, 9: 16..29, 23: 30..43, 34: 44..55, 36: 56..69
 0037:  send_stack                 :method_visibility, 0
 0040:  send_stack                 :add_defn_method, 4
 0043:  pop                        
-0044:  push_self                  
+0044:  push_rubinius              
 0045:  push_literal               :best_solution
-0047:  push_literal               :var_count
-0049:  push_literal               :solved
-0051:  allow_private              
-0052:  send_stack                 :attr_reader, 3
-0055:  pop                        
-0056:  push_rubinius              
-0057:  push_literal               :size
-0059:  push_literal               #<Rubinius::CompiledCode size file=instance.rb>
-0061:  push_scope                 
-0062:  push_variables             
-0063:  send_stack                 :method_visibility, 0
-0066:  send_stack                 :add_defn_method, 4
-0069:  ret                        
+0047:  push_literal               #<Rubinius::CompiledCode best_solution file=instance.rb>
+0049:  push_scope                 
+0050:  push_variables             
+0051:  send_stack                 :method_visibility, 0
+0054:  send_stack                 :add_defn_method, 4
+0057:  pop                        
+0058:  push_rubinius              
+0059:  push_literal               :var_count
+0061:  push_literal               #<Rubinius::CompiledCode var_count file=instance.rb>
+0063:  push_scope                 
+0064:  push_variables             
+0065:  send_stack                 :method_visibility, 0
+0068:  send_stack                 :add_defn_method, 4
+0071:  pop                        
+0072:  push_rubinius              
+0073:  push_literal               :solved
+0075:  push_literal               #<Rubinius::CompiledCode solved file=instance.rb>
+0077:  push_scope                 
+0078:  push_variables             
+0079:  send_stack                 :method_visibility, 0
+0082:  send_stack                 :add_defn_method, 4
+0085:  pop                        
+0086:  push_rubinius              
+0087:  push_literal               :size
+0089:  push_literal               #<Rubinius::CompiledCode size file=instance.rb>
+0091:  push_scope                 
+0092:  push_variables             
+0093:  send_stack                 :method_visibility, 0
+0096:  send_stack                 :add_defn_method, 4
+0099:  ret                        
 ----------------------------------------
 
 ============= :initialize ==============
@@ -246,14 +263,53 @@ Lines to IP: 26: 0..20, 27: 21..58, 0: 59..59, 28: 60..79, 0: 80..80
 0080:  ret                        
 ----------------------------------------
 
+============ :best_solution ============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    1: :@best_solution
+Line:        34
+Lines to IP: 35: 0..2
+
+0000:  push_ivar                  :@best_solution
+0002:  ret                        
+----------------------------------------
+
+============== :var_count ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    1: :@var_count
+Line:        38
+Lines to IP: 39: 0..2
+
+0000:  push_ivar                  :@var_count
+0002:  ret                        
+----------------------------------------
+
+=============== :solved ================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    1: :@solved
+Line:        42
+Lines to IP: 43: 0..2
+
+0000:  push_ivar                  :@solved
+0002:  ret                        
+----------------------------------------
+
 ================ :size =================
 Arguments:   0 required, 0 post, 0 total
 Arity:       0
 Locals:      0
 Stack size:  1
 Literals:    2: :@formula, :size
-Line:        36
-Lines to IP: 37: 0..5
+Line:        46
+Lines to IP: 47: 0..5
 
 0000:  push_ivar                  :@formula
 0002:  send_stack                 :size, 0

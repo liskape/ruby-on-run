@@ -8,7 +8,7 @@ module RubyOnRun::VM
     include InvokeInstructionInterpretation
     include VirtualMachineMethods
 
-    DEBUG = true
+    DEBUG = false
 
     def initialize(stream)
       fetch_builtin_classes
