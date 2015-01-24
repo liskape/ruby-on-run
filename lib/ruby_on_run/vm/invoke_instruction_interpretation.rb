@@ -8,7 +8,7 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
     message  = context.literals[args[:literal]]
     receiver = resolve_receiver(receiver, context)
     parameters = resolve_parameters(parameters, context)
-    if debug
+    if true
       p 'SEND STACK WITH BLOCK'
       p 'block = ' + block.to_s
       p 'receiver = ' + receiver.to_s
@@ -19,7 +19,8 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
       # heavy lifting here
       # method lookup and shit
       code = receiver.klass.method(message)
-      new_context = RubyOnRun::VM::Context.new(code, receiver.klass, receiver, context, {})
+      _binding = create_binding(code, parameters)
+      new_context = RubyOnRun::VM::Context.new(code, receiver.klass, receiver, context, _binding)
       interpret(new_context)
     else
       # primitive for now
@@ -39,7 +40,7 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
     receiver = resolve_receiver(receiver, context)
     parameters = resolve_parameters(parameters, context)
 
-    if false
+    if true
       p 'SEND STACK'
       p 'receiver = ' + receiver.to_s
       p 'parameters = ' + parameters.to_s
