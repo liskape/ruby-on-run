@@ -6,7 +6,7 @@ describe RubyOnRun::VM::VirtualMachine do
     let(:stream){ File.open(file).read }
 
     
-    specify do
+    specify 'receives puts with true' do
       expect(STDOUT).to receive(:puts).with(true)
       RubyOnRun::VM::VirtualMachine.new(stream).run
     end

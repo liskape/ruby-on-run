@@ -232,7 +232,7 @@ module RubyOnRun::VM::GeneralInstructionInterpretation
   end
 
   def allow_private(args, context)
-    context.self.allow_private = true
+    #context.self.allow_private = true
   end
 
   def push_rubinius(args, context)

@@ -1,7 +1,7 @@
 module RubyOnRun::VM::InvokeInstructionInterpretation
 
   def send_stack_with_block(args, parameters = [], context)
-    debug = false
+    debug = true
     block = context.pop
     args[:count].times { parameters << context.pop}
     receiver = context.pop
@@ -9,6 +9,7 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
     receiver = resolve_receiver(receiver, context)
     parameters = resolve_parameters(parameters, context)
     if debug
+      p 'SEND STACK WITH BLOCK'
       p 'block = ' + block.to_s
       p 'receiver = ' + receiver.to_s
       p 'parameters = ' + parameters.to_s
@@ -37,6 +38,13 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
     
     receiver = resolve_receiver(receiver, context)
     parameters = resolve_parameters(parameters, context)
+
+    if true
+      p 'SEND STACK'
+      p 'receiver = ' + receiver.to_s
+      p 'parameters = ' + parameters.to_s
+      p 'message = ' + message.to_s
+    end
 
     if receiver.is_a?(RubyOnRun::VM::VirtualMachine) || receiver.is_a?(RubyOnRun::VM::BlockEnvironment)
       # not program specific - management only
