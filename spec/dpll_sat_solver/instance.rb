@@ -31,7 +31,17 @@ class Instance
     0
   end
 
-  attr_reader :best_solution, :var_count, :solved
+  def best_solution
+    @best_solution
+  end
+
+  def var_count
+    @var_count
+  end
+
+  def solved
+    @solved
+  end
 
   def size
     @formula.size
