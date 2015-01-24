@@ -8,11 +8,15 @@ class Instance
 
   def evaluate_solution(solution, power)
     satisfied = 0
+    stop = false
     @formula.each do |x|
-      e = evaluate_clause(x, solution, power)
-      return -1 if e == -1
-      satisfied += 1 if e == 1
+      if !stop
+        e = evaluate_clause(x, solution, power)
+        stop = true if e == -1
+        satisfied += 1 if e == 1
+      end
     end
+    return -1 if stop
     if satisfied == size
       @best_solution = solution
       @solved = true
@@ -22,11 +26,15 @@ class Instance
 
   def evaluate_clause(clause, solution, power)
     im = true
+    stop = false
     clause.each do |x|
-      y = (solution >> (x.abs - 1)).odd?
-      return 1 if (x > 0 && y) || (x < 0 && !y)
-      im = false if x.abs > power
+      if !stop
+        y = (solution >> (x.abs - 1)).odd?
+        stop = true if (x > 0 && y) || (x < 0 && !y)
+        im = false if x.abs > power && !stop
+      end
     end
+    return 1 if stop
     return -1 if im
     0
   end
