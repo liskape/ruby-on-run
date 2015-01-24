@@ -1,0 +1,48 @@
+# class representing a frame in VMStack
+module RubyOnRun::VM
+  class Context
+    attr_accessor :literals, :stack, :bytecode_pointer, :parent, :locals, :constants, :instance, :method, :bytecode, :args, :self, :binding, :current_class, :compiled_code, :current_object
+
+    def initialize(compiled_code, current_class, current_object, parent, binding)
+      @compiled_code = compiled_code
+      @current_class = current_class
+      @self = current_object
+      @stack = []
+      @literals = compiled_code.literals
+      @bytecode_pointer = 0
+      @bytecode = compiled_code.iseq
+      @locals = compiled_code.local_names
+      @binding = binding
+      @parent = parent
+    end
+
+    def next_instruction
+      return nil if @bytecode_pointer >= @bytecode.length
+      i = RubyOnRun::InstructionSet.parse_instruction(@bytecode[@bytecode_pointer..-1])
+      if @jump
+        @jump = false
+      else
+        @bytecode_pointer += 1 + i.args.size
+      end
+      i
+    end
+
+    def add_binding(to_add_binding)
+      @binding.merge!(to_add_binding)
+    end
+
+    def push(x)
+      @stack.push(x)
+    end
+
+    def pop
+      @stack.pop
+    end
+
+    def top
+      top = @stack.pop
+      @stack.push(top)
+      top
+    end
+  end
+end

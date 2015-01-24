@@ -39,7 +39,7 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
     receiver = resolve_receiver(receiver, context)
     parameters = resolve_parameters(parameters, context)
 
-    if false
+    if true
       p 'SEND STACK'
       p 'receiver = ' + receiver.to_s
       p 'parameters = ' + parameters.to_s
