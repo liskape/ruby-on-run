@@ -12,10 +12,12 @@ class Instance
     @formula.each do |x|
       if !stop
         e = evaluate_clause(x, solution, power)
+        p 'e = ' + e.to_s
         stop = true if e == -1
         satisfied += 1 if e == 1
       end
     end
+    p 'evaluate solution returning -1' if stop
     return -1 if stop
     if satisfied == size
       @best_solution = solution
@@ -37,7 +39,9 @@ class Instance
     end
     p 'evaluate clause returning 1' if stop
     return 1 if stop
+    p 'evaluate clause returning -1' if im
     return -1 if im
+    p 'evaluate clause returning 0'
     0
   end
 
