@@ -106,9 +106,9 @@ Arguments:   2 required, 0 post, 2 total
 Arity:       2
 Locals:      4: solution, power, e, r
 Stack size:  8
-Literals:    13: "trying solution ", :to_s, :+, " / ", :p, :@max, :>=, :@instance, :evaluate_solution, :==, :size, :**, :try
+Literals:    20: "trying solution ", :to_s, :+, " / ", :@max, :p, :>=, "after first return ", :@instance, :evaluate_solution, "evaluation = ", :==, "after second return ", "instance size = ", :size, "after third return ", :**, :try, "result = ", "after fourth return "
 Line:        14
-Lines to IP: 15: 0..30, 16: 31..44, 0: 45..45, 17: 46..57, 18: 58..70, 0: 71..71, 19: 72..88, 0: 89..89, 20: 90..114, 21: 115..123, 0: 124..124, 22: 125..138
+Lines to IP: 15: 0..44, 16: 45..58, 0: 59..59, 17: 60..104, 18: 105..116, 19: 117..133, 20: 134..146, 0: 147..147, 21: 148..192, 22: 193..212, 23: 213..229, 0: 230..230, 24: 231..275, 25: 276..300, 26: 301..317, 27: 318..326, 0: 327..327, 28: 328..372, 29: 373..386
 
 0000:  push_self                  
 0001:  push_literal               "trying solution "
@@ -122,69 +122,187 @@ Lines to IP: 15: 0..30, 16: 31..44, 0: 45..45, 17: 46..57, 18: 58..70, 0: 71..71
 0018:  push_local                 1    # power
 0020:  send_stack                 :to_s, 0
 0023:  send_stack                 :+, 1
-0026:  allow_private              
-0027:  send_stack                 :p, 1
-0030:  pop                        
-0031:  push_local                 0    # solution
-0033:  push_ivar                  :@max
-0035:  send_stack                 :>=, 1
-0038:  goto_if_false              0044:
-0040:  push_false                 
-0041:  ret                        
-0042:  goto                       0045:
-0044:  push_nil                   
-0045:  pop                        
-0046:  push_ivar                  :@instance
-0048:  push_local                 0    # solution
-0050:  push_local                 1    # power
-0052:  send_stack                 :evaluate_solution, 2
-0055:  set_local                  2    # e
-0057:  pop                        
-0058:  push_local                 2    # e
-0060:  meta_push_neg_1            
-0061:  send_stack                 :==, 1
-0064:  goto_if_false              0070:
-0066:  push_false                 
-0067:  ret                        
-0068:  goto                       0071:
-0070:  push_nil                   
-0071:  pop                        
-0072:  push_local                 2    # e
-0074:  push_ivar                  :@instance
-0076:  send_stack                 :size, 0
-0079:  send_stack                 :==, 1
-0082:  goto_if_false              0088:
-0084:  push_true                  
-0085:  ret                        
-0086:  goto                       0089:
-0088:  push_nil                   
-0089:  pop                        
-0090:  push_self                  
-0091:  push_local                 0    # solution
-0093:  meta_push_2                
-0094:  push_local                 1    # power
-0096:  send_stack                 :**, 1
-0099:  send_stack                 :+, 1
-0102:  push_local                 1    # power
-0104:  meta_push_1                
-0105:  send_stack                 :+, 1
-0108:  allow_private              
-0109:  send_stack                 :try, 2
-0112:  set_local                  3    # r
-0114:  pop                        
-0115:  push_local                 3    # r
-0117:  goto_if_false              0123:
-0119:  push_true                  
-0120:  ret                        
-0121:  goto                       0124:
-0123:  push_nil                   
-0124:  pop                        
-0125:  push_self                  
-0126:  push_local                 0    # solution
-0128:  push_local                 1    # power
-0130:  meta_push_1                
-0131:  send_stack                 :+, 1
-0134:  allow_private              
-0135:  send_stack                 :try, 2
-0138:  ret                        
+0026:  push_literal               " / "
+0028:  string_dup                 
+0029:  send_stack                 :+, 1
+0032:  push_ivar                  :@max
+0034:  send_stack                 :to_s, 0
+0037:  send_stack                 :+, 1
+0040:  allow_private              
+0041:  send_stack                 :p, 1
+0044:  pop                        
+0045:  push_local                 0    # solution
+0047:  push_ivar                  :@max
+0049:  send_stack                 :>=, 1
+0052:  goto_if_false              0058:
+0054:  push_false                 
+0055:  ret                        
+0056:  goto                       0059:
+0058:  push_nil                   
+0059:  pop                        
+0060:  push_self                  
+0061:  push_literal               "after first return "
+0063:  string_dup                 
+0064:  push_local                 0    # solution
+0066:  send_stack                 :to_s, 0
+0069:  send_stack                 :+, 1
+0072:  push_literal               " / "
+0074:  string_dup                 
+0075:  send_stack                 :+, 1
+0078:  push_local                 1    # power
+0080:  send_stack                 :to_s, 0
+0083:  send_stack                 :+, 1
+0086:  push_literal               " / "
+0088:  string_dup                 
+0089:  send_stack                 :+, 1
+0092:  push_ivar                  :@max
+0094:  send_stack                 :to_s, 0
+0097:  send_stack                 :+, 1
+0100:  allow_private              
+0101:  send_stack                 :p, 1
+0104:  pop                        
+0105:  push_ivar                  :@instance
+0107:  push_local                 0    # solution
+0109:  push_local                 1    # power
+0111:  send_stack                 :evaluate_solution, 2
+0114:  set_local                  2    # e
+0116:  pop                        
+0117:  push_self                  
+0118:  push_literal               "evaluation = "
+0120:  string_dup                 
+0121:  push_local                 2    # e
+0123:  send_stack                 :to_s, 0
+0126:  send_stack                 :+, 1
+0129:  allow_private              
+0130:  send_stack                 :p, 1
+0133:  pop                        
+0134:  push_local                 2    # e
+0136:  meta_push_neg_1            
+0137:  send_stack                 :==, 1
+0140:  goto_if_false              0146:
+0142:  push_false                 
+0143:  ret                        
+0144:  goto                       0147:
+0146:  push_nil                   
+0147:  pop                        
+0148:  push_self                  
+0149:  push_literal               "after second return "
+0151:  string_dup                 
+0152:  push_local                 0    # solution
+0154:  send_stack                 :to_s, 0
+0157:  send_stack                 :+, 1
+0160:  push_literal               " / "
+0162:  string_dup                 
+0163:  send_stack                 :+, 1
+0166:  push_local                 1    # power
+0168:  send_stack                 :to_s, 0
+0171:  send_stack                 :+, 1
+0174:  push_literal               " / "
+0176:  string_dup                 
+0177:  send_stack                 :+, 1
+0180:  push_ivar                  :@max
+0182:  send_stack                 :to_s, 0
+0185:  send_stack                 :+, 1
+0188:  allow_private              
+0189:  send_stack                 :p, 1
+0192:  pop                        
+0193:  push_self                  
+0194:  push_literal               "instance size = "
+0196:  string_dup                 
+0197:  push_ivar                  :@instance
+0199:  send_stack                 :size, 0
+0202:  send_stack                 :to_s, 0
+0205:  send_stack                 :+, 1
+0208:  allow_private              
+0209:  send_stack                 :p, 1
+0212:  pop                        
+0213:  push_local                 2    # e
+0215:  push_ivar                  :@instance
+0217:  send_stack                 :size, 0
+0220:  send_stack                 :==, 1
+0223:  goto_if_false              0229:
+0225:  push_true                  
+0226:  ret                        
+0227:  goto                       0230:
+0229:  push_nil                   
+0230:  pop                        
+0231:  push_self                  
+0232:  push_literal               "after third return "
+0234:  string_dup                 
+0235:  push_local                 0    # solution
+0237:  send_stack                 :to_s, 0
+0240:  send_stack                 :+, 1
+0243:  push_literal               " / "
+0245:  string_dup                 
+0246:  send_stack                 :+, 1
+0249:  push_local                 1    # power
+0251:  send_stack                 :to_s, 0
+0254:  send_stack                 :+, 1
+0257:  push_literal               " / "
+0259:  string_dup                 
+0260:  send_stack                 :+, 1
+0263:  push_ivar                  :@max
+0265:  send_stack                 :to_s, 0
+0268:  send_stack                 :+, 1
+0271:  allow_private              
+0272:  send_stack                 :p, 1
+0275:  pop                        
+0276:  push_self                  
+0277:  push_local                 0    # solution
+0279:  meta_push_2                
+0280:  push_local                 1    # power
+0282:  send_stack                 :**, 1
+0285:  send_stack                 :+, 1
+0288:  push_local                 1    # power
+0290:  meta_push_1                
+0291:  send_stack                 :+, 1
+0294:  allow_private              
+0295:  send_stack                 :try, 2
+0298:  set_local                  3    # r
+0300:  pop                        
+0301:  push_self                  
+0302:  push_literal               "result = "
+0304:  string_dup                 
+0305:  push_local                 3    # r
+0307:  send_stack                 :to_s, 0
+0310:  send_stack                 :+, 1
+0313:  allow_private              
+0314:  send_stack                 :p, 1
+0317:  pop                        
+0318:  push_local                 3    # r
+0320:  goto_if_false              0326:
+0322:  push_true                  
+0323:  ret                        
+0324:  goto                       0327:
+0326:  push_nil                   
+0327:  pop                        
+0328:  push_self                  
+0329:  push_literal               "after fourth return "
+0331:  string_dup                 
+0332:  push_local                 0    # solution
+0334:  send_stack                 :to_s, 0
+0337:  send_stack                 :+, 1
+0340:  push_literal               " / "
+0342:  string_dup                 
+0343:  send_stack                 :+, 1
+0346:  push_local                 1    # power
+0348:  send_stack                 :to_s, 0
+0351:  send_stack                 :+, 1
+0354:  push_literal               " / "
+0356:  string_dup                 
+0357:  send_stack                 :+, 1
+0360:  push_ivar                  :@max
+0362:  send_stack                 :to_s, 0
+0365:  send_stack                 :+, 1
+0368:  allow_private              
+0369:  send_stack                 :p, 1
+0372:  pop                        
+0373:  push_self                  
+0374:  push_local                 0    # solution
+0376:  push_local                 1    # power
+0378:  meta_push_1                
+0379:  send_stack                 :+, 1
+0382:  allow_private              
+0383:  send_stack                 :try, 2
+0386:  ret                        
 ----------------------------------------
