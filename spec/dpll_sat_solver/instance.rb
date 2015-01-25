@@ -21,7 +21,7 @@ class Instance
       @best_solution = solution
       @solved = true
     end
-    p 'evaluate returning ' + satisfied.to_s
+    p 'evaluate solution returning ' + satisfied.to_s
     satisfied
   end
 
@@ -35,6 +35,7 @@ class Instance
         im = false if x.abs > power && !stop
       end
     end
+    p 'evaluate clause returning 1' if stop
     return 1 if stop
     return -1 if im
     0

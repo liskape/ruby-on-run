@@ -21,6 +21,7 @@ class Instance
       @best_solution = solution
       @solved = true
     end
+    p 'evaluate returning ' + satisfied.to_s
     satisfied
   end
 
