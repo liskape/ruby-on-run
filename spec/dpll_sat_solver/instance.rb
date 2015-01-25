@@ -17,13 +17,13 @@ class Instance
         satisfied += 1 if e == 1
       end
     end
-    p 'evaluate solution returning -1' if stop
+    #p 'evaluate solution returning -1' if stop
     return -1 if stop
     if satisfied == size
       @best_solution = solution
       @solved = true
     end
-    p 'evaluate solution returning ' + satisfied.to_s
+    #p 'evaluate solution returning ' + satisfied.to_s
     satisfied
   end
 
@@ -37,11 +37,11 @@ class Instance
         im = false if x.abs > power && !stop
       end
     end
-    p 'evaluate clause returning 1' if stop
+    #p 'evaluate clause returning 1' if stop
     return 1 if stop
-    p 'evaluate clause returning -1' if im
+    #p 'evaluate clause returning -1' if im
     return -1 if im
-    p 'evaluate clause returning 0'
+    #p 'evaluate clause returning 0'
     0
   end
 

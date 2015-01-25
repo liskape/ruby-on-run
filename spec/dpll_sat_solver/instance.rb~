@@ -17,6 +17,7 @@ class Instance
         satisfied += 1 if e == 1
       end
     end
+    p 'evaluate solution returning -1' if stop
     return -1 if stop
     if satisfied == size
       @best_solution = solution
