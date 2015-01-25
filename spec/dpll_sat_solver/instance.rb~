@@ -26,11 +26,15 @@ class Instance
 
   def evaluate_clause(clause, solution, power)
     im = true
+    stop = false
     clause.each do |x|
-      y = (solution >> (x.abs - 1)).odd?
-      return 1 if (x > 0 && y) || (x < 0 && !y)
-      im = false if x.abs > power
+      if !stop
+        y = (solution >> (x.abs - 1)).odd?
+        stop = true if (x > 0 && y) || (x < 0 && !y)
+        im = false if x.abs > power && !stop
+      end
     end
+    return 1 if stop
     return -1 if im
     0
   end
