@@ -47,6 +47,7 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
       p 'message = ' + message.to_s
     end
 
+
     if receiver.is_a?(RubyOnRun::VM::VirtualMachine) || receiver.is_a?(RubyOnRun::VM::BlockEnvironment)
       # not program specific - management only
       context.push receiver.send(message, *parameters)

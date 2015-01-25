@@ -67,11 +67,12 @@ module RubyOnRun::VM::GeneralInstructionInterpretation
   
   def ret(args, context)
     top = context.pop
+    @continue = false
+
     if context.parent.nil?
       @return_value = top
       context = nil
-    else      
-      # p 'parent top: ' + context.parent.top.to_s
+    else
       context.parent.push(top)      
     end
   end
