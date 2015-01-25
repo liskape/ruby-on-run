@@ -1,0 +1,175 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  4
+Literals:    6: "instance", :require_relative, :Solver, :open_class, <compiled code>, :call_under
+Lines to IP: 1: 0..8, 4: 9..27
+
+0000:  push_self                  
+0001:  push_literal               "instance"
+0003:  string_dup                 
+0004:  allow_private              
+0005:  send_stack                 :require_relative, 1
+0008:  pop                        
+0009:  push_rubinius              
+0010:  push_literal               :Solver
+0012:  push_nil                   
+0013:  push_scope                 
+0014:  send_stack                 :open_class, 3
+0017:  create_block               #<Rubinius::CompiledCode Solver file=solver.rb>
+0019:  swap_stack                 
+0020:  push_scope                 
+0021:  push_true                  
+0022:  send_stack                 :call_under, 3
+0025:  pop                        
+0026:  push_true                  
+0027:  ret                        
+----------------------------------------
+
+=============== :Solver ================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  5
+Literals:    6: :solve, <compiled code>, :method_visibility, :add_defn_method, :try, <compiled code>
+Lines to IP: 5: 2..15, 14: 16..29
+
+0000:  push_self                  
+0001:  add_scope                  
+0002:  push_rubinius              
+0003:  push_literal               :solve
+0005:  push_literal               #<Rubinius::CompiledCode solve file=solver.rb>
+0007:  push_scope                 
+0008:  push_variables             
+0009:  send_stack                 :method_visibility, 0
+0012:  send_stack                 :add_defn_method, 4
+0015:  pop                        
+0016:  push_rubinius              
+0017:  push_literal               :try
+0019:  push_literal               #<Rubinius::CompiledCode try file=solver.rb>
+0021:  push_scope                 
+0022:  push_variables             
+0023:  send_stack                 :method_visibility, 0
+0026:  send_stack                 :add_defn_method, 4
+0029:  ret                        
+----------------------------------------
+
+================ :solve ================
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      1: instance
+Stack size:  4
+Literals:    9: :@instance, :var_count, :**, :@max, :@solution, :@solved, :+, :try, :solved
+Line:        5
+Lines to IP: 6: 0..4, 7: 5..16, 8: 17..20, 9: 21..24, 10: 25..49, 0: 50..50, 11: 51..56
+
+0000:  push_local                 0    # instance
+0002:  set_ivar                   :@instance
+0004:  pop                        
+0005:  meta_push_2                
+0006:  push_local                 0    # instance
+0008:  send_stack                 :var_count, 0
+0011:  send_stack                 :**, 1
+0014:  set_ivar                   :@max
+0016:  pop                        
+0017:  meta_push_0                
+0018:  set_ivar                   :@solution
+0020:  pop                        
+0021:  push_false                 
+0022:  set_ivar                   :@solved
+0024:  pop                        
+0025:  push_self                  
+0026:  push_ivar                  :@solution
+0028:  meta_push_1                
+0029:  send_stack                 :+, 1
+0032:  meta_push_1                
+0033:  allow_private              
+0034:  send_stack                 :try, 2
+0037:  goto_if_false              0042:
+0039:  push_nil                   
+0040:  goto                       0050:
+0042:  push_self                  
+0043:  push_ivar                  :@solution
+0045:  meta_push_1                
+0046:  allow_private              
+0047:  send_stack                 :try, 2
+0050:  pop                        
+0051:  push_ivar                  :@instance
+0053:  send_stack                 :solved, 0
+0056:  ret                        
+----------------------------------------
+
+================= :try =================
+Arguments:   2 required, 0 post, 2 total
+Arity:       2
+Locals:      4: solution, power, e, r
+Stack size:  8
+Literals:    9: :@max, :>=, :@instance, :evaluate_solution, :==, :size, :**, :+, :try
+Line:        14
+Lines to IP: 16: 0..13, 0: 14..14, 18: 15..26, 20: 27..39, 0: 40..40, 23: 41..57, 0: 58..58, 25: 59..83, 27: 84..92, 0: 93..93, 29: 94..107
+
+0000:  push_local                 0    # solution
+0002:  push_ivar                  :@max
+0004:  send_stack                 :>=, 1
+0007:  goto_if_false              0013:
+0009:  push_false                 
+0010:  ret                        
+0011:  goto                       0014:
+0013:  push_nil                   
+0014:  pop                        
+0015:  push_ivar                  :@instance
+0017:  push_local                 0    # solution
+0019:  push_local                 1    # power
+0021:  send_stack                 :evaluate_solution, 2
+0024:  set_local                  2    # e
+0026:  pop                        
+0027:  push_local                 2    # e
+0029:  meta_push_neg_1            
+0030:  send_stack                 :==, 1
+0033:  goto_if_false              0039:
+0035:  push_false                 
+0036:  ret                        
+0037:  goto                       0040:
+0039:  push_nil                   
+0040:  pop                        
+0041:  push_local                 2    # e
+0043:  push_ivar                  :@instance
+0045:  send_stack                 :size, 0
+0048:  send_stack                 :==, 1
+0051:  goto_if_false              0057:
+0053:  push_true                  
+0054:  ret                        
+0055:  goto                       0058:
+0057:  push_nil                   
+0058:  pop                        
+0059:  push_self                  
+0060:  push_local                 0    # solution
+0062:  meta_push_2                
+0063:  push_local                 1    # power
+0065:  send_stack                 :**, 1
+0068:  send_stack                 :+, 1
+0071:  push_local                 1    # power
+0073:  meta_push_1                
+0074:  send_stack                 :+, 1
+0077:  allow_private              
+0078:  send_stack                 :try, 2
+0081:  set_local                  3    # r
+0083:  pop                        
+0084:  push_local                 3    # r
+0086:  goto_if_false              0092:
+0088:  push_true                  
+0089:  ret                        
+0090:  goto                       0093:
+0092:  push_nil                   
+0093:  pop                        
+0094:  push_self                  
+0095:  push_local                 0    # solution
+0097:  push_local                 1    # power
+0099:  meta_push_1                
+0100:  send_stack                 :+, 1
+0103:  allow_private              
+0104:  send_stack                 :try, 2
+0107:  ret                        
+----------------------------------------

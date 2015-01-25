@@ -1,0 +1,108 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  4
+Literals:    15: "solver", :require_relative, "loader", :Solver, :new, :allocate, :initialize, :Loader, "input/sat_5_10.in", :load, :solve, :puts, "input/sat_5_20.in", "input/sat_5_40.in", "input/sat_10_50.in"
+Lines to IP: 1: 0..8, 2: 9..17, 4: 18..57, 5: 58..97, 6: 98..137, 7: 138..179
+
+0000:  push_self                  
+0001:  push_literal               "solver"
+0003:  string_dup                 
+0004:  allow_private              
+0005:  send_stack                 :require_relative, 1
+0008:  pop                        
+0009:  push_self                  
+0010:  push_literal               "loader"
+0012:  string_dup                 
+0013:  allow_private              
+0014:  send_stack                 :require_relative, 1
+0017:  pop                        
+0018:  push_self                  
+0019:  push_const_fast            :Solver
+0021:  dup_top                    
+0022:  check_serial               :new, 47
+0025:  goto_if_false              0039:
+0027:  allow_private              
+0028:  send_stack                 :allocate, 0
+0031:  dup_top                    
+0032:  allow_private              
+0033:  send_stack                 :initialize, 0
+0036:  pop                        
+0037:  goto                       0042:
+0039:  send_stack                 :new, 0
+0042:  push_const_fast            :Loader
+0044:  push_literal               "input/sat_5_10.in"
+0046:  string_dup                 
+0047:  send_stack                 :load, 1
+0050:  send_stack                 :solve, 1
+0053:  allow_private              
+0054:  send_stack                 :puts, 1
+0057:  pop                        
+0058:  push_self                  
+0059:  push_const_fast            :Solver
+0061:  dup_top                    
+0062:  check_serial               :new, 47
+0065:  goto_if_false              0079:
+0067:  allow_private              
+0068:  send_stack                 :allocate, 0
+0071:  dup_top                    
+0072:  allow_private              
+0073:  send_stack                 :initialize, 0
+0076:  pop                        
+0077:  goto                       0082:
+0079:  send_stack                 :new, 0
+0082:  push_const_fast            :Loader
+0084:  push_literal               "input/sat_5_20.in"
+0086:  string_dup                 
+0087:  send_stack                 :load, 1
+0090:  send_stack                 :solve, 1
+0093:  allow_private              
+0094:  send_stack                 :puts, 1
+0097:  pop                        
+0098:  push_self                  
+0099:  push_const_fast            :Solver
+0101:  dup_top                    
+0102:  check_serial               :new, 47
+0105:  goto_if_false              0119:
+0107:  allow_private              
+0108:  send_stack                 :allocate, 0
+0111:  dup_top                    
+0112:  allow_private              
+0113:  send_stack                 :initialize, 0
+0116:  pop                        
+0117:  goto                       0122:
+0119:  send_stack                 :new, 0
+0122:  push_const_fast            :Loader
+0124:  push_literal               "input/sat_5_40.in"
+0126:  string_dup                 
+0127:  send_stack                 :load, 1
+0130:  send_stack                 :solve, 1
+0133:  allow_private              
+0134:  send_stack                 :puts, 1
+0137:  pop                        
+0138:  push_self                  
+0139:  push_const_fast            :Solver
+0141:  dup_top                    
+0142:  check_serial               :new, 47
+0145:  goto_if_false              0159:
+0147:  allow_private              
+0148:  send_stack                 :allocate, 0
+0151:  dup_top                    
+0152:  allow_private              
+0153:  send_stack                 :initialize, 0
+0156:  pop                        
+0157:  goto                       0162:
+0159:  send_stack                 :new, 0
+0162:  push_const_fast            :Loader
+0164:  push_literal               "input/sat_10_50.in"
+0166:  string_dup                 
+0167:  send_stack                 :load, 1
+0170:  send_stack                 :solve, 1
+0173:  allow_private              
+0174:  send_stack                 :puts, 1
+0177:  pop                        
+0178:  push_true                  
+0179:  ret                        
+----------------------------------------

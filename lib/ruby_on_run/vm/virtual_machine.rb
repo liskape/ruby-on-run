@@ -44,14 +44,14 @@ module RubyOnRun::VM
     end
 
     def interpret(context)
+      @continue ||= true
 
-      while true
+      while @continue
         instruction = context.next_instruction
-        break if instruction.nil?
         instruction.print if DEBUG
         send instruction.name, instruction.param_hash, context
       end
-     
+      @continue = true
       @return_value
     end
   end

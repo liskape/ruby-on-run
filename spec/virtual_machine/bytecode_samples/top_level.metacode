@@ -1,0 +1,47 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  5
+Literals:    5: :top_level, <compiled code>, :method_visibility, :add_defn_method, :puts
+Lines to IP: 1: 0..13, 7: 14..32
+
+0000:  push_rubinius              
+0001:  push_literal               :top_level
+0003:  push_literal               #<Rubinius::CompiledCode top_level file=top_level_methods.rb>
+0005:  push_scope                 
+0006:  push_variables             
+0007:  send_stack                 :method_visibility, 0
+0010:  send_stack                 :add_defn_method, 4
+0013:  pop                        
+0014:  push_self                  
+0015:  push_self                  
+0016:  push_int                   20
+0018:  push_int                   30
+0020:  push_int                   50
+0022:  allow_private              
+0023:  send_stack                 :top_level, 3
+0026:  allow_private              
+0027:  send_stack                 :puts, 1
+0030:  pop                        
+0031:  push_true                  
+0032:  ret                        
+----------------------------------------
+
+============== :top_level ==============
+Arguments:   3 required, 0 post, 3 total
+Arity:       3
+Locals:      3: a, b, c
+Stack size:  5
+Literals:    2: :*, :-
+Line:        1
+Lines to IP: 2: 0..12
+
+0000:  push_local                 0    # a
+0002:  push_local                 1    # b
+0004:  send_stack                 :*, 1
+0007:  push_local                 2    # c
+0009:  send_stack                 :-, 1
+0012:  ret                        
+----------------------------------------

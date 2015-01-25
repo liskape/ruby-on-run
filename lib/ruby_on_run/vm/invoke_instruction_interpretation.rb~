@@ -8,7 +8,7 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
     message  = context.literals[args[:literal]]
     receiver = resolve_receiver(receiver, context)
     parameters = resolve_parameters(parameters, context)
-    if false
+    if true
       p 'SEND STACK WITH BLOCK'
       p 'block = ' + block.to_s
       p 'receiver = ' + receiver.to_s
@@ -46,7 +46,6 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
       p 'parameters = ' + parameters.to_s
       p 'message = ' + message.to_s
     end
-
 
     if receiver.is_a?(RubyOnRun::VM::VirtualMachine) || receiver.is_a?(RubyOnRun::VM::BlockEnvironment)
       # not program specific - management only

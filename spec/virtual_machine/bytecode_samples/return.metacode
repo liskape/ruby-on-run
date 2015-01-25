@@ -1,0 +1,170 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  4
+Literals:    11: :Dummy, :open_class, <compiled code>, :call_under, :new, :allocate, :initialize, :some_method, :puts, :another_method, :another_another_method
+Lines to IP: 1: 0..16, 21: 17..48, 22: 49..80, 23: 81..114
+
+0000:  push_rubinius              
+0001:  push_literal               :Dummy
+0003:  push_nil                   
+0004:  push_scope                 
+0005:  send_stack                 :open_class, 3
+0008:  create_block               #<Rubinius::CompiledCode Dummy file=return_statement.rb>
+0010:  swap_stack                 
+0011:  push_scope                 
+0012:  push_true                  
+0013:  send_stack                 :call_under, 3
+0016:  pop                        
+0017:  push_self                  
+0018:  push_const_fast            :Dummy
+0020:  dup_top                    
+0021:  check_serial               :new, 47
+0024:  goto_if_false              0038:
+0026:  allow_private              
+0027:  send_stack                 :allocate, 0
+0030:  dup_top                    
+0031:  allow_private              
+0032:  send_stack                 :initialize, 0
+0035:  pop                        
+0036:  goto                       0041:
+0038:  send_stack                 :new, 0
+0041:  send_stack                 :some_method, 0
+0044:  allow_private              
+0045:  send_stack                 :puts, 1
+0048:  pop                        
+0049:  push_self                  
+0050:  push_const_fast            :Dummy
+0052:  dup_top                    
+0053:  check_serial               :new, 47
+0056:  goto_if_false              0070:
+0058:  allow_private              
+0059:  send_stack                 :allocate, 0
+0062:  dup_top                    
+0063:  allow_private              
+0064:  send_stack                 :initialize, 0
+0067:  pop                        
+0068:  goto                       0073:
+0070:  send_stack                 :new, 0
+0073:  send_stack                 :another_method, 0
+0076:  allow_private              
+0077:  send_stack                 :puts, 1
+0080:  pop                        
+0081:  push_self                  
+0082:  push_const_fast            :Dummy
+0084:  dup_top                    
+0085:  check_serial               :new, 47
+0088:  goto_if_false              0102:
+0090:  allow_private              
+0091:  send_stack                 :allocate, 0
+0094:  dup_top                    
+0095:  allow_private              
+0096:  send_stack                 :initialize, 0
+0099:  pop                        
+0100:  goto                       0105:
+0102:  send_stack                 :new, 0
+0105:  send_stack                 :another_another_method, 0
+0108:  allow_private              
+0109:  send_stack                 :puts, 1
+0112:  pop                        
+0113:  push_true                  
+0114:  ret                        
+----------------------------------------
+
+================ :Dummy ================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  5
+Literals:    8: :some_method, <compiled code>, :method_visibility, :add_defn_method, :another_method, <compiled code>, :another_another_method, <compiled code>
+Lines to IP: 2: 2..15, 7: 16..29, 14: 30..43
+
+0000:  push_self                  
+0001:  add_scope                  
+0002:  push_rubinius              
+0003:  push_literal               :some_method
+0005:  push_literal               #<Rubinius::CompiledCode some_method file=return_statement.rb>
+0007:  push_scope                 
+0008:  push_variables             
+0009:  send_stack                 :method_visibility, 0
+0012:  send_stack                 :add_defn_method, 4
+0015:  pop                        
+0016:  push_rubinius              
+0017:  push_literal               :another_method
+0019:  push_literal               #<Rubinius::CompiledCode another_method file=return_statement.rb>
+0021:  push_scope                 
+0022:  push_variables             
+0023:  send_stack                 :method_visibility, 0
+0026:  send_stack                 :add_defn_method, 4
+0029:  pop                        
+0030:  push_rubinius              
+0031:  push_literal               :another_another_method
+0033:  push_literal               #<Rubinius::CompiledCode another_another_method file=return_statement.rb>
+0035:  push_scope                 
+0036:  push_variables             
+0037:  send_stack                 :method_visibility, 0
+0040:  send_stack                 :add_defn_method, 4
+0043:  ret                        
+----------------------------------------
+
+============= :some_method =============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    0
+Line:        2
+Lines to IP: 3: 0..7, 0: 8..8, 4: 9..10
+
+0000:  push_true                  
+0001:  goto_if_false              0007:
+0003:  meta_push_0                
+0004:  ret                        
+0005:  goto                       0008:
+0007:  push_nil                   
+0008:  pop                        
+0009:  meta_push_1                
+0010:  ret                        
+----------------------------------------
+
+=========== :another_method ============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    0
+Line:        7
+Lines to IP: 8: 0..2, 9: 3..6, 8: 7..7, 0: 8..8, 11: 9..10
+
+0000:  push_true                  
+0001:  goto_if_false              0007:
+0003:  meta_push_0                
+0004:  ret                        
+0005:  goto                       0008:
+0007:  push_nil                   
+0008:  pop                        
+0009:  meta_push_1                
+0010:  ret                        
+----------------------------------------
+
+======= :another_another_method ========
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    0
+Line:        14
+Lines to IP: 15: 0..7, 0: 8..8, 16: 9..10
+
+0000:  push_true                  
+0001:  goto_if_false              0007:
+0003:  meta_push_0                
+0004:  ret                        
+0005:  goto                       0008:
+0007:  push_nil                   
+0008:  pop                        
+0009:  meta_push_1                
+0010:  ret                        
+----------------------------------------

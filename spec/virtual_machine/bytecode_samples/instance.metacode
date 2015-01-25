@@ -1,0 +1,361 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  4
+Literals:    4: :Instance, :open_class, <compiled code>, :call_under
+Lines to IP: 2: 0..18
+
+0000:  push_rubinius              
+0001:  push_literal               :Instance
+0003:  push_nil                   
+0004:  push_scope                 
+0005:  send_stack                 :open_class, 3
+0008:  create_block               #<Rubinius::CompiledCode Instance file=instance.rb>
+0010:  swap_stack                 
+0011:  push_scope                 
+0012:  push_true                  
+0013:  send_stack                 :call_under, 3
+0016:  pop                        
+0017:  push_true                  
+0018:  ret                        
+----------------------------------------
+
+============== :Instance ===============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  5
+Literals:    16: :initialize, <compiled code>, :method_visibility, :add_defn_method, :evaluate_solution, <compiled code>, :evaluate_clause, <compiled code>, :best_solution, <compiled code>, :var_count, <compiled code>, :solved, <compiled code>, :size, <compiled code>
+Lines to IP: 3: 2..15, 9: 16..29, 30: 30..43, 48: 44..57, 52: 58..71, 56: 72..85, 60: 86..99
+
+0000:  push_self                  
+0001:  add_scope                  
+0002:  push_rubinius              
+0003:  push_literal               :initialize
+0005:  push_literal               #<Rubinius::CompiledCode initialize file=instance.rb>
+0007:  push_scope                 
+0008:  push_variables             
+0009:  send_stack                 :method_visibility, 0
+0012:  send_stack                 :add_defn_method, 4
+0015:  pop                        
+0016:  push_rubinius              
+0017:  push_literal               :evaluate_solution
+0019:  push_literal               #<Rubinius::CompiledCode evaluate_solution file=instance.rb>
+0021:  push_scope                 
+0022:  push_variables             
+0023:  send_stack                 :method_visibility, 0
+0026:  send_stack                 :add_defn_method, 4
+0029:  pop                        
+0030:  push_rubinius              
+0031:  push_literal               :evaluate_clause
+0033:  push_literal               #<Rubinius::CompiledCode evaluate_clause file=instance.rb>
+0035:  push_scope                 
+0036:  push_variables             
+0037:  send_stack                 :method_visibility, 0
+0040:  send_stack                 :add_defn_method, 4
+0043:  pop                        
+0044:  push_rubinius              
+0045:  push_literal               :best_solution
+0047:  push_literal               #<Rubinius::CompiledCode best_solution file=instance.rb>
+0049:  push_scope                 
+0050:  push_variables             
+0051:  send_stack                 :method_visibility, 0
+0054:  send_stack                 :add_defn_method, 4
+0057:  pop                        
+0058:  push_rubinius              
+0059:  push_literal               :var_count
+0061:  push_literal               #<Rubinius::CompiledCode var_count file=instance.rb>
+0063:  push_scope                 
+0064:  push_variables             
+0065:  send_stack                 :method_visibility, 0
+0068:  send_stack                 :add_defn_method, 4
+0071:  pop                        
+0072:  push_rubinius              
+0073:  push_literal               :solved
+0075:  push_literal               #<Rubinius::CompiledCode solved file=instance.rb>
+0077:  push_scope                 
+0078:  push_variables             
+0079:  send_stack                 :method_visibility, 0
+0082:  send_stack                 :add_defn_method, 4
+0085:  pop                        
+0086:  push_rubinius              
+0087:  push_literal               :size
+0089:  push_literal               #<Rubinius::CompiledCode size file=instance.rb>
+0091:  push_scope                 
+0092:  push_variables             
+0093:  send_stack                 :method_visibility, 0
+0096:  send_stack                 :add_defn_method, 4
+0099:  ret                        
+----------------------------------------
+
+============= :initialize ==============
+Arguments:   2 required, 0 post, 2 total
+Arity:       2
+Locals:      2: formula, var_count
+Stack size:  3
+Literals:    3: :@formula, :@var_count, :@solved
+Line:        3
+Lines to IP: 4: 0..4, 5: 5..9, 6: 10..13
+
+0000:  push_local                 0    # formula
+0002:  set_ivar                   :@formula
+0004:  pop                        
+0005:  push_local                 1    # var_count
+0007:  set_ivar                   :@var_count
+0009:  pop                        
+0010:  push_false                 
+0011:  set_ivar                   :@solved
+0013:  ret                        
+----------------------------------------
+
+========== :evaluate_solution ==========
+Arguments:   2 required, 0 post, 2 total
+Arity:       2
+Locals:      4: solution, power, satisfied, stop
+Stack size:  6
+Literals:    7: :@formula, <compiled code>, :each, :size, :==, :@best_solution, :@solved
+Line:        9
+Lines to IP: 10: 0..3, 11: 4..7, 12: 8..15, 21: 16..24, 0: 25..25, 22: 26..35, 23: 36..40, 24: 41..45, 22: 46..46, 0: 47..47, 27: 48..50
+
+0000:  meta_push_0                
+0001:  set_local                  2    # satisfied
+0003:  pop                        
+0004:  push_false                 
+0005:  set_local                  3    # stop
+0007:  pop                        
+0008:  push_ivar                  :@formula
+0010:  create_block               #<Rubinius::CompiledCode evaluate_solution file=instance.rb>
+0012:  send_stack_with_block      :each, 0
+0015:  pop                        
+0016:  push_local                 3    # stop
+0018:  goto_if_false              0024:
+0020:  meta_push_neg_1            
+0021:  ret                        
+0022:  goto                       0025:
+0024:  push_nil                   
+0025:  pop                        
+0026:  push_local                 2    # satisfied
+0028:  push_self                  
+0029:  send_method                :size
+0031:  send_stack                 :==, 1
+0034:  goto_if_false              0046:
+0036:  push_local                 0    # solution
+0038:  set_ivar                   :@best_solution
+0040:  pop                        
+0041:  push_true                  
+0042:  set_ivar                   :@solved
+0044:  goto                       0047:
+0046:  push_nil                   
+0047:  pop                        
+0048:  push_local                 2    # satisfied
+0050:  ret                        
+----------------------------------------
+
+========== :evaluate_solution ==========
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      2: x, e
+Stack size:  7
+Literals:    7: :!, :evaluate_clause, "e = ", :to_s, :+, :p, :==
+Line:        12
+Lines to IP: 13: 0..7, 14: 8..23, 15: 24..40, 16: 41..55, 0: 56..56, 17: 57..77, 0: 78..79, 13: 80..80, 0: 81..81
+
+0000:  push_local_depth           1, 3
+0003:  send_stack                 :!, 0
+0006:  goto_if_false              0080:
+0008:  push_self                  
+0009:  push_local                 0
+0011:  push_local_depth           1, 0
+0014:  push_local_depth           1, 1
+0017:  allow_private              
+0018:  send_stack                 :evaluate_clause, 3
+0021:  set_local                  1
+0023:  pop                        
+0024:  push_self                  
+0025:  push_literal               "e = "
+0027:  string_dup                 
+0028:  push_local                 1
+0030:  send_stack                 :to_s, 0
+0033:  send_stack                 :+, 1
+0036:  allow_private              
+0037:  send_stack                 :p, 1
+0040:  pop                        
+0041:  push_local                 1
+0043:  meta_push_neg_1            
+0044:  send_stack                 :==, 1
+0047:  goto_if_false              0055:
+0049:  push_true                  
+0050:  set_local_depth            1, 3
+0053:  goto                       0056:
+0055:  push_nil                   
+0056:  pop                        
+0057:  push_local                 1
+0059:  meta_push_1                
+0060:  send_stack                 :==, 1
+0063:  goto_if_false              0077:
+0065:  push_local_depth           1, 2
+0068:  meta_push_1                
+0069:  send_stack                 :+, 1
+0072:  set_local_depth            1, 2
+0075:  goto                       0078:
+0077:  push_nil                   
+0078:  goto                       0081:
+0080:  push_nil                   
+0081:  ret                        
+----------------------------------------
+
+=========== :evaluate_clause ===========
+Arguments:   3 required, 0 post, 3 total
+Arity:       3
+Locals:      5: clause, solution, power, im, stop
+Stack size:  7
+Literals:    2: <compiled code>, :each
+Line:        30
+Lines to IP: 31: 0..3, 32: 4..7, 33: 8..15, 41: 16..24, 0: 25..25, 43: 26..34, 0: 35..35, 45: 36..37
+
+0000:  push_true                  
+0001:  set_local                  3    # im
+0003:  pop                        
+0004:  push_false                 
+0005:  set_local                  4    # stop
+0007:  pop                        
+0008:  push_local                 0    # clause
+0010:  create_block               #<Rubinius::CompiledCode evaluate_clause file=instance.rb>
+0012:  send_stack_with_block      :each, 0
+0015:  pop                        
+0016:  push_local                 4    # stop
+0018:  goto_if_false              0024:
+0020:  meta_push_1                
+0021:  ret                        
+0022:  goto                       0025:
+0024:  push_nil                   
+0025:  pop                        
+0026:  push_local                 3    # im
+0028:  goto_if_false              0034:
+0030:  meta_push_neg_1            
+0031:  ret                        
+0032:  goto                       0035:
+0034:  push_nil                   
+0035:  pop                        
+0036:  meta_push_0                
+0037:  ret                        
+----------------------------------------
+
+=========== :evaluate_clause ===========
+Arguments:   1 required, 0 post, 1 total
+Arity:       1
+Locals:      2: x, y
+Stack size:  6
+Literals:    7: :!, :abs, :-, :>>, :odd?, :>, :<
+Line:        33
+Lines to IP: 34: 0..7, 35: 8..28, 36: 29..68, 0: 69..69, 37: 70..99, 0: 100..101, 34: 102..102, 0: 103..103
+
+0000:  push_local_depth           1, 4
+0003:  send_stack                 :!, 0
+0006:  goto_if_false              0102:
+0008:  push_local_depth           1, 1
+0011:  push_local                 0
+0013:  send_stack                 :abs, 0
+0016:  meta_push_1                
+0017:  send_stack                 :-, 1
+0020:  send_stack                 :>>, 1
+0023:  send_stack                 :odd?, 0
+0026:  set_local                  1
+0028:  pop                        
+0029:  push_local                 0
+0031:  meta_push_0                
+0032:  send_stack                 :>, 1
+0035:  dup_top                    
+0036:  goto_if_false              0041:
+0038:  pop                        
+0039:  push_local                 1
+0041:  dup_top                    
+0042:  goto_if_true               0060:
+0044:  pop                        
+0045:  push_local                 0
+0047:  meta_push_0                
+0048:  send_stack                 :<, 1
+0051:  dup_top                    
+0052:  goto_if_false              0060:
+0054:  pop                        
+0055:  push_local                 1
+0057:  send_stack                 :!, 0
+0060:  goto_if_false              0068:
+0062:  push_true                  
+0063:  set_local_depth            1, 4
+0066:  goto                       0069:
+0068:  push_nil                   
+0069:  pop                        
+0070:  push_local                 0
+0072:  send_stack                 :abs, 0
+0075:  push_local_depth           1, 2
+0078:  send_stack                 :>, 1
+0081:  dup_top                    
+0082:  goto_if_false              0091:
+0084:  pop                        
+0085:  push_local_depth           1, 4
+0088:  send_stack                 :!, 0
+0091:  goto_if_false              0099:
+0093:  push_false                 
+0094:  set_local_depth            1, 3
+0097:  goto                       0100:
+0099:  push_nil                   
+0100:  goto                       0103:
+0102:  push_nil                   
+0103:  ret                        
+----------------------------------------
+
+============ :best_solution ============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    1: :@best_solution
+Line:        48
+Lines to IP: 49: 0..2
+
+0000:  push_ivar                  :@best_solution
+0002:  ret                        
+----------------------------------------
+
+============== :var_count ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    1: :@var_count
+Line:        52
+Lines to IP: 53: 0..2
+
+0000:  push_ivar                  :@var_count
+0002:  ret                        
+----------------------------------------
+
+=============== :solved ================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    1: :@solved
+Line:        56
+Lines to IP: 57: 0..2
+
+0000:  push_ivar                  :@solved
+0002:  ret                        
+----------------------------------------
+
+================ :size =================
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    2: :@formula, :size
+Line:        60
+Lines to IP: 61: 0..5
+
+0000:  push_ivar                  :@formula
+0002:  send_stack                 :size, 0
+0005:  ret                        
+----------------------------------------
