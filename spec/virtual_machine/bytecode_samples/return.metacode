@@ -1,0 +1,114 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  5
+Literals:    9: :some_method, <compiled code>, :method_visibility, :add_defn_method, :another_method, <compiled code>, :another_another_method, <compiled code>, :puts
+Lines to IP: 1: 0..13, 6: 14..27, 13: 28..41, 19: 42..50, 20: 51..59, 21: 60..70
+
+0000:  push_rubinius              
+0001:  push_literal               :some_method
+0003:  push_literal               #<Rubinius::CompiledCode some_method file=return_statement.rb>
+0005:  push_scope                 
+0006:  push_variables             
+0007:  send_stack                 :method_visibility, 0
+0010:  send_stack                 :add_defn_method, 4
+0013:  pop                        
+0014:  push_rubinius              
+0015:  push_literal               :another_method
+0017:  push_literal               #<Rubinius::CompiledCode another_method file=return_statement.rb>
+0019:  push_scope                 
+0020:  push_variables             
+0021:  send_stack                 :method_visibility, 0
+0024:  send_stack                 :add_defn_method, 4
+0027:  pop                        
+0028:  push_rubinius              
+0029:  push_literal               :another_another_method
+0031:  push_literal               #<Rubinius::CompiledCode another_another_method file=return_statement.rb>
+0033:  push_scope                 
+0034:  push_variables             
+0035:  send_stack                 :method_visibility, 0
+0038:  send_stack                 :add_defn_method, 4
+0041:  pop                        
+0042:  push_self                  
+0043:  push_self                  
+0044:  send_method                :some_method
+0046:  allow_private              
+0047:  send_stack                 :puts, 1
+0050:  pop                        
+0051:  push_self                  
+0052:  push_self                  
+0053:  send_method                :another_method
+0055:  allow_private              
+0056:  send_stack                 :puts, 1
+0059:  pop                        
+0060:  push_self                  
+0061:  push_self                  
+0062:  send_method                :another_another_method
+0064:  allow_private              
+0065:  send_stack                 :puts, 1
+0068:  pop                        
+0069:  push_true                  
+0070:  ret                        
+----------------------------------------
+
+============= :some_method =============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    0
+Line:        1
+Lines to IP: 2: 0..7, 0: 8..8, 3: 9..10
+
+0000:  push_true                  
+0001:  goto_if_false              0007:
+0003:  meta_push_0                
+0004:  ret                        
+0005:  goto                       0008:
+0007:  push_nil                   
+0008:  pop                        
+0009:  meta_push_1                
+0010:  ret                        
+----------------------------------------
+
+=========== :another_method ============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    0
+Line:        6
+Lines to IP: 7: 0..2, 8: 3..6, 7: 7..7, 0: 8..8, 10: 9..10
+
+0000:  push_true                  
+0001:  goto_if_false              0007:
+0003:  meta_push_0                
+0004:  ret                        
+0005:  goto                       0008:
+0007:  push_nil                   
+0008:  pop                        
+0009:  meta_push_1                
+0010:  ret                        
+----------------------------------------
+
+======= :another_another_method ========
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      0
+Stack size:  1
+Literals:    0
+Line:        13
+Lines to IP: 14: 0..7, 0: 8..8, 15: 9..10
+
+0000:  push_true                  
+0001:  goto_if_false              0007:
+0003:  meta_push_0                
+0004:  ret                        
+0005:  goto                       0008:
+0007:  push_nil                   
+0008:  pop                        
+0009:  meta_push_1                
+0010:  ret                        
+----------------------------------------
