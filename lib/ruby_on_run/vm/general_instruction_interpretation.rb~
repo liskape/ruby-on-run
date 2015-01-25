@@ -67,11 +67,12 @@ module RubyOnRun::VM::GeneralInstructionInterpretation
   
   def ret(args, context)
     top = context.pop
+    @continue = false
+
     if context.parent.nil?
       @return_value = top
       context = nil
-    else      
-      # p 'parent top: ' + context.parent.top.to_s
+    else
       context.parent.push(top)      
     end
   end
@@ -232,7 +233,7 @@ module RubyOnRun::VM::GeneralInstructionInterpretation
   end
 
   def allow_private(args, context)
-    context.self.allow_private = true
+    #context.self.allow_private = true
   end
 
   def push_rubinius(args, context)

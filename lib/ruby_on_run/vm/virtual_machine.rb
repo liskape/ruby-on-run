@@ -8,11 +8,11 @@ module RubyOnRun::VM
     include InvokeInstructionInterpretation
     include VirtualMachineMethods
 
-    DEBUG = true
+    DEBUG = false
 
     def initialize(stream)
       fetch_builtin_classes
-      fetch_standard_library #TODO: builtin classes are used only by standard lib classes
+      fetch_standard_library 
       @code = RubyOnRun::VM::Bytecode.load(stream).body # compiledCode
     end
 
