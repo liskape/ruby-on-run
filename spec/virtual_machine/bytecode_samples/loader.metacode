@@ -54,7 +54,7 @@ Locals:      4: file, a, var_count, f
 Stack size:  8
 Literals:    10: :File, "r", :open, <compiled code>, :each_line, :close, :Instance, :new, :allocate, :initialize
 Line:        5
-Lines to IP: 6: 0..4, 7: 5..8, 8: 9..21, 9: 22..29, 17: 30..35, 18: 36..67
+Lines to IP: 6: 0..4, 7: 5..8, 8: 9..21, 9: 22..29, 18: 30..35, 19: 36..67
 
 0000:  make_array                 0
 0002:  set_local                  1    # a
@@ -100,9 +100,9 @@ Arguments:   1 required, 0 post, 1 total
 Arity:       1
 Locals:      3: line, t, clause
 Stack size:  6
-Literals:    10: " ", :split, "p", :start_with?, :[], :to_i, "c", <compiled code>, :each, :<<
+Literals:    11: " ", :split, "p", :start_with?, :[], :to_i, :!, "c", <compiled code>, :each, :<<
 Line:        9
-Lines to IP: 10: 0..10, 11: 11..35, 0: 36..36, 12: 37..63, 0: 64..64, 13: 65..69, 14: 70..77, 15: 78..86
+Lines to IP: 10: 0..10, 11: 11..35, 0: 36..36, 12: 37..64, 13: 65..69, 14: 70..77, 15: 78..87, 12: 88..88, 0: 89..89
 
 0000:  push_local                 0
 0002:  push_literal               " "
@@ -127,19 +127,16 @@ Lines to IP: 10: 0..10, 11: 11..35, 0: 36..36, 12: 37..63, 0: 64..64, 13: 65..69
 0039:  push_literal               "p"
 0041:  string_dup                 
 0042:  send_stack                 :start_with?, 1
-0045:  dup_top                    
-0046:  goto_if_true               0057:
-0048:  pop                        
-0049:  push_local                 0
-0051:  push_literal               "c"
-0053:  string_dup                 
-0054:  send_stack                 :start_with?, 1
-0057:  goto_if_false              0063:
-0059:  push_nil                   
-0060:  ret                        
-0061:  goto                       0064:
-0063:  push_nil                   
-0064:  pop                        
+0045:  send_stack                 :!, 0
+0048:  dup_top                    
+0049:  goto_if_false              0063:
+0051:  pop                        
+0052:  push_local                 0
+0054:  push_literal               "c"
+0056:  string_dup                 
+0057:  send_stack                 :start_with?, 1
+0060:  send_stack                 :!, 0
+0063:  goto_if_false              0088:
 0065:  make_array                 0
 0067:  set_local                  2
 0069:  pop                        
@@ -150,7 +147,9 @@ Lines to IP: 10: 0..10, 11: 11..35, 0: 36..36, 12: 37..63, 0: 64..64, 13: 65..69
 0078:  push_local_depth           1, 1
 0081:  push_local                 2
 0083:  send_stack                 :<<, 1
-0086:  ret                        
+0086:  goto                       0089:
+0088:  push_nil                   
+0089:  ret                        
 ----------------------------------------
 
 ================ :load =================
