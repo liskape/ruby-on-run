@@ -12,7 +12,7 @@ class Solver
   end
 
   def try(solution, power)
-    # p 'trying solution ' + solution.to_s + " / " + power.to_s
+    p 'trying solution ' + solution.to_s + " / " + power.to_s
     return false if solution >= @max
     e = @instance.evaluate_solution(solution, power)
     return false if e == -1

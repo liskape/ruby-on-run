@@ -11,7 +11,7 @@ class Loader
       var_count = t[2].to_i if line.start_with? 'p'
       if !line.start_with?('p') && !line.start_with?('c')
         clause = []
-        t.each { |x| clause << x.to_i if x != "0\n" }
+        t.each { |x| clause << x.to_i if x.to_i != 0 }
         a << clause
       end
     end
