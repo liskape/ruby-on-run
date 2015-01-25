@@ -1,0 +1,110 @@
+
+============= :__script__ ==============
+Arguments:   0 required, 0 post, 0 total
+Arity:       0
+Locals:      2: a, inst
+Stack size:  6
+Literals:    14: "instance", :require_relative, :<<, -2, -3, :Instance, :new, :allocate, :initialize, :size, :puts, :var_count, :evaluate_solution, :best_solution
+Lines to IP: 1: 0..8, 3: 9..13, 4: 14..25, 5: 26..38, 6: 39..51, 7: 52..85, 8: 86..96, 9: 97..107, 10: 108..122, 11: 123..136, 12: 137..151, 13: 152..166, 14: 167..179
+
+0000:  push_self                  
+0001:  push_literal               "instance"
+0003:  string_dup                 
+0004:  allow_private              
+0005:  send_stack                 :require_relative, 1
+0008:  pop                        
+0009:  make_array                 0
+0011:  set_local                  0    # a
+0013:  pop                        
+0014:  push_local                 0    # a
+0016:  meta_push_1                
+0017:  meta_push_2                
+0018:  push_int                   3
+0020:  make_array                 3
+0022:  send_stack                 :<<, 1
+0025:  pop                        
+0026:  push_local                 0    # a
+0028:  meta_push_neg_1            
+0029:  push_literal               -2
+0031:  push_int                   3
+0033:  make_array                 3
+0035:  send_stack                 :<<, 1
+0038:  pop                        
+0039:  push_local                 0    # a
+0041:  meta_push_neg_1            
+0042:  push_literal               -2
+0044:  push_literal               -3
+0046:  make_array                 3
+0048:  send_stack                 :<<, 1
+0051:  pop                        
+0052:  push_const_fast            :Instance
+0054:  dup_top                    
+0055:  check_serial               :new, 47
+0058:  goto_if_false              0076:
+0060:  allow_private              
+0061:  send_stack                 :allocate, 0
+0064:  dup_top                    
+0065:  push_local                 0    # a
+0067:  push_int                   3
+0069:  allow_private              
+0070:  send_stack                 :initialize, 2
+0073:  pop                        
+0074:  goto                       0083:
+0076:  push_local                 0    # a
+0078:  push_int                   3
+0080:  send_stack                 :new, 2
+0083:  set_local                  1    # inst
+0085:  pop                        
+0086:  push_self                  
+0087:  push_local                 1    # inst
+0089:  send_stack                 :size, 0
+0092:  allow_private              
+0093:  send_stack                 :puts, 1
+0096:  pop                        
+0097:  push_self                  
+0098:  push_local                 1    # inst
+0100:  send_stack                 :var_count, 0
+0103:  allow_private              
+0104:  send_stack                 :puts, 1
+0107:  pop                        
+0108:  push_self                  
+0109:  push_local                 1    # inst
+0111:  push_int                   7
+0113:  push_int                   3
+0115:  send_stack                 :evaluate_solution, 2
+0118:  allow_private              
+0119:  send_stack                 :puts, 1
+0122:  pop                        
+0123:  push_self                  
+0124:  push_local                 1    # inst
+0126:  push_int                   3
+0128:  meta_push_2                
+0129:  send_stack                 :evaluate_solution, 2
+0132:  allow_private              
+0133:  send_stack                 :puts, 1
+0136:  pop                        
+0137:  push_self                  
+0138:  push_local                 1    # inst
+0140:  push_int                   3
+0142:  push_int                   3
+0144:  send_stack                 :evaluate_solution, 2
+0147:  allow_private              
+0148:  send_stack                 :puts, 1
+0151:  pop                        
+0152:  push_self                  
+0153:  push_local                 1    # inst
+0155:  push_int                   5
+0157:  push_int                   3
+0159:  send_stack                 :evaluate_solution, 2
+0162:  allow_private              
+0163:  send_stack                 :puts, 1
+0166:  pop                        
+0167:  push_self                  
+0168:  push_local                 1    # inst
+0170:  send_stack                 :best_solution, 0
+0173:  allow_private              
+0174:  send_stack                 :puts, 1
+0177:  pop                        
+0178:  push_true                  
+0179:  ret                        
+----------------------------------------

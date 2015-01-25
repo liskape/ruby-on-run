@@ -28,7 +28,7 @@ Arity:       0
 Locals:      0
 Stack size:  5
 Literals:    16: :initialize, <compiled code>, :method_visibility, :add_defn_method, :evaluate_solution, <compiled code>, :evaluate_clause, <compiled code>, :best_solution, <compiled code>, :var_count, <compiled code>, :solved, <compiled code>, :size, <compiled code>
-Lines to IP: 3: 2..15, 9: 16..29, 28: 30..43, 43: 44..57, 47: 58..71, 51: 72..85, 55: 86..99
+Lines to IP: 3: 2..15, 9: 16..29, 28: 30..43, 44: 44..57, 48: 58..71, 52: 72..85, 56: 86..99
 
 0000:  push_self                  
 0001:  add_scope                  
@@ -115,7 +115,7 @@ Arguments:   2 required, 0 post, 2 total
 Arity:       2
 Locals:      4: solution, power, satisfied, stop
 Stack size:  7
-Literals:    11: :@formula, <compiled code>, :each, :size, :==, :@best_solution, :@solved, "evaluate returning ", :to_s, :+, :p
+Literals:    11: :@formula, <compiled code>, :each, :size, :==, :@best_solution, :@solved, "evaluate solution returning ", :to_s, :+, :p
 Line:        9
 Lines to IP: 10: 0..3, 11: 4..7, 12: 8..15, 19: 16..24, 0: 25..25, 20: 26..35, 21: 36..40, 22: 41..45, 20: 46..46, 0: 47..47, 24: 48..64, 25: 65..67
 
@@ -150,7 +150,7 @@ Lines to IP: 10: 0..3, 11: 4..7, 12: 8..15, 19: 16..24, 0: 25..25, 20: 26..35, 2
 0046:  push_nil                   
 0047:  pop                        
 0048:  push_self                  
-0049:  push_literal               "evaluate returning "
+0049:  push_literal               "evaluate solution returning "
 0051:  string_dup                 
 0052:  push_local                 2    # satisfied
 0054:  send_stack                 :to_s, 0
@@ -211,9 +211,9 @@ Arguments:   3 required, 0 post, 3 total
 Arity:       3
 Locals:      5: clause, solution, power, im, stop
 Stack size:  7
-Literals:    2: <compiled code>, :each
+Literals:    4: <compiled code>, :each, "evaluate clause returning 1", :p
 Line:        28
-Lines to IP: 29: 0..3, 30: 4..7, 31: 8..15, 38: 16..24, 0: 25..25, 39: 26..34, 0: 35..35, 40: 36..37
+Lines to IP: 29: 0..3, 30: 4..7, 31: 8..15, 38: 16..30, 0: 31..31, 39: 32..40, 0: 41..41, 40: 42..50, 0: 51..51, 41: 52..53
 
 0000:  push_true                  
 0001:  set_local                  3    # im
@@ -226,21 +226,31 @@ Lines to IP: 29: 0..3, 30: 4..7, 31: 8..15, 38: 16..24, 0: 25..25, 39: 26..34, 0
 0012:  send_stack_with_block      :each, 0
 0015:  pop                        
 0016:  push_local                 4    # stop
-0018:  goto_if_false              0024:
-0020:  meta_push_1                
-0021:  ret                        
-0022:  goto                       0025:
-0024:  push_nil                   
-0025:  pop                        
-0026:  push_local                 3    # im
-0028:  goto_if_false              0034:
-0030:  meta_push_neg_1            
-0031:  ret                        
-0032:  goto                       0035:
-0034:  push_nil                   
-0035:  pop                        
-0036:  meta_push_0                
+0018:  goto_if_false              0030:
+0020:  push_self                  
+0021:  push_literal               "evaluate clause returning 1"
+0023:  string_dup                 
+0024:  allow_private              
+0025:  send_stack                 :p, 1
+0028:  goto                       0031:
+0030:  push_nil                   
+0031:  pop                        
+0032:  push_local                 4    # stop
+0034:  goto_if_false              0040:
+0036:  meta_push_1                
 0037:  ret                        
+0038:  goto                       0041:
+0040:  push_nil                   
+0041:  pop                        
+0042:  push_local                 3    # im
+0044:  goto_if_false              0050:
+0046:  meta_push_neg_1            
+0047:  ret                        
+0048:  goto                       0051:
+0050:  push_nil                   
+0051:  pop                        
+0052:  meta_push_0                
+0053:  ret                        
 ----------------------------------------
 
 =========== :evaluate_clause ===========
@@ -313,8 +323,8 @@ Arity:       0
 Locals:      0
 Stack size:  1
 Literals:    1: :@best_solution
-Line:        43
-Lines to IP: 44: 0..2
+Line:        44
+Lines to IP: 45: 0..2
 
 0000:  push_ivar                  :@best_solution
 0002:  ret                        
@@ -326,8 +336,8 @@ Arity:       0
 Locals:      0
 Stack size:  1
 Literals:    1: :@var_count
-Line:        47
-Lines to IP: 48: 0..2
+Line:        48
+Lines to IP: 49: 0..2
 
 0000:  push_ivar                  :@var_count
 0002:  ret                        
@@ -339,8 +349,8 @@ Arity:       0
 Locals:      0
 Stack size:  1
 Literals:    1: :@solved
-Line:        51
-Lines to IP: 52: 0..2
+Line:        52
+Lines to IP: 53: 0..2
 
 0000:  push_ivar                  :@solved
 0002:  ret                        
@@ -352,8 +362,8 @@ Arity:       0
 Locals:      0
 Stack size:  1
 Literals:    2: :@formula, :size
-Line:        55
-Lines to IP: 56: 0..5
+Line:        56
+Lines to IP: 57: 0..5
 
 0000:  push_ivar                  :@formula
 0002:  send_stack                 :size, 0
