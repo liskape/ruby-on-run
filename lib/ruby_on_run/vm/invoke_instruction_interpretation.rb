@@ -8,7 +8,7 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
     message  = context.literals[args[:literal]]
     receiver = resolve_receiver(receiver, context)
     parameters = resolve_parameters(parameters, context)
-    if true
+    if false
       p 'SEND STACK WITH BLOCK'
       p 'block = ' + block.to_s
       p 'receiver = ' + receiver.to_s
