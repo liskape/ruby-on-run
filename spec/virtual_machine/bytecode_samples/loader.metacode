@@ -157,20 +157,20 @@ Arguments:   1 required, 0 post, 1 total
 Arity:       1
 Locals:      1: x
 Stack size:  4
-Literals:    4: "0\n", :!=, :to_i, :<<
+Literals:    3: :to_i, :!=, :<<
 Line:        14
-Lines to IP: 0: 24..24
+Lines to IP: 0: 25..25
 
 0000:  push_local                 0
-0002:  push_literal               "0\n"
-0004:  string_dup                 
-0005:  send_stack                 :!=, 1
-0008:  goto_if_false              0023:
-0010:  push_local_depth           1, 2
-0013:  push_local                 0
-0015:  send_stack                 :to_i, 0
-0018:  send_stack                 :<<, 1
-0021:  goto                       0024:
-0023:  push_nil                   
-0024:  ret                        
+0002:  send_stack                 :to_i, 0
+0005:  meta_push_0                
+0006:  send_stack                 :!=, 1
+0009:  goto_if_false              0024:
+0011:  push_local_depth           1, 2
+0014:  push_local                 0
+0016:  send_stack                 :to_i, 0
+0019:  send_stack                 :<<, 1
+0022:  goto                       0025:
+0024:  push_nil                   
+0025:  ret                        
 ----------------------------------------
