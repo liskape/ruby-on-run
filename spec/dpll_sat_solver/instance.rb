@@ -12,7 +12,7 @@ class Instance
     @formula.each do |x|
       if !stop
         e = evaluate_clause(x, solution, power)
-        p 'e = ' + e.to_s
+        #p 'e = ' + e.to_s
         stop = true if e == -1
         satisfied += 1 if e == 1
       end
