@@ -174,7 +174,6 @@ module RubyOnRun::VM::GeneralInstructionInterpretation
     end
   end
 
-  # TODO: Push block here
   def push_block(args, context)
     context.push context.self
   end

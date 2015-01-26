@@ -80,7 +80,6 @@ module RubyOnRun::VM::InvokeInstructionInterpretation
     message  = context.literals[args[:literal]]
     receiver = context.pop
 
-    # TODO arity
     code = find_method_in_chain(resolve_receiver(receiver.klass.superklass, context), message, context)
     _binding = create_binding(code, [])
     

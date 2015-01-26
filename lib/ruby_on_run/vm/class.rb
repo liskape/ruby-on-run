@@ -24,7 +24,7 @@ module RubyOnRun::VM
       # we dont support so much reflection
       # classes Object and Class are closed
       # this way it searches here as it would in Class class, but ends here
-      super(self) #TODO: it's odd
+      super(self)
     end
 
     def allocate
