@@ -2,28 +2,23 @@
 
 Ruby on Run is program that interprets bytecode from rubinius compiler
 
+## TODO
+
+  * only standard lib uses builtin
+  * Class class
+  * public/private
+  * exteptios
+  * modules
+  * real closures
+  * GC
+
+## About
+
+
 ## Development
-
-Unit tests:
-
-    $ rspec
-    $ rspec spec
-
-Integration tests (TODO):
-
-    $ rake test:functions
-    $ rake test:recursion
-    $ rake test:class
-    $ ...
-    $ rake test:all
 
 
 ## Execeution
 
-Interpret bytecode from file or stream
 
-    $ bin/ruby_on_run file.bytecode
-
-Compile ruby file using rubinius and interpret
-
-    $ bin/ruby file.rb
+Authors: Petr Liška, Ondřej Kála
