@@ -48,7 +48,6 @@ module RubyOnRun::VM
 
       while @continue
         instruction = context.next_instruction
-        instruction.print if DEBUG
         send instruction.name, instruction.param_hash, context
       end
       @continue = true
